@@ -1,0 +1,7 @@
+{
+  "name": "Moda",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
