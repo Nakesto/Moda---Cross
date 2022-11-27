@@ -5,6 +5,14 @@
     display: flex;
 }
 
+.content-select{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
 .container-group{
     margin-left: 10px;
     margin-right: 10px;
@@ -68,8 +76,9 @@ ion-button{
 }
 
 .img-select-login{
-    width: 100%;
-    height: 350px;
+    width: 250px;
+    height: 300px;
+    margin-top: 10px;
     display: flex;
     justify-content: center;
 }
@@ -80,4 +89,89 @@ ion-button{
     margin-left: 20px;
     margin-bottom: 15px;
 }
+
+.btn-isi{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-facebook{
+    color:#3880ff; 
+    width: 40px;
+    height:30px; 
+    padding-right:10px;
+}
+
+.btn-icon-google{
+    width: 40px;
+    height: 30px; 
+    padding-right:10px;
+    margin-left: -21px;
+}
+
+.btn-icon-apple{
+    color: black; 
+    width: 40px;
+    height:30px;
+    padding-right: 16px;
+    margin-left: -32px;
+}
+
+.line-1{
+    display: flex; 
+    width:350px; 
+    flex-direction: row; 
+    align-items: center; 
+    padding-right: .5rem; 
+    padding-left: .5rem;   
+}
+
+
+@media (max-width: 390px) { 
+    .button-shape{
+        width: 250px;
+    }
+
+    .button-shape-signin{
+        width: 250px;
+    }
+
+    .line-1{
+        width: 250px;
+    }
+
+    .button-text{
+        font-size: small;
+    }
+
+    .btn-facebook{
+        width: 35px;
+        height: 35px;
+    }
+
+    .btn-icon-google{
+        width: 35px;
+        height: 35px;
+        margin-left: -15px;
+    }
+
+
+    .btn-icon-apple{
+        width: 35px;
+        height: 35px;
+        margin-left: -20px;
+    }
+}
+
+ @media (max-height: 655px)  {
+    .img-select-login{
+        width: 130px;
+        height: 150px;
+    }
+ }
+
+
+
 
