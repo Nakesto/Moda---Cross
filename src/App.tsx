@@ -20,8 +20,18 @@ import '@ionic/react/css/flex-utils.css'
 import '@ionic/react/css/display.css'
 
 /* Theme variables */
+<<<<<<< HEAD
 import './theme/variables.css'
 import AddChat from './pages/AddChat'
+=======
+import "./theme/variables.css";
+import AddChat from "./pages/AddChat";
+
+import SelectLoginPage from "./pages/SelectLogin";
+import LoginPage from "./pages/loginPage";
+import RegisterPage from "./pages/RegisterPage;
+import Cart from "./pages/Cart";
+>>>>>>> d1dea47216ec24f183fbac8df72c91e31d2f46e0
 
 import SelectLoginPage from './pages/SelectLogin'
 import LoginPage from './pages/loginPage'
