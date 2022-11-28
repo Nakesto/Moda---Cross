@@ -22,9 +22,11 @@ import "@ionic/react/css/display.css";
 /* Theme variables */
 import "./theme/variables.css";
 import AddChat from "./pages/AddChat";
+
 import SelectLoginPage from "./pages/SelectLogin";
 import LoginPage from "./pages/loginPage";
-import RegisterPage from "./pages/RegisterPage";
+import RegisterPage from "./pages/RegisterPage;
+import Cart from "./pages/Cart";
 
 setupIonicReact();
 
@@ -37,6 +39,7 @@ const App: React.FC = () => (
         <Route exact path="/login" component={LoginPage} />
         <Route exact path="/register" component={RegisterPage} />
         <Route exact path="/addchat" component={AddChat} />
+        <Route exact path="/cart" component={Cart} />
         <Route exact path="/">
           <Redirect to="/selectlogin" />
         </Route>

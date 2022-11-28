@@ -1,0 +1,55 @@
+.btn {
+  --background: none !important;
+  height: 30px !important;
+  --color: var(--ion-color-primary-contrast, #fff);
+  box-shadow: none !important;
+  overflow: hidden;
+  border: none !important;
+}
+
+.ctp {
+  text-transform: none !important;
+  margin: auto;
+  width: 80%;
+  position: fixed;
+  top: 93%;
+  left: 10%;
+}
+
+.ctr {
+  display: flex;
+  width: 40px;
+  margin-top: 10px !important;
+  height: 20px;
+  justify-content: center;
+}
+
+.des {
+  margin-left: 15px !important;
+}
+
+.cardlist {
+  background-color: beige !important;
+}
+
+.total {
+  position: fixed;
+  top: 87%;
+  left: 5%;
+  font-weight: bold;
+  font-size: 28px;
+}
+
+.icon-inner {
+  display: none !important;
+}
+
+.cb {
+  position: absolute;
+  left: 85%;
+  top: 53%;
+}
+
+ion-icon.item-detail-icon.ios {
+  display: none !important;
+}
