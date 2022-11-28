@@ -22,6 +22,7 @@ import "@ionic/react/css/display.css";
 /* Theme variables */
 import "./theme/variables.css";
 import AddChat from "./pages/AddChat";
+
 import SelectLoginPage from "./pages/SelectLogin";
 import LoginPage from "./pages/loginPage";
 import RegisterPage from "./pages/RegisterPage";

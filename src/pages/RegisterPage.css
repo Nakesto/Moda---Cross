@@ -1,97 +1,145 @@
-.container-img{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 10px;
-    margin-bottom: 20px;
+.container-img {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 15px;
+  margin-bottom: 20px;
 }
 
 .profilepic {
-    position: relative;
-    width: 125px;
-    height: 125px;
-    border-radius: 50%;
-    overflow: hidden;
-    background-color: #111;
-  }
-  
-  .profilepic:hover .profilepic_content {
-    opacity: 1;
-  }
-  
-  .profilepic:hover .profilepic_image {
-    opacity: .5;
-  }
-  
-  .profilepic_image {
-    object-fit: cover;
-    opacity: 1;
-    transition: opacity .2s ease-in-out;
-  }
-  
-  .profilepic_content {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    opacity: 0;
-    transition: opacity .2s ease-in-out;
-  }
-  
-  .profilepic_icon {
-    color: white;
-    padding-bottom: 8px;
-  }
-  
-  .fas {
-    font-size: 20px;
-  }
-  
-  .profilepic_text {
-    text-transform: uppercase;
-    font-size: 12px;
-    width: 50%;
-    text-align: center;
-  }
-
-.gender-dropdown{
-    width: 275px;
-    margin-right: 20px;
-    margin-left: -6px;
+  position: relative;
+  width: 125px;
+  height: 125px;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: #111;
 }
 
-.item-dropdown{
-    width: 275px;
-    margin-right: 20px;
-    margin-left: -6px;
+.profilepic:hover .profilepic_content {
+  opacity: 1;
 }
 
-.item-dropdown:hover{
+.profilepic:hover .profilepic_image {
+  opacity: 0.5;
+}
+
+.profilepic_image {
+  object-fit: cover;
+  opacity: 1;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.profilepic_content {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  color: white;
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.profilepic_icon {
+  color: white;
+  padding-bottom: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.fas {
+  font-size: 20px;
+}
+
+.profilepic_text {
+  text-transform: uppercase;
+  font-size: 12px;
+  width: 50%;
+  text-align: center;
+}
+
+.gender-dropdown {
+  width: 275px;
+  margin-right: 20px;
+  margin-left: -6px;
+}
+
+.input-item-register {
+  border-width: 2px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  background-color: #efefef;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 350px;
+  height: 50px;
+}
+
+.input-item-register:focus-within {
+  border: 1px solid var(--ion-color-primary);
   color: black;
-  background-color:rgba(52, 191, 246, 0.5);
+  background-color: rgba(52, 191, 246, 0.5);
 }
 
-input[type=date] {
+.item-dropdown {
+  width: 275px;
+  margin-right: 20px;
+}
+
+.item-dropdown:hover {
+  color: black;
+  background-color: rgba(52, 191, 246, 0.5);
+}
+
+input[type='date'] {
   text-align: right;
   color: #59595959;
 }
 
-input[type="date"]:before {
+input[type='date']:before {
   color: #59595959;
   content: attr(placeholder) !important;
   margin-right: 0.5em;
 }
 
-input[type="date"]:focus:before {
+input[type='date']:focus:before {
   content: '' !important;
 }
 
-.input-date{
+.input-date {
   margin-right: 20px;
+}
+
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  margin: 0;
+}
+
+@media (max-width: 390px) {
+  .profilepic {
+    width: 100px;
+    height: 100px;
+  }
+
+  .input-item-register {
+    width: 250px;
+  }
+}
+
+@media (max-height: 655px) {
+  .img-select-login {
+    width: 130px;
+    height: 150px;
+  }
 }
