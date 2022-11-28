@@ -51,8 +51,8 @@ const AddChat = () => {
       handleChange(value);
     },
     // delay in ms
-    1000,
-    { maxWait: 1000 }
+    500,
+    { maxWait: 500 }
   );
 
   return (

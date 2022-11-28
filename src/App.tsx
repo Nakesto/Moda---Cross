@@ -25,8 +25,13 @@ import AddChat from "./pages/AddChat";
 
 import SelectLoginPage from "./pages/SelectLogin";
 import LoginPage from "./pages/loginPage";
+<<<<<<< HEAD
 import RegisterPage from "./pages/RegisterPage;
 import Cart from "./pages/Cart";
+=======
+import RegisterPage from "./pages/RegisterPage";
+import Chat from "./pages/Chat";
+>>>>>>> fdc71a2 (hai)
 
 setupIonicReact();
 
@@ -39,7 +44,11 @@ const App: React.FC = () => (
         <Route exact path="/login" component={LoginPage} />
         <Route exact path="/register" component={RegisterPage} />
         <Route exact path="/addchat" component={AddChat} />
+<<<<<<< HEAD
         <Route exact path="/cart" component={Cart} />
+=======
+        <Route exact path="/chat" component={Chat} />
+>>>>>>> fdc71a2 (hai)
         <Route exact path="/">
           <Redirect to="/selectlogin" />
         </Route>
