@@ -35,6 +35,7 @@ import { useHistory } from 'react-router'
 import { ErrorMessage } from '@hookform/error-message'
 import { auth, providerFacebook, providerGoogle } from '../firebase'
 import { UserProvider } from '../context/UserData'
+import { Link } from 'react-router-dom'
 
 export type DataUser = {
   token: string
