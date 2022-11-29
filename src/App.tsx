@@ -25,8 +25,8 @@ import AddChat from "./pages/AddChat";
 
 import SelectLoginPage from "./pages/SelectLogin";
 import LoginPage from "./pages/loginPage";
-import RegisterPage from "./pages/RegisterPage;
-import Cart from "./pages/Cart";
+import RegisterPage from "./pages/RegisterPage";
+import Chat from "./pages/Chat";
 
 setupIonicReact();
 
@@ -39,7 +39,7 @@ const App: React.FC = () => (
         <Route exact path="/login" component={LoginPage} />
         <Route exact path="/register" component={RegisterPage} />
         <Route exact path="/addchat" component={AddChat} />
-        <Route exact path="/cart" component={Cart} />
+        <Route exact path="/chat" component={Chat} />
         <Route exact path="/">
           <Redirect to="/selectlogin" />
         </Route>
