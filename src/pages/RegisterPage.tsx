@@ -2,7 +2,6 @@ import {
   IonBackButton,
   IonButtons,
   IonContent,
-  IonGrid,
   IonHeader,
   IonIcon,
   IonInput,
@@ -15,8 +14,8 @@ import {
   IonToolbar,
 } from '@ionic/react'
 import './RegisterPage.css'
-import { useEffect, useRef, useState } from 'react'
-import { mail, calendar, attach } from 'ionicons/icons'
+import { useState } from 'react'
+import { mail, calendar } from 'ionicons/icons'
 import { FaTransgender } from 'react-icons/fa'
 import { BsCameraFill, BsFillTelephoneFill } from 'react-icons/bs'
 import { RiLockPasswordFill } from 'react-icons/ri'
@@ -29,7 +28,7 @@ import { useHistory } from 'react-router'
 import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { useForm } from 'react-hook-form'
 import { ErrorMessage } from '@hookform/error-message'
-import { app, storage, auth, db } from '../firebase'
+import { storage, auth, db } from '../firebase'
 
 const RegisterPage: React.FC = () => {
   const [takenPhoto, setTakenPhoto] = useState<string>()
@@ -80,6 +79,7 @@ const RegisterPage: React.FC = () => {
           password: data.password,
           pin: data.pin as number,
           photoUrl: url,
+          uid: userCredential.user.uid as string,
         })
         history.push('/login')
       } catch (error) {

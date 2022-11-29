@@ -80,7 +80,7 @@ const LoginPage: React.FC = () => {
           const token = credential.accessToken
 
           const user = result.user
-          history.push('/register')
+          history.push('/home')
         }
       })
       .catch((error) => {
@@ -99,9 +99,8 @@ const LoginPage: React.FC = () => {
 
           const user = result.user
           console.log(user)
-        } else {
-          setUserData([])
         }
+        history.push('/home')
       })
       .catch((error) => {
         const credential = GoogleAuthProvider.credentialFromError(error)
