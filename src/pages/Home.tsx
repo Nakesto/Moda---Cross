@@ -24,6 +24,7 @@ import "./Home.css";
 import "./Home2.css";
 import CardProduct from "../components/CardProduct";
 import { uuidv4 } from "@firebase/util";
+import { useEffect } from "react";
 
 const Home: React.FC = () => {
   const isApp = isPlatform("capacitor");
@@ -47,6 +48,13 @@ const Home: React.FC = () => {
     slidesToScroll: 1,
     autoplay: false,
   };
+
+  useEffect(() => {
+    if ("sdasa" > "sasasa") {
+      console.log("sdasa" + "sasasa");
+    }
+  });
+
   // const handleUpdateChat = async () => {
   //   updateDoc(doc(db, "/userChats", "fvBEo6MuRBP0tLN7qFvG"), {
   //     messages: ["hai"],
