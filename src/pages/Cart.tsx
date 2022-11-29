@@ -1,4 +1,4 @@
-import { IonAvatar, IonButton, IonButtons, IonCard, IonContent, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonPage, IonRow, IonSearchbar, IonTitle, IonToolbar, isPlatform } from "@ionic/react";
+import { IonAvatar, IonBackButton, IonButton, IonButtons, IonCard, IonContent, IonGrid, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonPage, IonRow, IonSearchbar, IonTitle, IonToolbar, isPlatform } from "@ionic/react";
 import { doc, serverTimestamp, setDoc, updateDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { db } from "../firebase";
@@ -31,14 +31,15 @@ const Cart: React.FC = () => {
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar>
-          <IonTitle className="ion-no-padding" style={{ textAlign: "left", marginLeft: "16px", fontSize: "30px" }}>
-            Your Cart
-          </IonTitle>
+        <IonToolbar color={"primary"}>
+          <IonButtons slot="start">
+            <IonBackButton className="backbtn" />
+          </IonButtons>
+          <IonTitle style={{ textAlign: "left", marginLeft: "16px", fontSize: "30px" }}>Your Cart</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        <IonList color="primary">
+        <IonList className="list" color="primary">
           {[0, 1, 2, 3, 4, 5].map((index) => (
             <IonItem className="cardlist" lines="none" button key={index}>
               <img style={{ height: "40px", marginRight: "10px" }} alt="produk" src={produk} />
@@ -60,6 +61,7 @@ const Cart: React.FC = () => {
             </IonItem>
           ))}
         </IonList>
+
         <IonRow>
           <IonLabel className="total">Total</IonLabel>
         </IonRow>

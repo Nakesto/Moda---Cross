@@ -5,6 +5,7 @@
   box-shadow: none !important;
   overflow: hidden;
   border: none !important;
+  --box-shadow: none !important;
 }
 
 .ctp {
@@ -50,6 +51,11 @@
   top: 53%;
 }
 
-ion-icon.item-detail-icon.ios {
-  display: none !important;
+.backbtn {
+  color: #fff !important;
+}
+
+.list {
+  max-height: 600px;
+  overflow: scroll;
 }

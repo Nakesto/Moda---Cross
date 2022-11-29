@@ -20,7 +20,7 @@ import {
 import './loginPage.css'
 import { useContext, useRef, useState } from 'react'
 import loginImg from '../Assets/login.png'
-import { lockClosed, mailUnread } from 'ionicons/icons'
+import { lockClosed, mail, mailUnread } from 'ionicons/icons'
 import { FcGoogle } from 'react-icons/fc'
 import { FaApple, FaFacebook } from 'react-icons/fa'
 import {
