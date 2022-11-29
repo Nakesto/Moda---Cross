@@ -10,16 +10,8 @@
     "@capacitor/ios": "4.3.0",
     "@capacitor/keyboard": "4.0.1",
     "@capacitor/status-bar": "4.0.1",
-<<<<<<< HEAD
-    "@ionic/react": "^6.3.7",
-=======
-<<<<<<< HEAD
     "@hookform/error-message": "^2.0.1",
-    "@ionic/react": "^6.0.0",
-=======
     "@ionic/react": "^6.3.7",
->>>>>>> d1dea47216ec24f183fbac8df72c91e31d2f46e0
->>>>>>> main
     "@ionic/react-router": "^6.0.0",
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^13.3.0",
