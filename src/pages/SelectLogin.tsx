@@ -6,19 +6,55 @@ import { MdOutgoingMail } from 'react-icons/md'
 
 import SelectLogin from '../Assets/select.png'
 import { useHistory } from 'react-router'
+import { auth, providerGoogle, providerFacebook } from '../firebase'
+import {
+  FacebookAuthProvider,
+  GoogleAuthProvider,
+  signInWithPopup,
+} from 'firebase/auth'
 
 const SelectLoginPage: React.FC = () => {
   const history = useHistory()
-  const goLogin = () => {
-    let path = '/login'
-    history.push(path)
+  const loginGoogle = () => {
+    signInWithPopup(auth, providerGoogle)
+      .then((result) => {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        const credential = GoogleAuthProvider.credentialFromResult(result)
+        if (credential !== null) {
+          const token = credential.accessToken
+
+          const user = result.user
+          history.push('/register')
+        }
+      })
+      .catch((error) => {
+        const credential = GoogleAuthProvider.credentialFromError(error)
+        console.log(credential)
+      })
   }
 
-  const goToSignUp = () => {
-    let path = '/register'
-    history.push(path)
-  }
+  const loginApple = () => {}
 
+  const loginFacebook = () => {
+    signInWithPopup(auth, providerFacebook)
+      .then((result) => {
+        // The signed-in user info.
+        const user = result.user
+
+        // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+        const credential = FacebookAuthProvider.credentialFromResult(result)
+        if (credential !== null) {
+          const token = credential.accessToken
+
+          const user = result.user
+          history.push('/register')
+        }
+      })
+      .catch((error) => {
+        const credential = FacebookAuthProvider.credentialFromError(error)
+        console.log(credential)
+      })
+  }
   return (
     <IonPage className="container">
       <IonContent>
@@ -29,7 +65,12 @@ const SelectLoginPage: React.FC = () => {
           </h1>
           <div className="container-group">
             <IonRow>
-              <IonButton size="large" className="button-shape" fill="outline">
+              <IonButton
+                size="large"
+                className="button-shape"
+                fill="outline"
+                onClick={loginFacebook}
+              >
                 <div className="btn-isi">
                   <FaFacebook className="btn-facebook" />
                   <h2 className="button-text">Continue with Facebook</h2>
@@ -37,7 +78,12 @@ const SelectLoginPage: React.FC = () => {
               </IonButton>
             </IonRow>
             <IonRow>
-              <IonButton size="large" className="button-shape" fill="outline">
+              <IonButton
+                size="large"
+                className="button-shape"
+                fill="outline"
+                onClick={loginGoogle}
+              >
                 <div className="btn-isi">
                   <FcGoogle className="btn-icon-google" />
                   <h2 className="button-text">Continue with Google</h2>
@@ -50,6 +96,7 @@ const SelectLoginPage: React.FC = () => {
                 size="large"
                 className="button-shape"
                 fill="outline"
+                onClick={loginApple}
               >
                 <div className="btn-isi">
                   <FaApple className="btn-icon-apple" />
@@ -69,17 +116,19 @@ const SelectLoginPage: React.FC = () => {
               />
             </div>
             <IonRow>
-              <button className="button-shape-signin" onClick={goLogin}>
-                <MdOutgoingMail
-                  style={{
-                    color: 'white',
-                    width: '40px',
-                    height: '30px',
-                    paddingRight: '10px',
-                  }}
-                />
-                <h2 className="button-text">Sign In With Email</h2>
-              </button>
+              <a href="/login">
+                <button className="button-shape-signin">
+                  <MdOutgoingMail
+                    style={{
+                      color: 'white',
+                      width: '40px',
+                      height: '30px',
+                      paddingRight: '10px',
+                    }}
+                  />
+                  <h2 className="button-text">Sign In With Email</h2>
+                </button>
+              </a>
             </IonRow>
             <IonRow>
               <h5
@@ -95,7 +144,7 @@ const SelectLoginPage: React.FC = () => {
                   marginLeft: '5px',
                   cursor: 'pointer',
                 }}
-                onClick={goToSignUp}
+                href="/register"
               >
                 Sign Up
               </a>
