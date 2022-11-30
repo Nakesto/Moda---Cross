@@ -23,9 +23,9 @@ import { HiIdentification } from 'react-icons/hi'
 import { AiTwotoneSecurityScan } from 'react-icons/ai'
 import profile from '../Assets/profile.png'
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
-import { addDoc, collection } from 'firebase/firestore'
+import { addDoc, collection, doc, setDoc } from 'firebase/firestore'
 import { useHistory } from 'react-router'
-import { createUserWithEmailAndPassword } from 'firebase/auth'
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth'
 import { useForm } from 'react-hook-form'
 import { ErrorMessage } from '@hookform/error-message'
 import { storage, auth, db } from '../firebase'
@@ -70,6 +70,12 @@ const RegisterPage: React.FC = () => {
           data.email as string,
           data.password as string,
         )
+
+        await updateProfile(userCredential.user, {
+              displayName: data.fullname as string,
+              photoURL: "",
+        });
+
         const docRef = await addDoc(collection(db, 'user'), {
           name: data.fullname as string,
           email: data.email as string,
@@ -81,6 +87,10 @@ const RegisterPage: React.FC = () => {
           photoUrl: url,
           uid: userCredential.user.uid as string,
         })
+
+        //create empty user chats on firestore
+        await setDoc(doc(db, "userChats", userCredential.user.uid), {});
+
         history.push('/login')
       } catch (error) {
         setErrorEmail('Email already registered!')
