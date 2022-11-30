@@ -1,6 +1,7 @@
-import { IonRouterOutlet } from "@ionic/react";
-import React from "react";
-import { Redirect, Route } from "react-router";
+import { IonRouterOutlet, withIonLifeCycle } from "@ionic/react";
+import React, { useContext, useEffect } from "react";
+import { Redirect, Route, useHistory } from "react-router";
+import { UserContext } from "./context/UserData";
 import LoginPage from "./pages/loginPage";
 import RegisterPage from "./pages/RegisterPage";
 import SelectLoginPage from "./pages/SelectLogin";
@@ -14,6 +15,7 @@ const GuestTabs = () => {
       <Route exact path="/selectlogin" component={SelectLoginPage} />
       <Route exact path="/login" component={LoginPage} />
       <Route exact path="/register" component={RegisterPage} />
+      <Redirect to="/" />
     </IonRouterOutlet>
   );
 };
