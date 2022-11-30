@@ -4,28 +4,23 @@ import {
   IonButtons,
   IonCheckbox,
   IonContent,
-  IonGrid,
   IonHeader,
   IonIcon,
   IonInput,
-  IonItem,
   IonLabel,
-  IonNote,
   IonPage,
   IonRow,
   IonTitle,
   IonToolbar,
-  IonBadge,
 } from '@ionic/react'
 import './loginPage.css'
-import { useContext, useRef, useState } from 'react'
+import { useState } from 'react'
 import loginImg from '../Assets/login.png'
-import { lockClosed, mail, mailUnread } from 'ionicons/icons'
+import { lockClosed, mailUnread } from 'ionicons/icons'
 import { FcGoogle } from 'react-icons/fc'
 import { FaApple, FaFacebook } from 'react-icons/fa'
 import {
   FacebookAuthProvider,
-  getAuth,
   GoogleAuthProvider,
   signInWithEmailAndPassword,
   signInWithPopup,
@@ -34,8 +29,6 @@ import { useForm } from 'react-hook-form'
 import { useHistory } from 'react-router'
 import { ErrorMessage } from '@hookform/error-message'
 import { auth, providerFacebook, providerGoogle } from '../firebase'
-import { UserProvider } from '../context/UserData'
-import { Link } from 'react-router-dom'
 
 export type DataUser = {
   token: string
@@ -48,7 +41,7 @@ export type DataUser = {
 
 const LoginPage: React.FC = () => {
   const history = useHistory()
-  const [userDat, setUserData] = useState<DataUser[]>([])
+  const [UserData, setUserData] = useState<DataUser[]>([])
 
   const {
     register,
@@ -65,6 +58,7 @@ const LoginPage: React.FC = () => {
         // Signed in
         const user = userCredential.user
         console.log(user)
+        history.push('/home')
       })
       .catch((error) => {
         console.log(error)
