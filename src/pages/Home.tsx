@@ -13,7 +13,7 @@ import {
 // import { doc, serverTimestamp, setDoc, updateDoc } from "firebase/firestore";
 // import { useEffect, useState } from "react";
 // import { db } from "../firebase";
-import { cartOutline} from "ionicons/icons";
+import { cartOutline } from "ionicons/icons";
 import Slider from "react-slick";
 import CardHero from "../components/CardHero";
 import { FaTshirt } from "react-icons/fa";

@@ -1,7 +1,6 @@
-import { Redirect, Route } from "react-router-dom";
+import { Route } from "react-router-dom";
 import { IonApp, IonRouterOutlet, setupIonicReact } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
-import Home from "./pages/Home";
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -21,31 +20,29 @@ import "@ionic/react/css/display.css";
 
 /* Theme variables */
 import "./theme/variables.css";
-import AddChat from "./pages/AddChat";
-
 import SelectLoginPage from "./pages/SelectLogin";
-import LoginPage from "./pages/loginPage";
-import RegisterPage from "./pages/RegisterPage";
-import Cart from "./pages/Cart";
+import LoggedInTabs from "./LoggedInTabs";
+import { useContext } from "react";
+import { UserContext } from "./context/UserData";
+import GuestTabs from "./GuestTabs";
 
 setupIonicReact();
 
-const App: React.FC = () => (
-  <IonApp>
-    <IonReactRouter>
-      <IonRouterOutlet>
-        <Route exact path="/home" component={Home} />
-        <Route exact path="/selectlogin" component={SelectLoginPage} />
-        <Route exact path="/login" component={LoginPage} />
-        <Route exact path="/register" component={RegisterPage} />
-        <Route exact path="/addchat" component={AddChat} />
-        <Route exact path="/cart" component={Cart} />
-        <Route exact path="/">
-          <Redirect to="/selectlogin" />
-        </Route>
-      </IonRouterOutlet>
-    </IonReactRouter>
-  </IonApp>
-);
+const App: React.FC = () => {
+  const { isLoggedIn } = useContext(UserContext);
+  return (
+    <IonApp>
+      <IonReactRouter>
+        <IonRouterOutlet>
+          <Route
+            exact
+            path="*"
+            component={isLoggedIn ? LoggedInTabs : GuestTabs}
+          />
+        </IonRouterOutlet>
+      </IonReactRouter>
+    </IonApp>
+  );
+};
 
 export default App;
