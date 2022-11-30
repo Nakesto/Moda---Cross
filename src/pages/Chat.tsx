@@ -13,6 +13,9 @@ import {
 import React from "react";
 
 const Chat = () => {
+  const send = () => {
+    
+  }
   return (
     <IonPage>
       <IonHeader>

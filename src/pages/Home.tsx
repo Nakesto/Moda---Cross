@@ -13,7 +13,7 @@ import {
 // import { doc, serverTimestamp, setDoc, updateDoc } from "firebase/firestore";
 // import { useEffect, useState } from "react";
 // import { db } from "../firebase";
-import { cartOutline, personAdd } from "ionicons/icons";
+import { cartOutline} from "ionicons/icons";
 import Slider from "react-slick";
 import CardHero from "../components/CardHero";
 import { FaTshirt } from "react-icons/fa";
@@ -23,8 +23,6 @@ import "slick-carousel/slick/slick-theme.css";
 import "./Home.css";
 import "./Home2.css";
 import CardProduct from "../components/CardProduct";
-import { uuidv4 } from "@firebase/util";
-import { useEffect } from "react";
 
 const Home: React.FC = () => {
   const isApp = isPlatform("capacitor");
@@ -48,12 +46,6 @@ const Home: React.FC = () => {
     slidesToScroll: 1,
     autoplay: false,
   };
-
-  useEffect(() => {
-    if ("sdasa" > "sasasa") {
-      console.log("sdasa" + "sasasa");
-    }
-  });
 
   // const handleUpdateChat = async () => {
   //   updateDoc(doc(db, "/userChats", "fvBEo6MuRBP0tLN7qFvG"), {
