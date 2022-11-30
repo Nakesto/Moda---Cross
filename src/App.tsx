@@ -34,9 +34,11 @@ const App: React.FC = () => {
     <IonApp>
       <IonReactRouter>
         <IonRouterOutlet>
-          <Route exact path="*">
-            {isLoggedIn === true ? <LoggedInTabs /> : <GuestTabs />}
-          </Route>
+          <Route
+            exact
+            path="*"
+            component={isLoggedIn === true ? LoggedInTabs : GuestTabs}
+          ></Route>
         </IonRouterOutlet>
       </IonReactRouter>
     </IonApp>
