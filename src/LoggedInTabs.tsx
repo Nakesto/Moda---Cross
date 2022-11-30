@@ -5,20 +5,22 @@ import {
   IonTabBar,
   IonTabButton,
   IonTabs,
-} from "@ionic/react";
+} from '@ionic/react'
 import {
   cartOutline,
   chatboxOutline,
   home,
   personCircle,
-} from "ionicons/icons";
-import React, { useContext } from "react";
-import { Redirect, Route } from "react-router";
-import AddChat from "./pages/AddChat";
-import Cart from "./pages/Cart";
-import Chat from "./pages/Chat";
-import Home from "./pages/Home";
-import Store from "./pages/Store";
+  storefront,
+} from 'ionicons/icons'
+import React, { useContext } from 'react'
+import { Redirect, Route } from 'react-router'
+import AddChat from './pages/AddChat'
+import Cart from './pages/Cart'
+import Chat from './pages/Chat'
+import Home from './pages/Home'
+import Store from './pages/Store'
+import Profile from './pages/Profile'
 
 const LoggedInTabs = () => {
   return (
@@ -31,6 +33,7 @@ const LoggedInTabs = () => {
         <Route exact path="/addchat" component={AddChat} />
         <Route exact path="/chat" component={Chat} />
         <Route exact path="/store" component={Store} />
+        <Route exact path="/profile" component={Profile} />
         <Route exact path="/cart" component={Cart} />
       </IonRouterOutlet>
       <IonTabBar slot="bottom">
@@ -40,7 +43,7 @@ const LoggedInTabs = () => {
         </IonTabButton>
 
         <IonTabButton tab="store" href="/store">
-          <IonIcon icon={personCircle} />
+          <IonIcon icon={storefront} />
           <IonLabel>Store</IonLabel>
         </IonTabButton>
 
@@ -49,13 +52,13 @@ const LoggedInTabs = () => {
           <IonLabel>Chat</IonLabel>
         </IonTabButton>
 
-        <IonTabButton tab="cart" href="/cart">
-          <IonIcon icon={cartOutline} />
-          <IonLabel>Cart</IonLabel>
+        <IonTabButton tab="cart" href="/profile">
+          <IonIcon icon={personCircle} />
+          <IonLabel>Profile</IonLabel>
         </IonTabButton>
       </IonTabBar>
     </IonTabs>
-  );
-};
+  )
+}
 
-export default LoggedInTabs;
+export default LoggedInTabs

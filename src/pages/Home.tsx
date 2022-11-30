@@ -9,23 +9,23 @@ import {
   IonText,
   IonToolbar,
   isPlatform,
-} from "@ionic/react";
+} from '@ionic/react'
 // import { doc, serverTimestamp, setDoc, updateDoc } from "firebase/firestore";
 // import { useEffect, useState } from "react";
 // import { db } from "../firebase";
-import { cartOutline } from "ionicons/icons";
-import Slider from "react-slick";
-import CardHero from "../components/CardHero";
-import { FaTshirt } from "react-icons/fa";
-import { GiArmoredPants, GiHandBag, GiSonicShoes } from "react-icons/gi";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import "./Home.css";
-import "./Home2.css";
-import CardProduct from "../components/CardProduct";
+import { cartOutline } from 'ionicons/icons'
+import Slider from 'react-slick'
+import CardHero from '../components/CardHero'
+import { FaTshirt } from 'react-icons/fa'
+import { GiArmoredPants, GiHandBag, GiSonicShoes } from 'react-icons/gi'
+import 'slick-carousel/slick/slick.css'
+import 'slick-carousel/slick/slick-theme.css'
+import './Home.css'
+import './Home2.css'
+import CardProduct from '../components/CardProduct'
 
 const Home: React.FC = () => {
-  const isApp = isPlatform("capacitor");
+  const isApp = isPlatform('capacitor')
   const settings = {
     dots: true,
     infinite: true,
@@ -35,7 +35,7 @@ const Home: React.FC = () => {
     slidesToScroll: 1,
     autoplay: true,
     pauseOnHover: true,
-  };
+  }
 
   const setting = {
     dots: false,
@@ -45,7 +45,7 @@ const Home: React.FC = () => {
     slidesToShow: 2,
     slidesToScroll: 1,
     autoplay: false,
-  };
+  }
 
   // const handleUpdateChat = async () => {
   //   updateDoc(doc(db, "/userChats", "fvBEo6MuRBP0tLN7qFvG"), {
@@ -72,14 +72,14 @@ const Home: React.FC = () => {
         <IonToolbar
           color="primary"
           style={{
-            paddingLeft: "15px",
-            paddingRight: "15px",
+            paddingLeft: '15px',
+            paddingRight: '15px',
           }}
           className="center"
         >
           <IonText
             style={{
-              marginTop: "9px",
+              marginTop: '9px',
             }}
             slot="start"
             className="text-toolbar"
@@ -88,7 +88,7 @@ const Home: React.FC = () => {
           </IonText>
           <IonSearchbar
             style={{
-              marginTop: "9px",
+              marginTop: '9px',
             }}
           ></IonSearchbar>
           <IonRow slot="end">
@@ -102,16 +102,16 @@ const Home: React.FC = () => {
         <div className="test"></div>
         <div
           style={{
-            marginTop: "-4rem",
-            backgroundColor: "white",
-            marginLeft: "17px",
-            marginRight: "17px",
-            paddingRight: "10px",
-            paddingLeft: "10px",
-            paddingTop: "15px",
-            paddingBottom: "25px",
-            borderRadius: "10px",
-            boxShadow: "0 4px 6px rgb(0 0 0 / 0.3)",
+            marginTop: '-4rem',
+            backgroundColor: 'white',
+            marginLeft: '17px',
+            marginRight: '17px',
+            paddingRight: '10px',
+            paddingLeft: '10px',
+            paddingTop: '15px',
+            paddingBottom: '25px',
+            borderRadius: '10px',
+            boxShadow: '0 4px 6px rgb(0 0 0 / 0.3)',
           }}
           className="ion-padding-horizontal"
         >
@@ -129,35 +129,35 @@ const Home: React.FC = () => {
         </div>
         <div
           style={{
-            display: "flex",
-            marginLeft: "17px",
-            marginRight: "17px",
-            marginTop: "1.5rem",
-            justifyContent: "center",
-            gap: "10px",
+            display: 'flex',
+            marginLeft: '17px',
+            marginRight: '17px',
+            marginTop: '1.5rem',
+            justifyContent: 'center',
+            gap: '10px',
           }}
         >
           <div
             style={{
-              textAlign: "center",
-              fontSize: "20px",
-              fontWeight: "600",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
+              textAlign: 'center',
+              fontSize: '20px',
+              fontWeight: '600',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
             }}
           >
             <button
               style={{
-                maxWidth: "200px",
-                padding: "13px",
+                maxWidth: '200px',
+                padding: '13px',
               }}
               className="button-category"
             >
               <FaTshirt
                 style={{
-                  width: "50px",
-                  height: "50px",
+                  width: '50px',
+                  height: '50px',
                 }}
               />
             </button>
@@ -165,25 +165,25 @@ const Home: React.FC = () => {
           </div>
           <div
             style={{
-              textAlign: "center",
-              fontSize: "20px",
-              fontWeight: "600",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
+              textAlign: 'center',
+              fontSize: '20px',
+              fontWeight: '600',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
             }}
           >
             <button
               style={{
-                maxWidth: "200px",
-                padding: "13px",
+                maxWidth: '200px',
+                padding: '13px',
               }}
               className="button-category"
             >
               <GiArmoredPants
                 style={{
-                  width: "50px",
-                  height: "50px",
+                  width: '50px',
+                  height: '50px',
                 }}
               />
             </button>
@@ -191,25 +191,25 @@ const Home: React.FC = () => {
           </div>
           <div
             style={{
-              textAlign: "center",
-              fontSize: "20px",
-              fontWeight: "600",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
+              textAlign: 'center',
+              fontSize: '20px',
+              fontWeight: '600',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
             }}
           >
             <button
               style={{
-                maxWidth: "200px",
-                padding: "13px",
+                maxWidth: '200px',
+                padding: '13px',
               }}
               className="button-category"
             >
               <GiSonicShoes
                 style={{
-                  width: "50px",
-                  height: "50px",
+                  width: '50px',
+                  height: '50px',
                 }}
               />
             </button>
@@ -217,25 +217,25 @@ const Home: React.FC = () => {
           </div>
           <div
             style={{
-              textAlign: "center",
-              fontSize: "20px",
-              fontWeight: "600",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
+              textAlign: 'center',
+              fontSize: '20px',
+              fontWeight: '600',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
             }}
           >
             <button
               style={{
-                maxWidth: "200px",
-                padding: "13px",
+                maxWidth: '200px',
+                padding: '13px',
               }}
               className="button-category"
             >
               <GiHandBag
                 style={{
-                  width: "50px",
-                  height: "50px",
+                  width: '50px',
+                  height: '50px',
                 }}
               />
             </button>
@@ -244,26 +244,26 @@ const Home: React.FC = () => {
         </div>
         <div
           style={{
-            width: "100%",
-            paddingRight: "17px",
-            paddingLeft: "17px",
-            marginTop: "15px",
-            backgroundColor: "#F1F1F1",
-            paddingTop: "20px",
-            paddingBottom: "20px",
+            width: '100%',
+            paddingRight: '17px',
+            paddingLeft: '17px',
+            marginTop: '15px',
+            backgroundColor: '#F1F1F1',
+            paddingTop: '20px',
+            paddingBottom: '20px',
           }}
         >
           <div
             style={{
-              justifyContent: "space-between",
-              display: "flex",
-              alignItems: "center",
+              justifyContent: 'space-between',
+              display: 'flex',
+              alignItems: 'center',
             }}
           >
             <IonText
               style={{
-                fontSize: "30px",
-                fontWeight: "600",
+                fontSize: '30px',
+                fontWeight: '600',
               }}
             >
               New products
@@ -272,14 +272,14 @@ const Home: React.FC = () => {
           </div>
           <div
             style={{
-              marginTop: "10px",
+              marginTop: '10px',
             }}
           >
             <div
               style={{
-                display: "flex",
-                gap: "20px",
-                overflow: "scroll",
+                display: 'flex',
+                gap: '20px',
+                overflow: 'scroll',
               }}
               className="example"
             >
@@ -306,8 +306,8 @@ const Home: React.FC = () => {
         </div>
       </IonContent>
     </IonPage>
-  );
-};
+  )
+}
 
 {
   /* <IonTitle
@@ -346,4 +346,4 @@ const Home: React.FC = () => {
 //   ))}
 // </IonList>
 
-export default Home;
+export default Home
