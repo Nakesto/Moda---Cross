@@ -106,7 +106,9 @@ const LoginPage: React.FC = () => {
       })
   }
 
-  const loginApple = () => {}
+  const loginApple = () => {
+    history.push('/home')
+  }
   return (
     <IonPage>
       <IonHeader>
