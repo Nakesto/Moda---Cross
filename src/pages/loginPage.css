@@ -13,8 +13,8 @@ ion-back-button {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
   flex-direction: column;
+  height: 90vh;
 }
 
 .h1-login {
