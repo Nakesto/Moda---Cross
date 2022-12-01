@@ -18,7 +18,7 @@ import {
   IonBadge,
 } from "@ionic/react";
 import "./loginPage.css";
-import { useContext, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import loginImg from "../Assets/login.png";
 import { lockClosed, mail, mailUnread } from "ionicons/icons";
 import { FcGoogle } from "react-icons/fc";
@@ -31,7 +31,7 @@ import {
   signInWithPopup,
 } from "firebase/auth";
 import { useForm } from "react-hook-form";
-import { useHistory } from "react-router";
+import { useHistory, useLocation } from "react-router";
 import { ErrorMessage } from "@hookform/error-message";
 import { auth, providerFacebook, providerGoogle } from "../firebase";
 import { UserContext, UserProvider } from "../context/UserData";
@@ -48,8 +48,15 @@ export type DataUser = {
 
 const LoginPage: React.FC = () => {
   const history = useHistory();
-  const [userDat, setUserData] = useState<DataUser[]>([]);
-  const { loggedIn } = useContext(UserContext);
+  const location = useLocation();
+  // const [userDat, setUserData] = useState<DataUser[]>([]);
+  const { isLoggedIn, loggedIn } = useContext(UserContext);
+
+  useEffect(() => {
+    if (isLoggedIn == true) {
+      history.replace("/home");
+    }
+  }, [location.pathname]);
 
   const {
     register,
