@@ -27,14 +27,12 @@ const LoggedInTabs = () => {
     <IonTabs>
       <IonRouterOutlet>
         <Route exact path="/home" component={Home} />
-        <Route exact path="/">
-          <Redirect exact to="/home" />
-        </Route>
         <Route exact path="/addchat" component={AddChat} />
         <Route exact path="/chat" component={Chat} />
         <Route exact path="/store" component={Store} />
         <Route exact path="/profile" component={Profile} />
         <Route exact path="/cart" component={Cart} />
+        <Redirect to="/" />
       </IonRouterOutlet>
       <IonTabBar slot="bottom">
         <IonTabButton tab="home" href="/home">

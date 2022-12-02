@@ -15,7 +15,7 @@ import {
   useIonActionSheet,
 } from '@ionic/react'
 import './RegisterPage.css'
-import { useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { mail, calendar } from 'ionicons/icons'
 import { FaTransgender } from 'react-icons/fa'
 import { BsCameraFill, BsFillTelephoneFill } from 'react-icons/bs'
@@ -25,12 +25,13 @@ import { AiTwotoneSecurityScan } from 'react-icons/ai'
 import profile from '../Assets/profile.png'
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
 import { addDoc, collection, doc, setDoc } from 'firebase/firestore'
-import { useHistory } from 'react-router'
+import { useHistory, useLocation } from 'react-router'
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth'
 import { useForm } from 'react-hook-form'
 import { ErrorMessage } from '@hookform/error-message'
 import { storage, auth, db } from '../firebase'
 import { OverlayEventDetail } from '@ionic/react/dist/types/components/react-component-lib/interfaces'
+import { UserContext } from '../context/UserData'
 
 const RegisterPage: React.FC = () => {
   const [takenPhoto, setTakenPhoto] = useState<string>()
@@ -51,6 +52,15 @@ const RegisterPage: React.FC = () => {
     formState: { errors },
     handleSubmit,
   } = useForm()
+
+  const location = useLocation()
+  const { isLoggedIn } = useContext(UserContext)
+
+  useEffect(() => {
+    if (isLoggedIn == true) {
+      history.replace('/home')
+    }
+  }, [location.pathname])
 
   const fileChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedFile(event.target!.files![0])

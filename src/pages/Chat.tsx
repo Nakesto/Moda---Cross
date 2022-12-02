@@ -13,20 +13,36 @@ import {
 import React from "react";
 
 const Chat = () => {
-  const send = () => {
-    
-  }
+  const send = () => {};
   return (
-    <IonPage>
-      <IonHeader>
-        <IonToolbar>
+    <IonPage className="container">
+      <IonHeader className="head">
+        <IonToolbar
+          color="primary"
+          style={{
+            textAlign: "center",
+          }}
+        >
           <IonText>Chat</IonText>
         </IonToolbar>
       </IonHeader>
-      <IonContent>
-        <IonList color="primary">
-          {[0, 1, 2].map((index) => (
-            <IonItem lines="none" button key={index}>
+      <IonContent className="head">
+        <IonList
+          style={{
+            backgroundColor: "rgb(65, 199, 238, 0.4)",
+            paddingBottom: "60px",
+          }}
+        >
+          {[0, 1, 2, 3, 4, 5, 6].map((index) => (
+            <IonItem
+              lines="none"
+              button
+              key={index}
+              className="ion-margin"
+              style={{
+                borderRadius: "12px",
+              }}
+            >
               <IonAvatar
                 style={{ marginRight: "20px", height: "60px", width: "60px" }}
               >
@@ -37,7 +53,13 @@ const Chat = () => {
               </IonAvatar>
 
               <IonLabel style={{ paddingTop: "10px", paddingBottom: "10px" }}>
-                <h2>Rommy</h2>
+                <h2
+                  style={{
+                    paddingBottom: "15px",
+                  }}
+                >
+                  Rommy
+                </h2>
                 <h3>Nk billiard dk?</h3>
               </IonLabel>
             </IonItem>

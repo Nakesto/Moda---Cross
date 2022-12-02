@@ -1,7 +1,4 @@
-import { IonAvatar, IonBackButton, IonButton, IonButtons, IonCard, IonContent, IonGrid, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonPage, IonRow, IonSearchbar, IonTitle, IonToolbar, isPlatform } from "@ionic/react";
-import { doc, serverTimestamp, setDoc, updateDoc } from "firebase/firestore";
-import { useEffect, useState } from "react";
-import { db } from "../firebase";
+import { IonBackButton, IonButton, IonButtons, IonCard, IonCol, IonContent, IonGrid, IonHeader, IonItem, IonLabel, IonList, IonPage, IonRow, IonTitle, IonToolbar, isPlatform } from "@ionic/react";
 import produk from "../Assets/produk.png";
 import minus from "../Assets/minus.png";
 import plus from "../Assets/plus.png";
@@ -29,8 +26,8 @@ const Cart: React.FC = () => {
   // };
 
   return (
-    <IonPage>
-      <IonHeader>
+    <IonPage className="page">
+      <IonHeader className="toolbar">
         <IonToolbar color={"primary"}>
           <IonButtons slot="start">
             <IonBackButton className="backbtn" />
@@ -38,7 +35,7 @@ const Cart: React.FC = () => {
           <IonTitle style={{ textAlign: "left", marginLeft: "16px", fontSize: "30px" }}>Your Cart</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent>
+      <IonContent className="content">
         <IonList className="list" color="primary">
           {[0, 1, 2, 3, 4, 5].map((index) => (
             <IonItem className="cardlist" lines="none" button key={index}>
@@ -61,13 +58,22 @@ const Cart: React.FC = () => {
             </IonItem>
           ))}
         </IonList>
-
-        <IonRow>
-          <IonLabel className="total">Total</IonLabel>
-        </IonRow>
-        <IonRow>
-          <IonButton className="ctp">Continue To Payment</IonButton>
-        </IonRow>
+        <div className="bawah">
+          <IonRow style={{ paddingTop: "10px" }}>
+            <IonCol size="4">
+              <IonLabel className="totaltxt">Total</IonLabel>
+            </IonCol>
+            <IonCol size="4"></IonCol>
+            <IonCol size="4" style={{ justifyContent: "end", display: "flex" }}>
+              <IonLabel className="totalhrg">Rp. 100.000</IonLabel>
+            </IonCol>
+          </IonRow>
+          <IonRow>
+            <IonCol size="12" style={{ display: "flex", justifyContent: "center" }}>
+              <IonButton className="ctp">Continue to Payment</IonButton>
+            </IonCol>
+          </IonRow>
+        </div>
       </IonContent>
     </IonPage>
   );

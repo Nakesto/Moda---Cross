@@ -1,4 +1,4 @@
-import { Route } from "react-router-dom";
+import { Redirect, Route } from "react-router-dom";
 import { IonApp, IonRouterOutlet, setupIonicReact } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
 
@@ -24,7 +24,9 @@ import SelectLoginPage from "./pages/SelectLogin";
 import LoggedInTabs from "./LoggedInTabs";
 import { useContext } from "react";
 import { UserContext } from "./context/UserData";
-import GuestTabs from "./GuestTabs";
+import LoginPage from "./pages/loginPage";
+import RegisterPage from "./pages/RegisterPage";
+import ProtectedRoute from "./ProtectedRoute";
 
 setupIonicReact();
 
@@ -34,11 +36,15 @@ const App: React.FC = () => {
     <IonApp>
       <IonReactRouter>
         <IonRouterOutlet>
-          <Route
-            exact
-            path="*"
-            component={isLoggedIn ? LoggedInTabs : GuestTabs}
-          />
+          <Route exact path="/">
+            <Redirect to={isLoggedIn === true ? "/home" : "/selectlogin"} />
+          </Route>
+          <Route exact path="/selectlogin" component={SelectLoginPage} />
+          <Route exact path="/login" component={LoginPage} />
+          <Route exact path="/register" component={RegisterPage} />
+          <ProtectedRoute>
+            <LoggedInTabs />
+          </ProtectedRoute>
         </IonRouterOutlet>
       </IonReactRouter>
     </IonApp>
