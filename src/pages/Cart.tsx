@@ -1,5 +1,5 @@
+
 import {
-  IonAvatar,
   IonBackButton,
   IonButton,
   IonButtons,
@@ -7,20 +7,15 @@ import {
   IonContent,
   IonGrid,
   IonHeader,
-  IonIcon,
   IonItem,
   IonLabel,
   IonList,
   IonPage,
   IonRow,
-  IonSearchbar,
   IonTitle,
   IonToolbar,
   isPlatform,
 } from "@ionic/react";
-import { doc, serverTimestamp, setDoc, updateDoc } from "firebase/firestore";
-import { useEffect, useState } from "react";
-import { db } from "../firebase";
 import produk from "../Assets/produk.png";
 import minus from "../Assets/minus.png";
 import plus from "../Assets/plus.png";
@@ -88,7 +83,7 @@ const Cart: React.FC = () => {
             </IonItem>
           ))}
         </IonList>
-        <IonGrid className="bawah">
+        <IonGrid>
           <IonRow>
             <IonLabel className="total">Total</IonLabel>
           </IonRow>

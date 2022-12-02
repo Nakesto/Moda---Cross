@@ -12,7 +12,7 @@
   text-transform: none !important;
   margin: auto;
   width: 80%;
-  position: flex;
+  position: fixed;
   top: 93%;
   left: 10%;
 }
@@ -34,7 +34,7 @@
 }
 
 .total {
-  position: flex;
+  position: fixed;
   top: 87%;
   left: 5%;
   font-weight: bold;
@@ -61,10 +61,10 @@
 }
 
 .page {
-  display: flex;
+  display: fixed;
+  overflow: hidden;
   justify-content: center;
   align-items: center;
-  overflow-y: hidden;
 }
 
 .toolbar {
@@ -72,8 +72,4 @@
 }
 .content {
   max-width: 1024px;
-}
-
-.bawah {
-  padding-top: 140px;
 }
