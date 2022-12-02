@@ -12,7 +12,7 @@
   text-transform: none !important;
   margin: auto;
   width: 80%;
-  position: fixed;
+  position: flex;
   top: 93%;
   left: 10%;
 }
@@ -34,7 +34,7 @@
 }
 
 .total {
-  position: fixed;
+  position: flex;
   top: 87%;
   left: 5%;
   font-weight: bold;
@@ -56,7 +56,24 @@
 }
 
 .list {
-  max-height: 670px;
-  overflow: scroll;
+  max-height: 500px;
+  overflow-y: scroll;
 }
 
+.page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-y: hidden;
+}
+
+.toolbar {
+  max-width: 1024px;
+}
+.content {
+  max-width: 1024px;
+}
+
+.bawah {
+  padding-top: 140px;
+}

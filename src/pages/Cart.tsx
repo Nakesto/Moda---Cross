@@ -29,8 +29,8 @@ const Cart: React.FC = () => {
   // };
 
   return (
-    <IonPage>
-      <IonHeader>
+    <IonPage class="page">
+      <IonHeader className="toolbar">
         <IonToolbar color={"primary"}>
           <IonButtons slot="start">
             <IonBackButton className="backbtn" />
@@ -38,7 +38,7 @@ const Cart: React.FC = () => {
           <IonTitle style={{ textAlign: "left", marginLeft: "16px", fontSize: "30px" }}>Your Cart</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent>
+      <IonContent className="content">
         <IonList className="list" color="primary">
           {[0, 1, 2, 3, 4, 5].map((index) => (
             <IonItem className="cardlist" lines="none" button key={index}>
@@ -61,13 +61,14 @@ const Cart: React.FC = () => {
             </IonItem>
           ))}
         </IonList>
-
-        <IonRow>
-          <IonLabel className="total">Total</IonLabel>
-        </IonRow>
-        <IonRow>
-          <IonButton className="ctp">Continue To Payment</IonButton>
-        </IonRow>
+        <IonGrid className="bawah">
+          <IonRow>
+            <IonLabel className="total">Total</IonLabel>
+          </IonRow>
+          <IonRow>
+            <IonButton className="ctp">Continue To Payment</IonButton>
+          </IonRow>
+        </IonGrid>
       </IonContent>
     </IonPage>
   );
