@@ -53,10 +53,10 @@ const RegisterPage: React.FC = () => {
   const { isLoggedIn } = useContext(UserContext);
 
   useEffect(() => {
-    if (isLoggedIn == true) {
-      history.replace("/home");
+    if (isLoggedIn === true) {
+      history.push("/home");
     }
-  }, [location.pathname]);
+  }, [location.pathname, isLoggedIn, history]);
 
   const fileChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedFile(event.target!.files![0]);
@@ -83,7 +83,7 @@ const RegisterPage: React.FC = () => {
 
         await updateProfile(userCredential.user, {
           displayName: data.fullname as string,
-          photoURL: "",
+          photoURL: url,
         });
 
         const docRef = await addDoc(collection(db, "user"), {
