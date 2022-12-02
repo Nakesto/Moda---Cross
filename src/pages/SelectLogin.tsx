@@ -62,10 +62,10 @@ const SelectLoginPage: React.FC = () => {
   };
 
   useEffect(() => {
-    if (isLoggedIn == true) {
-      history.replace("/home");
+    if (isLoggedIn === true) {
+      history.push("/home");
     }
-  }, [location.pathname]);
+  }, [location.pathname, isLoggedIn, history]);
 
   return (
     <IonPage className="container">

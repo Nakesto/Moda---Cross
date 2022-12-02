@@ -7,20 +7,19 @@ import {
   IonTabs,
 } from '@ionic/react'
 import {
-  cartOutline,
   chatboxOutline,
   home,
+  person,
   personCircle,
   storefront,
 } from 'ionicons/icons'
-import React, { useContext } from 'react'
 import { Redirect, Route } from 'react-router'
 import AddChat from './pages/AddChat'
 import Cart from './pages/Cart'
 import Chat from './pages/Chat'
 import Home from './pages/Home'
-import Store from './pages/Store'
 import Profile from './pages/Profile'
+import Store from './pages/Store'
 
 const LoggedInTabs = () => {
   return (
@@ -32,6 +31,7 @@ const LoggedInTabs = () => {
         <Route exact path="/store" component={Store} />
         <Route exact path="/profile" component={Profile} />
         <Route exact path="/cart" component={Cart} />
+        <Route exact path="/profile" component={Profile} />
         <Redirect to="/" />
       </IonRouterOutlet>
       <IonTabBar slot="bottom">
@@ -50,8 +50,8 @@ const LoggedInTabs = () => {
           <IonLabel>Chat</IonLabel>
         </IonTabButton>
 
-        <IonTabButton tab="cart" href="/profile">
-          <IonIcon icon={personCircle} />
+        <IonTabButton tab="profile" href="/profile">
+          <IonIcon icon={person} />
           <IonLabel>Profile</IonLabel>
         </IonTabButton>
       </IonTabBar>
