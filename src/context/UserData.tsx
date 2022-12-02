@@ -1,20 +1,37 @@
-import React, { createContext } from 'react'
-import { DataUser } from '../pages/loginPage'
+import React, { createContext, useState } from "react";
+import { DataUser } from "../pages/loginPage";
 
-export type UserContext = {
-  userData: DataUser[]
-}
+export type DataContext = {
+  userData: DataUser[];
+  isLoggedIn: boolean;
+  loggedIn: () => void;
+};
 
-const initialValue: UserContext = {
+const initialValue: DataContext = {
   userData: [],
-}
+  isLoggedIn: false,
+  loggedIn: () => {},
+};
 
-const UserContext = createContext(initialValue)
+const UserContext = createContext(initialValue);
 
 const UserProvider = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <UserContext.Provider value={initialValue}>{children}</UserContext.Provider>
-  )
-}
+  const [init, setInit] = useState(initialValue);
 
-export { UserProvider }
+  const loggedIn = () => {
+    setInit({
+      ...init,
+      isLoggedIn: true,
+    });
+
+    console.log("panggil");
+  };
+
+  return (
+    <UserContext.Provider value={{ ...init, loggedIn }}>
+      {children}
+    </UserContext.Provider>
+  );
+};
+
+export { UserProvider, UserContext };

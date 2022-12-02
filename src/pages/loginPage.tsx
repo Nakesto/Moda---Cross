@@ -4,38 +4,33 @@ import {
   IonButtons,
   IonCheckbox,
   IonContent,
-  IonGrid,
   IonHeader,
   IonIcon,
   IonInput,
-  IonItem,
   IonLabel,
-  IonNote,
   IonPage,
   IonRow,
   IonTitle,
   IonToolbar,
   IonBadge,
-
 } from "@ionic/react";
 import "./loginPage.css";
-import { useContext, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import loginImg from "../Assets/login.png";
 import { lockClosed, mail, mailUnread } from "ionicons/icons";
 import { FcGoogle } from "react-icons/fc";
 import { FaApple, FaFacebook } from "react-icons/fa";
 import {
   FacebookAuthProvider,
-  getAuth,
   GoogleAuthProvider,
   signInWithEmailAndPassword,
   signInWithPopup,
 } from "firebase/auth";
 import { useForm } from "react-hook-form";
-import { useHistory } from "react-router";
+import { useHistory, useLocation } from "react-router";
 import { ErrorMessage } from "@hookform/error-message";
 import { auth, providerFacebook, providerGoogle } from "../firebase";
-import { UserProvider } from "../context/UserData";
+import { UserContext, UserProvider } from "../context/UserData";
 import { Link } from "react-router-dom";
 
 export type DataUser = {
@@ -49,7 +44,9 @@ export type DataUser = {
 
 const LoginPage: React.FC = () => {
   const history = useHistory();
-  const [userDat, setUserData] = useState<DataUser[]>([]);
+  const location = useLocation();
+  // const [userDat, setUserData] = useState<DataUser[]>([]);
+  const { isLoggedIn, loggedIn } = useContext(UserContext);
 
   const {
     register,
@@ -65,7 +62,8 @@ const LoginPage: React.FC = () => {
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
-        console.log(user);
+        loggedIn();
+        history.push("/home");
       })
       .catch((error) => {
         console.log(error);
@@ -81,7 +79,7 @@ const LoginPage: React.FC = () => {
           const token = credential.accessToken;
 
           const user = result.user;
-          history.push("/register");
+          history.push("/home");
         }
       })
       .catch((error) => {
@@ -100,9 +98,8 @@ const LoginPage: React.FC = () => {
 
           const user = result.user;
           console.log(user);
-        } else {
-          setUserData([]);
         }
+        history.push("/home");
       })
       .catch((error) => {
         const credential = GoogleAuthProvider.credentialFromError(error);
@@ -110,7 +107,16 @@ const LoginPage: React.FC = () => {
       });
   };
 
-  const loginApple = () => {};
+  const loginApple = () => {
+    history.push("/home");
+  };
+
+  useEffect(() => {
+    if (isLoggedIn == true) {
+      history.replace("/home");
+    }
+  }, [location.pathname]);
+
   return (
     <IonPage>
       <IonHeader>
@@ -228,69 +234,6 @@ const LoginPage: React.FC = () => {
             </IonRow>
           </div>
         </div>
-        <h1 className="h1-login">
-          <strong>Login to Your Account</strong>
-        </h1>
-        <IonGrid className="login-group">
-          <div className="input-item">
-            <IonLabel>
-              <IonIcon className="input-icon" slot="start" icon={mail} />
-            </IonLabel>
-            <IonInput
-              className="input-text"
-              placeholder="Email"
-              type="email"
-            ></IonInput>
-          </div>
-          <div className="input-item">
-            <IonLabel>
-              <IonIcon className="input-icon" slot="start" icon={lockClosed} />
-            </IonLabel>
-            <IonInput
-              className="input-text"
-              placeholder="Password"
-              type="password"
-            ></IonInput>
-          </div>
-          <IonItem lines="none">
-            <IonCheckbox slot="start"></IonCheckbox>
-            <IonLabel>Remember Me</IonLabel>
-          </IonItem>
-          <IonRow>
-            <Link to="/home">
-              <button className="btn-login">Sign In</button>
-            </Link>
-          </IonRow>
-          <div
-            style={{
-              display: "flex",
-              width: "350px",
-              flexDirection: "row",
-              alignItems: "center",
-              paddingRight: ".5rem",
-              paddingLeft: ".5rem",
-            }}
-          >
-            <div style={{ flex: 1, height: "1px", backgroundColor: "black" }} />
-            <div>
-              <p style={{ width: "140px", textAlign: "center" }}>
-                or continue with
-              </p>
-            </div>
-            <div style={{ flex: 1, height: "1px", backgroundColor: "black" }} />
-          </div>
-          <IonRow>
-            <IonButton fill="outline" className="btn-icon-login">
-              <FaFacebook />
-            </IonButton>
-            <IonButton fill="outline" className="btn-icon-login">
-              <FcGoogle />
-            </IonButton>
-            <IonButton fill="outline" className="btn-icon-login">
-              <FaApple style={{ color: "black" }} />
-            </IonButton>
-          </IonRow>
-        </IonGrid>
       </IonContent>
     </IonPage>
   );

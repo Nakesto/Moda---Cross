@@ -13,15 +13,26 @@ import {
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  serverTimestamp,
+  setDoc,
+  updateDoc,
+  where,
+} from "firebase/firestore";
 import { useState } from "react";
-import { db } from "../firebase";
+import { auth, db } from "../firebase";
 import { useDebouncedCallback } from "use-debounce";
 
 export type User = {
   name: string;
   umur: number;
   photoUrl: string;
+  uid: string;
 };
 
 const AddChat = () => {
@@ -42,6 +53,46 @@ const AddChat = () => {
       console.log("panggil");
     } catch (err) {
       console.log(err);
+    }
+  };
+
+  const addUserChats = async (user: User) => {
+    const { currentUser } = auth;
+
+    if (currentUser) {
+      const combinedId =
+        currentUser.uid > user.uid
+          ? currentUser.uid + user.uid
+          : user.uid + currentUser.uid;
+
+  try {
+      const res = await getDoc(doc(db, "chats", combinedId));
+
+      if (!res.exists()) {
+        //create a chat in chats collection
+        await setDoc(doc(db, "chats", combinedId), { messages: [] });
+
+        //create user chats
+        await updateDoc(doc(db, "userChats", currentUser.uid), {
+          [combinedId + ".userInfo"]: {
+            uid: user.uid,
+            displayName: user.name,
+            photoURL: user.photoUrl,
+          },
+          [combinedId + ".date"]: serverTimestamp(),
+        });
+
+        await updateDoc(doc(db, "userChats", user.uid), {
+          [combinedId + ".userInfo"]: {
+            uid: currentUser.uid,
+            displayName: currentUser.displayName,
+            photoURL: currentUser.photoURL,
+          },
+          [combinedId + ".date"]: serverTimestamp(),
+        });
+      }
+    } catch (err) {}
+
     }
   };
 
@@ -79,7 +130,12 @@ const AddChat = () => {
         ) : (
           <IonList className="ion-padding-top">
             {people.map((people, index) => (
-              <IonItem lines="none" button key={index}>
+              <IonItem
+                lines="none"
+                button
+                key={index}
+                onClick={() => addUserChats(people)}
+              >
                 <IonAvatar
                   style={{ marginRight: "20px", height: "60px", width: "60px" }}
                 >
