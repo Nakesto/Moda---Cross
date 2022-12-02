@@ -17,6 +17,7 @@ import { Redirect, Route } from 'react-router'
 import AddChat from './pages/AddChat'
 import Cart from './pages/Cart'
 import Chat from './pages/Chat'
+import ChatDetail from './pages/ChatDetail'
 import Home from './pages/Home'
 import Profile from './pages/Profile'
 import Store from './pages/Store'
@@ -32,6 +33,7 @@ const LoggedInTabs = () => {
         <Route exact path="/profile" component={Profile} />
         <Route exact path="/cart" component={Cart} />
         <Route exact path="/profile" component={Profile} />
+        <Route exact path="/detail" component={ChatDetail} />
         <Redirect to="/" />
       </IonRouterOutlet>
       <IonTabBar slot="bottom">

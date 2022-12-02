@@ -9,18 +9,23 @@ import {
   IonPage,
   IonText,
   IonToolbar,
-} from "@ionic/react";
-import React from "react";
+} from '@ionic/react'
+import React, { useState } from 'react'
+import { useHistory } from 'react-router'
 
 const Chat = () => {
-  const send = () => {};
+  const history = useHistory()
+  const send = () => {}
+  const goDetail = () => {
+    history.push('/detail')
+  }
   return (
     <IonPage className="container">
       <IonHeader className="head">
         <IonToolbar
           color="primary"
           style={{
-            textAlign: "center",
+            textAlign: 'center',
           }}
         >
           <IonText>Chat</IonText>
@@ -29,9 +34,10 @@ const Chat = () => {
       <IonContent className="head">
         <IonList
           style={{
-            backgroundColor: "rgb(65, 199, 238, 0.4)",
-            paddingBottom: "60px",
+            backgroundColor: 'rgb(65, 199, 238, 0.4)',
+            paddingBottom: '60px',
           }}
+          onClick={() => goDetail()}
         >
           {[0, 1, 2, 3, 4, 5, 6].map((index) => (
             <IonItem
@@ -40,11 +46,11 @@ const Chat = () => {
               key={index}
               className="ion-margin"
               style={{
-                borderRadius: "12px",
+                borderRadius: '12px',
               }}
             >
               <IonAvatar
-                style={{ marginRight: "20px", height: "60px", width: "60px" }}
+                style={{ marginRight: '20px', height: '60px', width: '60px' }}
               >
                 <img
                   alt="Silhouette of a person's head"
@@ -52,10 +58,10 @@ const Chat = () => {
                 />
               </IonAvatar>
 
-              <IonLabel style={{ paddingTop: "10px", paddingBottom: "10px" }}>
+              <IonLabel style={{ paddingTop: '10px', paddingBottom: '10px' }}>
                 <h2
                   style={{
-                    paddingBottom: "15px",
+                    paddingBottom: '15px',
                   }}
                 >
                   Rommy
@@ -67,7 +73,7 @@ const Chat = () => {
         </IonList>
       </IonContent>
     </IonPage>
-  );
-};
+  )
+}
 
-export default Chat;
+export default Chat
