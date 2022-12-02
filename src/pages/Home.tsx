@@ -23,6 +23,7 @@ import 'slick-carousel/slick/slick-theme.css'
 import './Home.css'
 import './Home2.css'
 import CardProduct from '../components/CardProduct'
+import { Link } from 'react-router-dom'
 
 const Home: React.FC = () => {
   const isApp = isPlatform('capacitor')
@@ -92,9 +93,11 @@ const Home: React.FC = () => {
             }}
           ></IonSearchbar>
           <IonRow slot="end">
-            <IonButton>
-              <IonIcon slot="icon-only" icon={cartOutline}></IonIcon>
-            </IonButton>
+            <Link to="/cart">
+              <IonButton>
+                <IonIcon slot="icon-only" icon={cartOutline}></IonIcon>
+              </IonButton>
+            </Link>
           </IonRow>
         </IonToolbar>
       </IonHeader>

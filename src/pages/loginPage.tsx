@@ -46,7 +46,7 @@ const LoginPage: React.FC = () => {
   const history = useHistory();
   const location = useLocation();
   // const [userDat, setUserData] = useState<DataUser[]>([]);
-  const { isLoggedIn, loggedIn } = useContext(UserContext);
+  const { isLoggedIn, loggedIn, isLoading } = useContext(UserContext);
 
   const {
     register,
@@ -112,10 +112,15 @@ const LoginPage: React.FC = () => {
   };
 
   useEffect(() => {
+    console.log(isLoggedIn);
     if (isLoggedIn === true) {
       history.push("/home");
     }
-  }, [location.pathname, isLoggedIn, history]);
+  }, [location.pathname, isLoggedIn, isLoading, history]);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <IonPage>
