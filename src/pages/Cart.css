@@ -10,11 +10,8 @@
 
 .ctp {
   text-transform: none !important;
-  margin: auto;
-  width: 80%;
-  position: fixed;
-  top: 93%;
-  left: 10%;
+  width: 90%;
+  height: 140%;
 }
 
 .ctr {
@@ -33,10 +30,7 @@
   background-color: beige !important;
 }
 
-.total {
-  position: fixed;
-  top: 87%;
-  left: 5%;
+.totaltxt {
   font-weight: bold;
   font-size: 28px;
 }
@@ -56,14 +50,19 @@
 }
 
 .list {
-  max-height: 90%;
+  max-height: 80%;
   overflow-y: scroll;
+  overflow-x: hidden;
   padding-bottom: 15px;
+}
+
+.bawah {
+  height: 10%;
 }
 
 .page {
   display: fixed;
-  overflow: hidden;
+  overflow: hidden !important;
   justify-content: center;
   align-items: center;
 }
@@ -73,4 +72,18 @@
 }
 .content {
   max-width: 1024px;
+}
+
+.totalhrg {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.test {
+  box-shadow: none !important;
+  background-color: #0081a7;
+  width: 100%;
+  height: 5rem;
+  border-bottom-left-radius: 30%;
+  border-bottom-right-radius: 30%;
 }
