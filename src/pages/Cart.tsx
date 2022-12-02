@@ -1,4 +1,23 @@
-import { IonAvatar, IonBackButton, IonButton, IonButtons, IonCard, IonContent, IonGrid, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonPage, IonRow, IonSearchbar, IonTitle, IonToolbar, isPlatform } from "@ionic/react";
+import {
+  IonAvatar,
+  IonBackButton,
+  IonButton,
+  IonButtons,
+  IonCard,
+  IonContent,
+  IonGrid,
+  IonHeader,
+  IonIcon,
+  IonItem,
+  IonLabel,
+  IonList,
+  IonPage,
+  IonRow,
+  IonSearchbar,
+  IonTitle,
+  IonToolbar,
+  isPlatform,
+} from "@ionic/react";
 import { doc, serverTimestamp, setDoc, updateDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { db } from "../firebase";
@@ -29,20 +48,28 @@ const Cart: React.FC = () => {
   // };
 
   return (
-    <IonPage class="page">
+    <IonPage className="page">
       <IonHeader className="toolbar">
         <IonToolbar color={"primary"}>
           <IonButtons slot="start">
             <IonBackButton className="backbtn" />
           </IonButtons>
-          <IonTitle style={{ textAlign: "left", marginLeft: "16px", fontSize: "30px" }}>Your Cart</IonTitle>
+          <IonTitle
+            style={{ textAlign: "left", marginLeft: "16px", fontSize: "30px" }}
+          >
+            Your Cart
+          </IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent className="content">
         <IonList className="list" color="primary">
           {[0, 1, 2, 3, 4, 5].map((index) => (
             <IonItem className="cardlist" lines="none" button key={index}>
-              <img style={{ height: "40px", marginRight: "10px" }} alt="produk" src={produk} />
+              <img
+                style={{ height: "40px", marginRight: "10px" }}
+                alt="produk"
+                src={produk}
+              />
 
               <IonLabel style={{ paddingTop: "10px", paddingBottom: "10px" }}>
                 <h2 className="des">Produk</h2>
