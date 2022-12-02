@@ -1,4 +1,21 @@
-import { IonBackButton, IonButton, IonButtons, IonCard, IonCol, IonContent, IonGrid, IonHeader, IonItem, IonLabel, IonList, IonPage, IonRow, IonTitle, IonToolbar, isPlatform } from "@ionic/react";
+import {
+  IonBackButton,
+  IonButton,
+  IonButtons,
+  IonCard,
+  IonCol,
+  IonContent,
+  IonGrid,
+  IonHeader,
+  IonItem,
+  IonLabel,
+  IonList,
+  IonPage,
+  IonRow,
+  IonTitle,
+  IonToolbar,
+  isPlatform,
+} from "@ionic/react";
 import produk from "../Assets/produk.png";
 import minus from "../Assets/minus.png";
 import plus from "../Assets/plus.png";
@@ -32,14 +49,22 @@ const Cart: React.FC = () => {
           <IonButtons slot="start">
             <IonBackButton className="backbtn" />
           </IonButtons>
-          <IonTitle style={{ textAlign: "left", marginLeft: "16px", fontSize: "30px" }}>Your Cart</IonTitle>
+          <IonTitle
+            style={{ textAlign: "left", marginLeft: "16px", fontSize: "30px" }}
+          >
+            Your Cart
+          </IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent className="content">
         <IonList className="list" color="primary">
           {[0, 1, 2, 3, 4, 5].map((index) => (
             <IonItem className="cardlist" lines="none" button key={index}>
-              <img style={{ height: "40px", marginRight: "10px" }} alt="produk" src={produk} />
+              <img
+                style={{ height: "40px", marginRight: "10px" }}
+                alt="produk"
+                src={produk}
+              />
 
               <IonLabel style={{ paddingTop: "10px", paddingBottom: "10px" }}>
                 <h2 className="des">Produk</h2>
@@ -58,8 +83,8 @@ const Cart: React.FC = () => {
             </IonItem>
           ))}
         </IonList>
-        <div className="bawah">
-          <IonRow style={{ paddingTop: "10px" }}>
+        <IonGrid className="bawah">
+          <IonRow>
             <IonCol size="4">
               <IonLabel className="totaltxt">Total</IonLabel>
             </IonCol>
@@ -69,11 +94,14 @@ const Cart: React.FC = () => {
             </IonCol>
           </IonRow>
           <IonRow>
-            <IonCol size="12" style={{ display: "flex", justifyContent: "center" }}>
+            <IonCol
+              size="12"
+              style={{ display: "flex", justifyContent: "center" }}
+            >
               <IonButton className="ctp">Continue to Payment</IonButton>
             </IonCol>
           </IonRow>
-        </div>
+        </IonGrid>
       </IonContent>
     </IonPage>
   );

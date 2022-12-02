@@ -5,6 +5,7 @@ import { DataUser } from "../pages/loginPage";
 
 export type DataContext = {
   userData: DataUser | null;
+  isLoading: boolean;
   isLoggedIn: boolean;
   loggedIn: () => void;
 };
@@ -12,6 +13,7 @@ export type DataContext = {
 const initialValue: DataContext = {
   userData: null,
   isLoggedIn: false,
+  isLoading: false,
   loggedIn: () => {},
 };
 
@@ -21,16 +23,19 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [init, setInit] = useState(initialValue);
 
   useEffect(() => {
+    setInit({ ...init, isLoading: true });
     const unsub = onAuthStateChanged(auth, (user) => {
       if (user) {
-        setInit({ ...init, isLoggedIn: true });
+        setInit({ ...init, isLoggedIn: true, isLoading: false });
+      } else {
+        setInit({ ...init, isLoading: false });
       }
     });
 
     return () => {
       unsub();
     };
-  }, [init]);
+  }, []);
 
   const loggedIn = () => {
     setInit({
