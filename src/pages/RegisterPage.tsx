@@ -12,6 +12,7 @@ import {
   IonSelectOption,
   IonTitle,
   IonToolbar,
+  useIonActionSheet,
 } from '@ionic/react'
 import './RegisterPage.css'
 import { useState } from 'react'
@@ -29,6 +30,7 @@ import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth'
 import { useForm } from 'react-hook-form'
 import { ErrorMessage } from '@hookform/error-message'
 import { storage, auth, db } from '../firebase'
+import { OverlayEventDetail } from '@ionic/react/dist/types/components/react-component-lib/interfaces'
 
 const RegisterPage: React.FC = () => {
   const [takenPhoto, setTakenPhoto] = useState<string>()
@@ -36,6 +38,8 @@ const RegisterPage: React.FC = () => {
   const [fileName, setFileName] = useState('profile.png')
   const [gender, setGender] = useState<'male' | 'female'>('male')
   const [errorEmail, setErrorEmail] = useState<string>()
+  const [present] = useIonActionSheet()
+  const [result, setResult] = useState<OverlayEventDetail>()
   const selectGender = (event: CustomEvent) => {
     const selectedGender = event.detail.value
     setGender(selectedGender)
@@ -72,9 +76,9 @@ const RegisterPage: React.FC = () => {
         )
 
         await updateProfile(userCredential.user, {
-              displayName: data.fullname as string,
-              photoURL: "",
-        });
+          displayName: data.fullname as string,
+          photoURL: '',
+        })
 
         const docRef = await addDoc(collection(db, 'user'), {
           name: data.fullname as string,
@@ -89,7 +93,7 @@ const RegisterPage: React.FC = () => {
         })
 
         //create empty user chats on firestore
-        await setDoc(doc(db, "userChats", userCredential.user.uid), {});
+        await setDoc(doc(db, 'userChats', userCredential.user.uid), {})
 
         history.push('/login')
       } catch (error) {
@@ -137,10 +141,38 @@ const RegisterPage: React.FC = () => {
                   </span>
                   <span className="profilepic_text">Edit Profile</span>
                 </label>
-                <input
+                <button
                   id="actual-btn"
-                  type="file"
-                  onChange={fileChangeHandler}
+                  type="button"
+                  onClick={() =>
+                    present({
+                      header: 'Select',
+                      subHeader: 'Your Profile',
+                      buttons: [
+                        {
+                          text: 'Camera',
+                          role: 'destructive',
+                          data: {
+                            action: 'delete',
+                          },
+                        },
+                        {
+                          text: 'Gallery',
+                          data: {
+                            action: 'share',
+                          },
+                        },
+                        {
+                          text: 'Cancel',
+                          role: 'cancel',
+                          data: {
+                            action: 'cancel',
+                          },
+                        },
+                      ],
+                      onDidDismiss: ({ detail }) => setResult(detail),
+                    })
+                  }
                   hidden
                 />
               </div>
