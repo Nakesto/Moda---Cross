@@ -1,28 +1,45 @@
 import {
   IonBackButton,
-  IonButton,
   IonButtons,
   IonContent,
-  IonIcon,
+  IonHeader,
   IonPage,
   IonTitle,
   IonToolbar,
-} from '@ionic/react'
-import { send } from 'ionicons/icons'
-import React from 'react'
-import { BsPlus } from 'react-icons/bs'
-import './ChatDetail.css'
+} from "@ionic/react";
+import { doc, onSnapshot } from "firebase/firestore";
+import React, { useContext, useEffect, useState } from "react";
+import Input from "../components/Input";
+import Message from "../components/Message";
+import { ChatContext } from "../context/Provider";
+import { db } from "../firebase";
+import "./ChatDetail.css";
 
 const ChatDetail = () => {
+  const [messages, setMessages] = useState([]);
+  const { chatId } = useContext(ChatContext);
+
+  useEffect(() => {
+    const unSub = onSnapshot(doc(db, "chats", chatId), (doc) => {
+      doc.exists() && setMessages(doc.data().messages);
+    });
+
+    return () => {
+      unSub();
+    };
+  }, [chatId]);
+
   return (
     <IonPage>
-      <IonToolbar color="primary">
-        <IonTitle>Slebew Store</IonTitle>
-        <IonButtons slot="start">
-          <IonBackButton />
-        </IonButtons>
-      </IonToolbar>
-      <IonContent className="content-detail">
+      <IonHeader>
+        <IonToolbar color="primary">
+          <IonTitle>Slebew Store</IonTitle>
+          <IonButtons slot="start">
+            <IonBackButton />
+          </IonButtons>
+        </IonToolbar>
+      </IonHeader>
+      <IonContent>
         <div className="container-chat">
           <div className="content-date">
             <div className="date-chat">
@@ -31,7 +48,10 @@ const ChatDetail = () => {
               </h4>
             </div>
           </div>
-          <div className="content-reciever">
+          {messages.map((m, idx) => (
+            <Message message={m} key={idx} />
+          ))}
+          {/* <div className="content-reciever">
             <div className="chat-reciever">
               <p>Halo apa kabar?</p>
             </div>
@@ -66,20 +86,12 @@ const ChatDetail = () => {
               <p>Wah asik tuh, nanti saya langsung cek aja</p>
             </div>
             <p>10.40 AM</p>
-          </div>
+          </div> */}
         </div>
       </IonContent>
-      <div className="container-input">
-        <div className="text-input">
-          <button className="btn-plus">+</button>
-          <textarea className="input" />
-        </div>
-        <IonButton className="btn-send">
-          <IonIcon icon={send} />
-        </IonButton>
-      </div>
+      <Input />
     </IonPage>
-  )
-}
+  );
+};
 
-export default ChatDetail
+export default ChatDetail;

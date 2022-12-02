@@ -1,3 +1,4 @@
+import { isPlatform } from "@ionic/core";
 import { onAuthStateChanged } from "firebase/auth";
 import React, { createContext, useEffect, useState } from "react";
 import { auth } from "../firebase";
@@ -13,7 +14,7 @@ export type DataContext = {
 const initialValue: DataContext = {
   userData: null,
   isLoggedIn: false,
-  isLoading: false,
+  isLoading: true,
   loggedIn: () => {},
 };
 
@@ -21,12 +22,27 @@ const UserContext = createContext(initialValue);
 
 const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [init, setInit] = useState(initialValue);
+  const isApp = isPlatform("mobile");
 
   useEffect(() => {
-    setInit({ ...init, isLoading: true });
-    const unsub = onAuthStateChanged(auth, (user) => {
+    if (isApp) {
+      setInit({ ...init, isLoading: false });
+    }
+    const unsub = onAuthStateChanged(auth, (user: any) => {
       if (user) {
-        setInit({ ...init, isLoggedIn: true, isLoading: false });
+        console.log(user);
+        setInit({
+          ...init,
+          userData: {
+            token: user.accessToken,
+            name: user.displayName,
+            email: user.email,
+            uid: user.uid,
+            photoUrl: user.photoURL,
+          },
+          isLoggedIn: true,
+          isLoading: false,
+        });
       } else {
         setInit({ ...init, isLoading: false });
       }
