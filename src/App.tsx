@@ -37,7 +37,7 @@ const App: React.FC = () => {
       <IonReactRouter>
         <IonRouterOutlet>
           <Route exact path="/">
-            <Redirect to="/selectlogin" />
+            <Redirect to={isLoggedIn === true ? "/home" : "/selectlogin"} />
           </Route>
           <Route exact path="/selectlogin" component={SelectLoginPage} />
           <Route exact path="/login" component={LoginPage} />

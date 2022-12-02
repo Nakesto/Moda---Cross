@@ -1,4 +1,3 @@
-
 import {
   IonBackButton,
   IonButton,
@@ -83,13 +82,23 @@ const Cart: React.FC = () => {
             </IonItem>
           ))}
         </IonList>
-        <IonGrid>
-          <IonRow>
-            <IonLabel className="total">Total</IonLabel>
-          </IonRow>
-          <IonRow>
-            <IonButton className="ctp">Continue To Payment</IonButton>
-          </IonRow>
+        <IonGrid
+          color="white"
+          style={{
+            height: "10%",
+            position: "fixed",
+            backgroundColor: "white",
+            width: "100%",
+            bottom: 0,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            paddingLeft: "20px",
+            paddingRight: "20px",
+          }}
+        >
+          <IonLabel>Total</IonLabel>
+          <IonButton>Pay</IonButton>
         </IonGrid>
       </IonContent>
     </IonPage>

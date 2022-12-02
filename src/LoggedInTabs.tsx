@@ -25,9 +25,6 @@ const LoggedInTabs = () => {
   return (
     <IonTabs>
       <IonRouterOutlet>
-        <Route exact path="/">
-          <Redirect to="/home" />
-        </Route>
         <Route exact path="/home" component={Home} />
         <Route exact path="/addchat" component={AddChat} />
         <Route exact path="/chat" component={Chat} />
