@@ -1,9 +1,20 @@
 import { IonIcon, IonText } from "@ionic/react";
+import { arrayUnion, doc, updateDoc } from "firebase/firestore";
 import { add } from "ionicons/icons";
-import React from "react";
+import React, { useContext } from "react";
+import { UserContext } from "../context/UserData";
+import { db } from "../firebase";
 import { Product } from "../pages/Home";
 
 const CardProduct = ({ product }: { product: Product }) => {
+  const { userData } = useContext(UserContext);
+
+  const addCart = async (product: Product) => {
+    await updateDoc(doc(db, "cart", userData!.uid), {
+      products: arrayUnion(product),
+    });
+  };
+
   return (
     <div
       style={{
@@ -48,7 +59,7 @@ const CardProduct = ({ product }: { product: Product }) => {
           }}
         >
           <IonText>{"Rp." + product.price}</IonText>
-          <button>
+          <button onClick={() => addCart(product)}>
             <IonIcon icon={add} />
           </button>
         </div>

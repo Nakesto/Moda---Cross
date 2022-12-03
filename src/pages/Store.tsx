@@ -1,4 +1,5 @@
 import {
+  IonButton,
   IonCard,
   IonCardHeader,
   IonCardSubtitle,
@@ -7,13 +8,20 @@ import {
   IonContent,
   IonGrid,
   IonHeader,
+  IonIcon,
   IonPage,
   IonRow,
+  IonSearchbar,
   IonText,
   IonToolbar,
+  useIonModal,
 } from "@ionic/react";
+import { OverlayEventDetail } from "@ionic/react/dist/types/components/react-component-lib/interfaces";
 import { collection, getDocs, limit, query } from "firebase/firestore";
+import { cartOutline } from "ionicons/icons";
 import React, { useEffect, useState } from "react";
+import { Link, useHistory } from "react-router-dom";
+import ModalFull from "../components/ModalFull";
 import { db } from "../firebase";
 import { Product } from "./Home";
 
@@ -27,6 +35,11 @@ export type Toko = {
 
 const Store = () => {
   const [tokos, setTokos] = useState<Toko[]>([]);
+  const [present, dismiss] = useIonModal(ModalFull, {
+    onDismiss: (data: string, role: string) => dismiss(data, role),
+    role: "toko",
+  });
+  const history = useHistory();
 
   useEffect(() => {
     const getProduct = async () => {
@@ -44,11 +57,49 @@ const Store = () => {
     getProduct();
   }, []);
 
+  function openModal() {
+    present({
+      onWillDismiss: (ev: CustomEvent<OverlayEventDetail>) => {
+        if (ev.detail.role === "goToCart") {
+          history.push("/cart");
+        }
+      },
+    });
+  }
+
   return (
     <IonPage className="page">
       <IonHeader className="head">
-        <IonToolbar color="primary">
-          <IonText>Store</IonText>
+        <IonToolbar
+          color="primary"
+          style={{
+            paddingLeft: "15px",
+            paddingRight: "15px",
+          }}
+          className="center"
+        >
+          <IonText
+            style={{
+              marginTop: "9px",
+            }}
+            slot="start"
+            className="text-toolbar"
+          >
+            MODA
+          </IonText>
+          <IonSearchbar
+            style={{
+              marginTop: "9px",
+            }}
+            onClick={() => openModal()}
+          ></IonSearchbar>
+          <IonRow slot="end">
+            <Link to="/cart">
+              <IonButton>
+                <IonIcon slot="icon-only" icon={cartOutline}></IonIcon>
+              </IonButton>
+            </Link>
+          </IonRow>
         </IonToolbar>
       </IonHeader>
       <IonContent className="content" color="medium">
@@ -56,7 +107,7 @@ const Store = () => {
           <IonRow>
             {tokos.map((val, idx) => {
               return (
-                <IonCol size="6" key={idx}>
+                <IonCol size="12" size-sm="6" key={idx}>
                   <IonCard
                     className="ion-padding"
                     style={{

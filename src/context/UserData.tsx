@@ -1,41 +1,23 @@
-<<<<<<< HEAD
-import { isPlatform } from '@ionic/core'
-import { onAuthStateChanged } from 'firebase/auth'
-import React, { createContext, useEffect, useState } from 'react'
-import { auth } from '../firebase'
-import { DataUser } from '../pages/loginPage'
-import { signOut } from 'firebase/auth'
-
-export type DataContext = {
-  userData: DataUser | null
-  isLoading: boolean
-  isLoggedIn: boolean
-  logOut: () => void
-}
-=======
 import { isPlatform } from "@ionic/core";
 import { onAuthStateChanged } from "firebase/auth";
 import React, { createContext, useEffect, useState } from "react";
 import { auth } from "../firebase";
 import { DataUser } from "../pages/loginPage";
+import { signOut } from "firebase/auth";
 
 export type DataContext = {
   userData: DataUser | null;
   isLoading: boolean;
   isLoggedIn: boolean;
+  logOut: () => void;
 };
->>>>>>> e1dc31d64977a2e5c29befec9cf17b1ec2bb451e
 
 const initialValue: DataContext = {
   userData: null,
   isLoggedIn: false,
   isLoading: true,
-<<<<<<< HEAD
   logOut: () => {},
-}
-=======
 };
->>>>>>> e1dc31d64977a2e5c29befec9cf17b1ec2bb451e
 
 const UserContext = createContext(initialValue);
 
@@ -73,7 +55,7 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   const logOut = () => {
-    setInit({ ...init, isLoading: true })
+    setInit({ ...init, isLoading: true });
     signOut(auth)
       .then(() => {
         setInit({
@@ -81,12 +63,12 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
           userData: null,
           isLoading: false,
           isLoggedIn: false,
-        })
+        });
       })
       .catch((error) => {
-        console.log(error)
-      })
-  }
+        console.log(error);
+      });
+  };
 
   return (
     <UserContext.Provider value={{ ...init }}>{children}</UserContext.Provider>
