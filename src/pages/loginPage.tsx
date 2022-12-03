@@ -45,7 +45,7 @@ const LoginPage: React.FC = () => {
   const history = useHistory();
   const location = useLocation();
   // const [userDat, setUserData] = useState<DataUser[]>([]);
-  const { isLoggedIn, loggedIn, isLoading } = useContext(UserContext);
+  const { isLoggedIn } = useContext(UserContext);
 
   const {
     register,
@@ -61,7 +61,6 @@ const LoginPage: React.FC = () => {
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
-        loggedIn();
         history.push("/home");
       })
       .catch((error) => {

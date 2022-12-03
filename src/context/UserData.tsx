@@ -8,14 +8,12 @@ export type DataContext = {
   userData: DataUser | null;
   isLoading: boolean;
   isLoggedIn: boolean;
-  loggedIn: () => void;
 };
 
 const initialValue: DataContext = {
   userData: null,
   isLoggedIn: false,
   isLoading: true,
-  loggedIn: () => {},
 };
 
 const UserContext = createContext(initialValue);
@@ -25,9 +23,9 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const isApp = isPlatform("mobile");
 
   useEffect(() => {
-    if (isApp) {
-      setInit({ ...init, isLoading: false });
-    }
+    // if (isApp) {
+    //   setInit({ ...init, isLoading: false });
+    // }
     const unsub = onAuthStateChanged(auth, (user: any) => {
       if (user) {
         console.log(user);
@@ -53,19 +51,8 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
     };
   }, []);
 
-  const loggedIn = () => {
-    setInit({
-      ...init,
-      isLoggedIn: true,
-    });
-
-    console.log("panggil");
-  };
-
   return (
-    <UserContext.Provider value={{ ...init, loggedIn }}>
-      {children}
-    </UserContext.Provider>
+    <UserContext.Provider value={{ ...init }}>{children}</UserContext.Provider>
   );
 };
 
