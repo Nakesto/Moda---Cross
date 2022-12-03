@@ -12,9 +12,38 @@ import {
   IonText,
   IonToolbar,
 } from "@ionic/react";
-import React from "react";
+import { collection, getDocs, limit, query } from "firebase/firestore";
+import React, { useEffect, useState } from "react";
+import { db } from "../firebase";
+import { Product } from "./Home";
+
+export type Toko = {
+  name: string;
+  description: string;
+  products: Product[];
+  phoneNumber: string;
+  province: string;
+};
 
 const Store = () => {
+  const [tokos, setTokos] = useState<Toko[]>([]);
+
+  useEffect(() => {
+    const getProduct = async () => {
+      const q = query(collection(db, "toko"), limit(5));
+      const querySnapshot = await getDocs(q);
+      const data: Toko[] = [];
+      querySnapshot.forEach((doc) => {
+        // doc.data() is never undefined for query doc snapshots
+        data.push(doc.data() as Toko);
+      });
+
+      setTokos(data);
+    };
+
+    getProduct();
+  }, []);
+
   return (
     <IonPage className="page">
       <IonHeader className="head">
@@ -25,9 +54,9 @@ const Store = () => {
       <IonContent className="content" color="medium">
         <IonGrid>
           <IonRow>
-            {[0, 1, 2, 3, 4].map(() => {
+            {tokos.map((val, idx) => {
               return (
-                <IonCol size="6">
+                <IonCol size="6" key={idx}>
                   <IonCard
                     className="ion-padding"
                     style={{
@@ -37,9 +66,10 @@ const Store = () => {
                     <img
                       src="https://awsimages.detik.net.id/community/media/visual/2019/07/08/dd5bb8bd-3562-4d34-98a1-282ca2ba9165_169.jpeg?w=700&q=90"
                       alt=""
-                      height="700px"
+                      height="200px"
                       style={{
                         borderRadius: "20px",
+                        objectFit: "cover",
                       }}
                     />
                     <IonCardHeader
@@ -48,8 +78,8 @@ const Store = () => {
                         marginTop: "10px",
                       }}
                     >
-                      <IonCardTitle>Slewbew Store</IonCardTitle>
-                      <IonCardSubtitle>Palembang</IonCardSubtitle>
+                      <IonCardTitle>{val.name}</IonCardTitle>
+                      <IonCardSubtitle>{val.province}</IonCardSubtitle>
                     </IonCardHeader>
                   </IonCard>
                 </IonCol>
