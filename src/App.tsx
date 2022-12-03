@@ -31,13 +31,13 @@ import ProtectedRoute from "./ProtectedRoute";
 setupIonicReact();
 
 const App: React.FC = () => {
-  const { isLoggedIn } = useContext(UserContext);
+  const { isLoading } = useContext(UserContext);
   return (
     <IonApp>
       <IonReactRouter>
         <IonRouterOutlet>
           <Route exact path="/">
-            <Redirect to={isLoggedIn === true ? "/home" : "/selectlogin"} />
+            {/* <Redirect to={isLoggedIn === true ? "/home" : "/selectlogin"} /> */}
           </Route>
           <Route exact path="/selectlogin" component={SelectLoginPage} />
           <Route exact path="/login" component={LoginPage} />
@@ -48,6 +48,20 @@ const App: React.FC = () => {
           </ProtectedRoute>
         </IonRouterOutlet>
       </IonReactRouter>
+      {isLoading === true ? (
+        <div>Loading...</div>
+      ) : (
+        <IonReactRouter>
+          <IonRouterOutlet>
+            <Route exact path="/selectlogin" component={SelectLoginPage} />
+            <Route exact path="/login" component={LoginPage} />
+            <Route exact path="/register" component={RegisterPage} />
+            <ProtectedRoute>
+              <LoggedInTabs />
+            </ProtectedRoute>
+          </IonRouterOutlet>
+        </IonReactRouter>
+      )}
     </IonApp>
   );
 };

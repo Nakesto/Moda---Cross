@@ -12,6 +12,7 @@ import {
   IonSelectOption,
   IonTitle,
   IonToolbar,
+  useIonActionSheet,
 } from "@ionic/react";
 import "./RegisterPage.css";
 import { useContext, useEffect, useState } from "react";
@@ -24,11 +25,12 @@ import { AiTwotoneSecurityScan } from "react-icons/ai";
 import profile from "../Assets/profile.png";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { addDoc, collection, doc, setDoc } from "firebase/firestore";
-import { useHistory, useLocation } from "react-router";
+import { Redirect, useHistory, useLocation } from "react-router";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 import { storage, auth, db } from "../firebase";
+import { OverlayEventDetail } from "@ionic/react/dist/types/components/react-component-lib/interfaces";
 import { UserContext } from "../context/UserData";
 
 const RegisterPage: React.FC = () => {
@@ -37,6 +39,8 @@ const RegisterPage: React.FC = () => {
   const [fileName, setFileName] = useState("profile.png");
   const [gender, setGender] = useState<"male" | "female">("male");
   const [errorEmail, setErrorEmail] = useState<string>();
+  const [present] = useIonActionSheet();
+  const [result, setResult] = useState<OverlayEventDetail>();
   const selectGender = (event: CustomEvent) => {
     const selectedGender = event.detail.value;
     setGender(selectedGender);
@@ -108,6 +112,10 @@ const RegisterPage: React.FC = () => {
     };
   };
 
+  if (isLoggedIn) {
+    return <Redirect to="/home" />;
+  }
+
   return (
     <IonPage>
       <IonHeader>
@@ -147,10 +155,38 @@ const RegisterPage: React.FC = () => {
                   </span>
                   <span className="profilepic_text">Edit Profile</span>
                 </label>
-                <input
+                <button
                   id="actual-btn"
-                  type="file"
-                  onChange={fileChangeHandler}
+                  type="button"
+                  onClick={() =>
+                    present({
+                      header: "Select",
+                      subHeader: "Your Profile",
+                      buttons: [
+                        {
+                          text: "Camera",
+                          role: "destructive",
+                          data: {
+                            action: "delete",
+                          },
+                        },
+                        {
+                          text: "Gallery",
+                          data: {
+                            action: "share",
+                          },
+                        },
+                        {
+                          text: "Cancel",
+                          role: "cancel",
+                          data: {
+                            action: "cancel",
+                          },
+                        },
+                      ],
+                      onDidDismiss: ({ detail }) => setResult(detail),
+                    })
+                  }
                   hidden
                 />
               </div>

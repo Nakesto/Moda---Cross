@@ -5,7 +5,7 @@ import { FaApple, FaFacebook } from "react-icons/fa";
 import { MdOutgoingMail } from "react-icons/md";
 
 import SelectLogin from "../Assets/select.png";
-import { useHistory, useLocation } from "react-router";
+import { Redirect, useHistory, useLocation } from "react-router";
 import { auth, providerGoogle, providerFacebook } from "../firebase";
 import {
   FacebookAuthProvider,
@@ -14,6 +14,7 @@ import {
 } from "firebase/auth";
 import { useContext, useEffect } from "react";
 import { UserContext } from "../context/UserData";
+import { Link } from "react-router-dom";
 
 const SelectLoginPage: React.FC = () => {
   const history = useHistory();
@@ -61,11 +62,13 @@ const SelectLoginPage: React.FC = () => {
       });
   };
 
-  useEffect(() => {
-    if (isLoggedIn === true) {
-      history.push("/home");
-    }
-  }, [location.pathname, isLoggedIn, history]);
+  // if (isLoading) {
+  //   return <div>Loading...</div>;
+  // }
+
+  if (isLoggedIn) {
+    return <Redirect to="/home" />;
+  }
 
   return (
     <IonPage className="container">
@@ -128,7 +131,7 @@ const SelectLoginPage: React.FC = () => {
               />
             </div>
             <IonRow>
-              <a href="/login">
+              <Link to="/login">
                 <button className="button-shape-signin">
                   <MdOutgoingMail
                     style={{
@@ -140,7 +143,7 @@ const SelectLoginPage: React.FC = () => {
                   />
                   <h2 className="button-text">Sign In With Email</h2>
                 </button>
-              </a>
+              </Link>
             </IonRow>
             <IonRow>
               <h5
@@ -148,7 +151,7 @@ const SelectLoginPage: React.FC = () => {
               >
                 Don't have an account?
               </h5>
-              <a
+              <Link
                 style={{
                   fontSize: "15px",
                   marginTop: "10px",
@@ -156,10 +159,10 @@ const SelectLoginPage: React.FC = () => {
                   marginLeft: "5px",
                   cursor: "pointer",
                 }}
-                href="/register"
+                to="/register"
               >
                 Sign Up
-              </a>
+              </Link>
             </IonRow>
           </div>
         </div>
