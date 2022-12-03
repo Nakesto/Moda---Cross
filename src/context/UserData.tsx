@@ -71,7 +71,9 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   return (
-    <UserContext.Provider value={{ ...init }}>{children}</UserContext.Provider>
+    <UserContext.Provider value={{ ...init, logOut }}>
+      {children}
+    </UserContext.Provider>
   );
 };
 

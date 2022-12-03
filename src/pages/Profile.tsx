@@ -11,21 +11,9 @@ import { FaMapMarkerAlt } from "react-icons/fa";
 import { UserContext } from "../context/UserData";
 import { FiLogOut } from "react-icons/fi";
 import "./Profile.css";
-// import { signOut } from 'firebase/auth'
-// import { auth } from '../firebase'
-const Profile: React.FC = () => {
-  const { isLoggedIn, userData, logOut } = useContext(UserContext);
-  // useEffect(() => {
-  //   console.log(userData)
-  // }, [isLoggedIn, userData])
 
-  // const logOut = () => {
-  //   signOut(auth)
-  //     .then(() => {})
-  //     .catch((error) => {
-  //       console.log(error)
-  //     })
-  // }
+const Profile: React.FC = () => {
+  const { userData, logOut } = useContext(UserContext);
 
   return (
     <IonPage className="container">
