@@ -34,6 +34,7 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
             token: user.accessToken,
             name: user.displayName,
             email: user.email,
+            phone: user.phoneNumber,
             uid: user.uid,
             photoUrl: user.photoURL,
           },
