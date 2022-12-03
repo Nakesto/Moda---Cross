@@ -118,6 +118,7 @@ const Store = () => {
                       src="https://awsimages.detik.net.id/community/media/visual/2019/07/08/dd5bb8bd-3562-4d34-98a1-282ca2ba9165_169.jpeg?w=700&q=90"
                       alt=""
                       height="200px"
+                      width="100%"
                       style={{
                         borderRadius: '20px',
                         objectFit: 'cover',
