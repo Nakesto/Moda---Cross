@@ -31,17 +31,13 @@ const Chat = () => {
   };
 
   useEffect(() => {
-    const getChats = () => {
-      const unsub = onSnapshot(doc(db, "userChats", userData!.uid), (doc) => {
-        setChats(doc.data() as any);
-      });
+    const unsub = onSnapshot(doc(db, "userChats", userData!.uid), (doc) => {
+      setChats(doc.data() as any);
+    });
 
-      return () => {
-        unsub();
-      };
+    return () => {
+      unsub();
     };
-
-    userData?.uid && getChats();
   }, [userData]);
 
   const handleSelect = (u: User) => {

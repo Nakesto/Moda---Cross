@@ -1,5 +1,11 @@
 import { Redirect, Route } from "react-router-dom";
-import { IonApp, IonRouterOutlet, setupIonicReact } from "@ionic/react";
+import {
+  IonApp,
+  IonPage,
+  IonRouterOutlet,
+  IonSpinner,
+  setupIonicReact,
+} from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
 
 /* Core CSS required for Ionic components to work properly */
@@ -35,7 +41,16 @@ const App: React.FC = () => {
   return (
     <IonApp>
       {isLoading === true ? (
-        <div>Loading...</div>
+        <IonPage
+          style={{
+            height: "100vh",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <IonSpinner color="black" name="lines"></IonSpinner>
+        </IonPage>
       ) : (
         <IonReactRouter>
           <IonRouterOutlet>
