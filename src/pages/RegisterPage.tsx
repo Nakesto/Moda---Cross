@@ -1,11 +1,13 @@
 import {
   IonBackButton,
+  IonButton,
   IonButtons,
   IonContent,
   IonHeader,
   IonIcon,
   IonInput,
   IonLabel,
+  IonModal,
   IonPage,
   IonRow,
   IonSelect,
@@ -32,6 +34,7 @@ import { ErrorMessage } from '@hookform/error-message'
 import { storage, auth, db } from '../firebase'
 import { OverlayEventDetail } from '@ionic/react/dist/types/components/react-component-lib/interfaces'
 import { UserContext } from '../context/UserData'
+import ModalPicture from '../components/ModalPicture'
 
 const RegisterPage: React.FC = () => {
   const [takenPhoto, setTakenPhoto] = useState<string>()
@@ -105,22 +108,16 @@ const RegisterPage: React.FC = () => {
         //create empty user chats on firestore
         await setDoc(doc(db, 'userChats', userCredential.user.uid), {})
 
-<<<<<<< HEAD
-        history.push('/login')
-=======
-        await setDoc(doc(db, "cart", userCredential.user.uid), {
+        await setDoc(doc(db, 'cart', userCredential.user.uid), {
           products: [],
-        });
+        })
 
-        history.push("/login");
->>>>>>> e1dc31d64977a2e5c29befec9cf17b1ec2bb451e
+        history.push('/login')
       } catch (error) {
         setErrorEmail('Email already registered!')
       }
     }
   }
-
-  const selectImage = () => {}
 
   if (isLoggedIn) {
     return <Redirect to="/home" />
@@ -165,18 +162,32 @@ const RegisterPage: React.FC = () => {
                   </span>
                   <span className="profilepic_text">Edit Profile</span>
                 </label>
-                <button
-                  id="actual-btn"
-                  type="button"
+                <IonButton
+                  id="open-modal"
                   onClick={() => {
                     setModal(true)
                   }}
+                  type="button"
                   hidden
                 />
               </div>
             </div>
           </div>
-          {modal && <p>halo</p>}
+          <IonModal
+            id="topic_modal"
+            isOpen={modal}
+            initialBreakpoint={0.25}
+            breakpoints={[0, 0.25, 0.5, 0.75]}
+            handleBehavior="cycle"
+          >
+            <IonContent className="ion-padding">
+              <div className="ion-margin-top">
+                <IonLabel>
+                  Click the handle above to advance to the next breakpoint.
+                </IonLabel>
+              </div>
+            </IonContent>
+          </IonModal>
           <div className="login-group">
             <div className="input-item-register">
               <IonLabel>

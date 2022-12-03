@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { isPlatform } from '@ionic/core'
 import { onAuthStateChanged } from 'firebase/auth'
 import React, { createContext, useEffect, useState } from 'react'
@@ -12,36 +11,19 @@ export type DataContext = {
   isLoggedIn: boolean
   logOut: () => void
 }
-=======
-import { isPlatform } from "@ionic/core";
-import { onAuthStateChanged } from "firebase/auth";
-import React, { createContext, useEffect, useState } from "react";
-import { auth } from "../firebase";
-import { DataUser } from "../pages/loginPage";
-
-export type DataContext = {
-  userData: DataUser | null;
-  isLoading: boolean;
-  isLoggedIn: boolean;
-};
->>>>>>> e1dc31d64977a2e5c29befec9cf17b1ec2bb451e
 
 const initialValue: DataContext = {
   userData: null,
   isLoggedIn: false,
   isLoading: true,
-<<<<<<< HEAD
   logOut: () => {},
 }
-=======
-};
->>>>>>> e1dc31d64977a2e5c29befec9cf17b1ec2bb451e
 
-const UserContext = createContext(initialValue);
+const UserContext = createContext(initialValue)
 
 const UserProvider = ({ children }: { children: React.ReactNode }) => {
-  const [init, setInit] = useState(initialValue);
-  const isApp = isPlatform("mobile");
+  const [init, setInit] = useState(initialValue)
+  const isApp = isPlatform('mobile')
 
   useEffect(() => {
     // if (isApp) {
@@ -61,16 +43,16 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
           },
           isLoggedIn: true,
           isLoading: false,
-        });
+        })
       } else {
-        setInit({ ...init, isLoading: false });
+        setInit({ ...init, isLoading: false })
       }
-    });
+    })
 
     return () => {
-      unsub();
-    };
-  }, []);
+      unsub()
+    }
+  }, [])
 
   const logOut = () => {
     setInit({ ...init, isLoading: true })
@@ -90,7 +72,7 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <UserContext.Provider value={{ ...init }}>{children}</UserContext.Provider>
-  );
-};
+  )
+}
 
-export { UserProvider, UserContext };
+export { UserProvider, UserContext }
