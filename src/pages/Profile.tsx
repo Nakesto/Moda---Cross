@@ -5,13 +5,13 @@ import {
   IonGrid,
   IonPage,
   IonRow,
-} from '@ionic/react'
-import React, { useContext, useEffect } from 'react'
-import { FaMapMarkerAlt } from 'react-icons/fa'
-import { UserContext } from '../context/UserData'
-import './Profile.css'
+} from "@ionic/react";
+import React, { useContext, useEffect } from "react";
+import { FaMapMarkerAlt } from "react-icons/fa";
+import { UserContext } from "../context/UserData";
+import "./Profile.css";
 const Profile: React.FC = () => {
-  const { isLoggedIn, userData } = useContext(UserContext)
+  const { isLoggedIn, userData } = useContext(UserContext);
   // useEffect(() => {
   //   console.log(userData)
   // }, [isLoggedIn, userData])
@@ -93,7 +93,7 @@ const Profile: React.FC = () => {
         </div>
       </IonContent>
     </IonPage>
-  )
-}
+  );
+};
 
-export default Profile
+export default Profile;

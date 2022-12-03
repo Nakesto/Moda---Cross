@@ -9,6 +9,7 @@ import {
   IonText,
   IonToolbar,
   isPlatform,
+  useIonModal,
 } from "@ionic/react";
 // import { doc, serverTimestamp, setDoc, updateDoc } from "firebase/firestore";
 // import { useEffect, useState } from "react";
@@ -23,10 +24,12 @@ import "slick-carousel/slick/slick-theme.css";
 import "./Home.css";
 import "./Home2.css";
 import CardProduct from "../components/CardProduct";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { collection, getDocs, limit, query } from "firebase/firestore";
 import { db } from "../firebase";
+import { OverlayEventDetail } from "@ionic/react/dist/types/components/react-component-lib/interfaces";
+import ModalFull from "../components/ModalFull";
 
 export type Product = {
   name: string;
@@ -42,6 +45,7 @@ export type Product = {
 
 const Home: React.FC = () => {
   const isApp = isPlatform("capacitor");
+  const history = useHistory();
   const settings = {
     dots: true,
     infinite: true,
@@ -65,24 +69,10 @@ const Home: React.FC = () => {
 
   const [newProduct, setNewProduct] = useState<Product[]>([]);
 
-  // const handleUpdateChat = async () => {
-  //   updateDoc(doc(db, "/userChats", "fvBEo6MuRBP0tLN7qFvG"), {
-  //     messages: ["hai"],
-  //   });
-  // };
-
-  // const handleCreateChat = async () => {
-  //   await setDoc(doc(db, "/userChats", "fvBEo6MuRBP0tLN7qFvG"), {
-  //     ["sadsa" + ".userinfo"]: {
-  //       uid: "JLQ4qfvHldnOfHeDXrLo",
-  //       displayName: "Rommy",
-  //       photoURL: "",
-  //     },
-  //     ["sadsa" + ".date"]: serverTimestamp(),
-  //   })
-  //     .then(() => alert("Data has added to firestore"))
-  //     .catch((err) => alert("Ini" + err));
-  // }
+  const [present, dismiss] = useIonModal(ModalFull, {
+    onDismiss: (data: string, role: string) => dismiss(data, role),
+    role: "product",
+  });
 
   useEffect(() => {
     const getProduct = async () => {
@@ -99,6 +89,16 @@ const Home: React.FC = () => {
 
     getProduct();
   }, []);
+
+  function openModal() {
+    present({
+      onWillDismiss: (ev: CustomEvent<OverlayEventDetail>) => {
+        if (ev.detail.role === "goToCart") {
+          history.push("/cart");
+        }
+      },
+    });
+  }
 
   return (
     <IonPage className="container">
@@ -124,6 +124,7 @@ const Home: React.FC = () => {
             style={{
               marginTop: "9px",
             }}
+            onClick={() => openModal()}
           ></IonSearchbar>
           <IonRow slot="end">
             <Link to="/cart">
