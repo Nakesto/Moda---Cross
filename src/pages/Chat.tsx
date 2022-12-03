@@ -41,8 +41,10 @@ const Chat = () => {
       };
     };
 
-    userData!.uid && getChats();
-  }, [userData!.uid]);
+    console.log(userData);
+
+    userData?.uid && getChats();
+  }, [userData]);
 
   const handleSelect = (u: User) => {
     activeRoomChat(u);
