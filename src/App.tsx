@@ -42,6 +42,7 @@ const App: React.FC = () => {
           <Route exact path="/selectlogin" component={SelectLoginPage} />
           <Route exact path="/login" component={LoginPage} />
           <Route exact path="/register" component={RegisterPage} />
+
           <ProtectedRoute>
             <LoggedInTabs />
           </ProtectedRoute>

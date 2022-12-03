@@ -1,11 +1,11 @@
 import { IonBackButton, IonButton, IonButtons, IonCard, IonCol, IonContent, IonGrid, IonHeader, IonItem, IonLabel, IonList, IonPage, IonRow, IonTitle, IonToolbar, isPlatform } from "@ionic/react";
-
 import produk from "../Assets/produk.png";
 import minus from "../Assets/minus.png";
 import plus from "../Assets/plus.png";
-import "./Cart.css";
+import gopay from "../Assets/gopay.png";
+import "./Payment.css";
 
-const Cart: React.FC = () => {
+const Payment: React.FC = () => {
   const isApp = isPlatform("capacitor");
   // const handleUpdateChat = async () => {
   //   updateDoc(doc(db, "/userChats", "fvBEo6MuRBP0tLN7qFvG"), {
@@ -33,7 +33,7 @@ const Cart: React.FC = () => {
           <IonButtons slot="start">
             <IonBackButton className="backbtn" />
           </IonButtons>
-          <IonTitle style={{ textAlign: "left", marginLeft: "16px", fontSize: "30px" }}>Your Cart</IonTitle>
+          <IonTitle style={{ textAlign: "left", marginLeft: "16px", fontSize: "30px" }}>Payment</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent className="content">
@@ -53,25 +53,45 @@ const Cart: React.FC = () => {
                   <IonButton className="btn">
                     <img src={plus} alt="" />
                   </IonButton>
-                  <input className="cb" type="checkbox"></input>
                 </IonRow>
               </IonLabel>
             </IonItem>
           ))}
         </IonList>
+        <div style={{ height: "32%" }}>
+          <h3 style={{ fontWeight: "bold", marginLeft: "20px" }}>Metode Pembayaran</h3>
+          <IonItem className="cardlist" lines="none">
+            <img style={{ width: "60px", marginRight: "10px", marginLeft: "20px" }} alt="pembayaran" src={gopay}></img>
+            <IonLabel style={{ paddingBottom: "10px" }}>
+              <h2 className="des">Gopay</h2>
+            </IonLabel>
+          </IonItem>
+          <IonItem className="cardlist" lines="none">
+            <img style={{ width: "60px", marginRight: "10px", marginLeft: "20px" }} alt="pembayaran" src={gopay}></img>
+            <IonLabel style={{ paddingBottom: "10px" }}>
+              <h2 className="des">Gopay</h2>
+            </IonLabel>
+          </IonItem>
+          <IonItem className="cardlist" lines="none">
+            <img style={{ width: "60px", marginRight: "10px", marginLeft: "20px" }} alt="pembayaran" src={gopay}></img>
+            <IonLabel style={{ paddingBottom: "10px" }}>
+              <h2 className="des">Gopay</h2>
+            </IonLabel>
+          </IonItem>
+        </div>
         <div className="bawah">
-          <IonRow>
-            <IonCol size="4">
-              <IonLabel className="totaltxt">Total</IonLabel>
+          <IonRow style={{}}>
+            <IonCol size="6">
+              <IonLabel className="totaltxt">Total payment</IonLabel>
             </IonCol>
-            <IonCol size="4"></IonCol>
+            <IonCol size="2"></IonCol>
             <IonCol size="4" style={{ justifyContent: "end", display: "flex" }}>
               <IonLabel className="totalhrg">Rp. 100.000</IonLabel>
             </IonCol>
           </IonRow>
           <IonRow>
             <IonCol size="12" style={{ display: "flex", justifyContent: "center" }}>
-              <IonButton className="ctp">Continue to Payment</IonButton>
+              <IonButton className="ctp">Pay</IonButton>
             </IonCol>
           </IonRow>
         </div>
@@ -80,4 +100,4 @@ const Cart: React.FC = () => {
   );
 };
 
-export default Cart;
+export default Payment;
