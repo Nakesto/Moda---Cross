@@ -41,8 +41,6 @@ const Chat = () => {
       };
     };
 
-    console.log(userData);
-
     userData?.uid && getChats();
   }, [userData]);
 

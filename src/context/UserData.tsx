@@ -28,7 +28,6 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
     // }
     const unsub = onAuthStateChanged(auth, (user: any) => {
       if (user) {
-        console.log(user);
         setInit({
           ...init,
           userData: {

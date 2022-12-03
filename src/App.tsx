@@ -34,20 +34,6 @@ const App: React.FC = () => {
   const { isLoading } = useContext(UserContext);
   return (
     <IonApp>
-      <IonReactRouter>
-        <IonRouterOutlet>
-          <Route exact path="/">
-            {/* <Redirect to={isLoggedIn === true ? "/home" : "/selectlogin"} /> */}
-          </Route>
-          <Route exact path="/selectlogin" component={SelectLoginPage} />
-          <Route exact path="/login" component={LoginPage} />
-          <Route exact path="/register" component={RegisterPage} />
-
-          <ProtectedRoute>
-            <LoggedInTabs />
-          </ProtectedRoute>
-        </IonRouterOutlet>
-      </IonReactRouter>
       {isLoading === true ? (
         <div>Loading...</div>
       ) : (
