@@ -105,7 +105,15 @@ const RegisterPage: React.FC = () => {
         //create empty user chats on firestore
         await setDoc(doc(db, 'userChats', userCredential.user.uid), {})
 
+<<<<<<< HEAD
         history.push('/login')
+=======
+        await setDoc(doc(db, "cart", userCredential.user.uid), {
+          products: [],
+        });
+
+        history.push("/login");
+>>>>>>> e1dc31d64977a2e5c29befec9cf17b1ec2bb451e
       } catch (error) {
         setErrorEmail('Email already registered!')
       }

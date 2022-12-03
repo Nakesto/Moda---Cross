@@ -1,8 +1,9 @@
 import { IonIcon, IonText } from "@ionic/react";
 import { add } from "ionicons/icons";
 import React from "react";
+import { Product } from "../pages/Home";
 
-const CardProduct = () => {
+const CardProduct = ({ product }: { product: Product }) => {
   return (
     <div
       style={{
@@ -31,14 +32,14 @@ const CardProduct = () => {
             marginBottom: "5px",
           }}
         >
-          Pull&Bear T-Shirt
+          {product.name}
         </IonText>
         <IonText
           style={{
             marginBottom: "15px",
           }}
         >
-          Slebew Store
+          {product.toko.name}
         </IonText>
         <div
           style={{
@@ -46,7 +47,7 @@ const CardProduct = () => {
             justifyContent: "space-between",
           }}
         >
-          <IonText>Rp. 100.000</IonText>
+          <IonText>{"Rp." + product.price}</IonText>
           <button>
             <IonIcon icon={add} />
           </button>
