@@ -1,26 +1,26 @@
-import { isPlatform } from "@ionic/core";
-import { onAuthStateChanged } from "firebase/auth";
-import React, { createContext, useEffect, useState } from "react";
-import { auth } from "../firebase";
-import { DataUser } from "../pages/loginPage";
+import { isPlatform } from '@ionic/core'
+import { onAuthStateChanged } from 'firebase/auth'
+import React, { createContext, useEffect, useState } from 'react'
+import { auth } from '../firebase'
+import { DataUser } from '../pages/loginPage'
 
 export type DataContext = {
-  userData: DataUser | null;
-  isLoading: boolean;
-  isLoggedIn: boolean;
-};
+  userData: DataUser | null
+  isLoading: boolean
+  isLoggedIn: boolean
+}
 
 const initialValue: DataContext = {
   userData: null,
   isLoggedIn: false,
   isLoading: true,
-};
+}
 
-const UserContext = createContext(initialValue);
+const UserContext = createContext(initialValue)
 
 const UserProvider = ({ children }: { children: React.ReactNode }) => {
-  const [init, setInit] = useState(initialValue);
-  const isApp = isPlatform("mobile");
+  const [init, setInit] = useState(initialValue)
+  const isApp = isPlatform('mobile')
 
   useEffect(() => {
     // if (isApp) {
@@ -28,32 +28,33 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
     // }
     const unsub = onAuthStateChanged(auth, (user: any) => {
       if (user) {
-        console.log(user);
+        console.log(user)
         setInit({
           ...init,
           userData: {
             token: user.accessToken,
             name: user.displayName,
             email: user.email,
+            phone: user.phoneNumber,
             uid: user.uid,
             photoUrl: user.photoURL,
           },
           isLoggedIn: true,
           isLoading: false,
-        });
+        })
       } else {
-        setInit({ ...init, isLoading: false });
+        setInit({ ...init, isLoading: false })
       }
-    });
+    })
 
     return () => {
-      unsub();
-    };
-  }, []);
+      unsub()
+    }
+  }, [])
 
   return (
     <UserContext.Provider value={{ ...init }}>{children}</UserContext.Provider>
-  );
-};
+  )
+}
 
-export { UserProvider, UserContext };
+export { UserProvider, UserContext }
