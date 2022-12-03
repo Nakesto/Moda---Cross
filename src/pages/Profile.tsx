@@ -9,12 +9,23 @@ import {
 import React, { useContext, useEffect } from 'react'
 import { FaMapMarkerAlt } from 'react-icons/fa'
 import { UserContext } from '../context/UserData'
+import { FiLogOut } from 'react-icons/fi'
 import './Profile.css'
+// import { signOut } from 'firebase/auth'
+// import { auth } from '../firebase'
 const Profile: React.FC = () => {
-  const { isLoggedIn, userData } = useContext(UserContext)
+  const { isLoggedIn, userData, logOut } = useContext(UserContext)
   // useEffect(() => {
   //   console.log(userData)
   // }, [isLoggedIn, userData])
+
+  // const logOut = () => {
+  //   signOut(auth)
+  //     .then(() => {})
+  //     .catch((error) => {
+  //       console.log(error)
+  //     })
+  // }
 
   return (
     <IonPage className="container">
@@ -23,6 +34,18 @@ const Profile: React.FC = () => {
           <div className="background-profile">
             <img className="bg-pic" src={userData?.photoUrl} />
             <div className="box-transparent"></div>
+            <div className="btn-logout-container">
+              <div className="btn-logout">
+                <IonButton
+                  onClick={() => {
+                    logOut()
+                  }}
+                >
+                  <FiLogOut style={{ marginRight: '5px' }} />
+                  Logout
+                </IonButton>
+              </div>
+            </div>
             <div className="text-container">
               <div className="profile-text">
                 <h3>{userData?.name}</h3>
