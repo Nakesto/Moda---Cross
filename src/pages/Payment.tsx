@@ -19,7 +19,7 @@ import {
 import produk from "../Assets/produk.png";
 import gopay from "../Assets/gopay.png";
 import "./Payment.css";
-import { useHistory, useLocation } from "react-router";
+import { Redirect, useHistory, useLocation } from "react-router";
 import { useContext, useState } from "react";
 import { deleteField, doc, updateDoc } from "firebase/firestore";
 import { db } from "../firebase";
@@ -48,6 +48,10 @@ const Payment: React.FC = () => {
         .catch((err) => {});
     });
   };
+
+  if (params == null) {
+    return <Redirect to="/home" />;
+  }
 
   return (
     <IonPage className="page">
