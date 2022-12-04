@@ -12,6 +12,7 @@ import {
   person,
   personCircle,
   storefront,
+<<<<<<< HEAD
 } from 'ionicons/icons'
 import { Redirect, Route } from 'react-router'
 import AddChat from './pages/AddChat'
@@ -22,6 +23,18 @@ import Home from './pages/Home'
 import Profile from './pages/Profile'
 import Store from './pages/Store'
 import StoreDetail from './pages/StoreDetail'
+=======
+} from "ionicons/icons";
+import { Redirect, Route } from "react-router";
+import AddChat from "./pages/AddChat";
+import Cart from "./pages/Cart";
+import Chat from "./pages/Chat";
+import ChatDetail from "./pages/ChatDetail";
+import Home from "./pages/Home";
+import Payment from "./pages/Payment";
+import Profile from "./pages/Profile";
+import Store from "./pages/Store";
+>>>>>>> master
 
 const LoggedInTabs = () => {
   return (
@@ -38,7 +51,11 @@ const LoggedInTabs = () => {
         <Route exact path="/cart" component={Cart} />
         <Route exact path="/profile" component={Profile} />
         <Route exact path="/detail" component={ChatDetail} />
+<<<<<<< HEAD
         <Route exact path="/detailToko" component={StoreDetail} />
+=======
+        <Route exact path="/payment" component={Payment} />
+>>>>>>> master
       </IonRouterOutlet>
       <IonTabBar slot="bottom">
         <IonTabButton tab="home" href="/home">

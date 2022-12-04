@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { IonIcon, IonText } from '@ionic/react'
 import { arrayUnion, doc, updateDoc } from 'firebase/firestore'
 import { add } from 'ionicons/icons'
@@ -6,15 +7,32 @@ import { UserContext } from '../context/UserData'
 import { db } from '../firebase'
 import { Product } from '../pages/Home'
 import './CardProduct.css'
+=======
+import { IonIcon, IonText } from "@ionic/react";
+import { arrayUnion, doc, setDoc, updateDoc } from "firebase/firestore";
+import { add } from "ionicons/icons";
+import React, { useContext } from "react";
+import { UserContext } from "../context/UserData";
+import { db } from "../firebase";
+import { Product } from "../pages/Home";
+>>>>>>> master
 
 const CardProduct = ({ product }: { product: Product }) => {
   const { userData } = useContext(UserContext)
 
   const addCart = async (product: Product) => {
+<<<<<<< HEAD
     await updateDoc(doc(db, 'cart', userData!.uid), {
       products: arrayUnion(product),
     })
   }
+=======
+    await updateDoc(doc(db, "cart", userData!.uid), {
+      [userData!.uid + product.uid + ".product"]: product,
+      [userData!.uid + product.uid + ".quantity"]: 1,
+    });
+  };
+>>>>>>> master
 
   return (
     <div className="card-product">

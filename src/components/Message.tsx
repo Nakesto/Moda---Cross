@@ -1,22 +1,14 @@
-import React, {
-  DetailedHTMLProps,
-  HTMLAttributes,
-  useContext,
-  useEffect,
-  useRef,
-} from "react";
-import { ChatContext } from "../context/Provider";
+import React, { useContext, useEffect, useRef } from "react";
 import { UserContext } from "../context/UserData";
 
 const Message = ({ message }: any) => {
   const { userData } = useContext(UserContext);
-  const { user } = useContext(ChatContext);
 
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     ref.current?.scrollIntoView({ behavior: "smooth" });
-  }, [message]);
+  }, [message, userData]);
 
   return (
     <div

@@ -8,7 +8,6 @@ import {
   IonSearchbar,
   IonText,
   IonToolbar,
-  isPlatform,
   useIonModal,
 } from '@ionic/react'
 // import { doc, serverTimestamp, setDoc, updateDoc } from "firebase/firestore";
@@ -44,8 +43,12 @@ export type Product = {
 }
 
 const Home: React.FC = () => {
+<<<<<<< HEAD
   const isApp = isPlatform('capacitor')
   const history = useHistory()
+=======
+  const history = useHistory();
+>>>>>>> master
   const settings = {
     dots: true,
     infinite: true,
@@ -57,6 +60,7 @@ const Home: React.FC = () => {
     pauseOnHover: true,
   }
 
+<<<<<<< HEAD
   const setting = {
     dots: false,
     infinite: false,
@@ -68,6 +72,9 @@ const Home: React.FC = () => {
   }
 
   const [newProduct, setNewProduct] = useState<Product[]>([])
+=======
+  const [newProduct, setNewProduct] = useState<Product[]>([]);
+>>>>>>> master
 
   const [present, dismiss] = useIonModal(ModalFull, {
     onDismiss: (data: string, role: string) => dismiss(data, role),
@@ -136,9 +143,9 @@ const Home: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent className="content">
-        <div className="test"></div>
         <div
           style={{
+<<<<<<< HEAD
             marginTop: '-4rem',
             backgroundColor: 'white',
             marginLeft: '17px',
@@ -172,18 +179,38 @@ const Home: React.FC = () => {
             marginTop: '1.5rem',
             justifyContent: 'center',
             gap: '10px',
+=======
+            height: "90vh",
+            overflow: "scroll",
+>>>>>>> master
           }}
         >
+          <div className="test"></div>
           <div
             style={{
+<<<<<<< HEAD
               textAlign: 'center',
               fontSize: '20px',
               fontWeight: '600',
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
+=======
+              marginTop: "-4rem",
+              backgroundColor: "white",
+              marginLeft: "17px",
+              marginRight: "17px",
+              paddingRight: "10px",
+              paddingLeft: "10px",
+              paddingTop: "15px",
+              paddingBottom: "25px",
+              borderRadius: "10px",
+              boxShadow: "0 4px 6px rgb(0 0 0 / 0.3)",
+>>>>>>> master
             }}
+            className="ion-padding-horizontal"
           >
+<<<<<<< HEAD
             <button
               style={{
                 maxWidth: '200px',
@@ -208,10 +235,33 @@ const Home: React.FC = () => {
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
+=======
+            <Slider {...settings}>
+              <div>
+                <CardHero />
+              </div>
+              <div>
+                <CardHero />
+              </div>
+              <div>
+                <CardHero />
+              </div>
+            </Slider>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              marginLeft: "17px",
+              marginRight: "17px",
+              marginTop: "1.5rem",
+              justifyContent: "center",
+              gap: "10px",
+>>>>>>> master
             }}
           >
-            <button
+            <div
               style={{
+<<<<<<< HEAD
                 maxWidth: '200px',
                 padding: '13px',
               }}
@@ -301,22 +351,181 @@ const Home: React.FC = () => {
               style={{
                 fontSize: '30px',
                 fontWeight: '600',
+=======
+                textAlign: "center",
+                fontSize: "20px",
+                fontWeight: "600",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+>>>>>>> master
               }}
             >
-              New products
-            </IonText>
-            <IonButton size="small">View All</IonButton>
+              <button
+                style={{
+                  maxWidth: "200px",
+                  padding: "13px",
+                }}
+                className="button-category"
+              >
+                <FaTshirt
+                  style={{
+                    width: "50px",
+                    height: "50px",
+                  }}
+                />
+              </button>
+              <IonText>Shirt</IonText>
+            </div>
+            <div
+              style={{
+                textAlign: "center",
+                fontSize: "20px",
+                fontWeight: "600",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              <button
+                style={{
+                  maxWidth: "200px",
+                  padding: "13px",
+                }}
+                className="button-category"
+              >
+                <GiArmoredPants
+                  style={{
+                    width: "50px",
+                    height: "50px",
+                  }}
+                />
+              </button>
+              <IonText>Pants</IonText>
+            </div>
+            <div
+              style={{
+                textAlign: "center",
+                fontSize: "20px",
+                fontWeight: "600",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              <button
+                style={{
+                  maxWidth: "200px",
+                  padding: "13px",
+                }}
+                className="button-category"
+              >
+                <GiSonicShoes
+                  style={{
+                    width: "50px",
+                    height: "50px",
+                  }}
+                />
+              </button>
+              <IonText>Shoes</IonText>
+            </div>
+            <div
+              style={{
+                textAlign: "center",
+                fontSize: "20px",
+                fontWeight: "600",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              <button
+                style={{
+                  maxWidth: "200px",
+                  padding: "13px",
+                }}
+                className="button-category"
+              >
+                <GiHandBag
+                  style={{
+                    width: "50px",
+                    height: "50px",
+                  }}
+                />
+              </button>
+              <IonText>Bag</IonText>
+            </div>
           </div>
           <div
             style={{
+<<<<<<< HEAD
               marginTop: '10px',
+=======
+              width: "100%",
+              paddingRight: "17px",
+              paddingLeft: "17px",
+              marginTop: "15px",
+              backgroundColor: "#F1F1F1",
+              paddingTop: "20px",
+              paddingBottom: "20px",
             }}
           >
             <div
               style={{
+                justifyContent: "space-between",
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <IonText
+                style={{
+                  fontSize: "30px",
+                  fontWeight: "600",
+                }}
+              >
+                New products
+              </IonText>
+              <IonButton size="small">View All</IonButton>
+            </div>
+            <div
+              style={{
+                marginTop: "10px",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  gap: "20px",
+                  overflow: "scroll",
+                }}
+                className="example"
+              >
+                {newProduct.map((product) => (
+                  <div key={product.name}>
+                    <CardProduct product={product} />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+          {/* <div
+            style={{
+              marginTop: "10px",
+>>>>>>> master
+            }}
+          >
+            <div
+              style={{
+<<<<<<< HEAD
                 display: 'flex',
                 gap: '20px',
                 overflow: 'scroll',
+=======
+                display: "flex",
+                gap: "20px",
+                overflow: "scroll",
+                marginBottom: "60px",
+>>>>>>> master
               }}
               className="example"
             >
@@ -326,13 +535,14 @@ const Home: React.FC = () => {
                 </div>
               ))}
             </div>
-          </div>
+          </div> */}
         </div>
       </IonContent>
     </IonPage>
   )
 }
 
+<<<<<<< HEAD
 {
   /* <IonTitle
             className="ion-no-padding"
@@ -371,3 +581,6 @@ const Home: React.FC = () => {
 // </IonList>
 
 export default Home
+=======
+export default Home;
+>>>>>>> master

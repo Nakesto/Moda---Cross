@@ -50,29 +50,17 @@
 }
 
 .list {
-  max-height: 85%;
+  height: 85%;
   overflow-y: scroll;
   overflow-x: hidden;
-  padding-bottom: 15px;
 }
 
 .bawah {
   height: 10%;
-  bottom: 0% !important;
-}
-
-.page {
-  display: fixed;
-  overflow: hidden !important;
-  justify-content: center;
-  align-items: center;
-}
-
-.toolbar {
-  max-width: 1024px;
-}
-.content {
-  max-width: 1024px;
+  bottom: 0 !important;
+  position: fixed;
+  background-color: red;
+  width: 100%;
 }
 
 .totalhrg {
