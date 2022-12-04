@@ -126,6 +126,12 @@ input[type='number']::-webkit-outer-spin-button {
   margin: 0;
 }
 
+.open-camera {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 5px;
+}
+
 @media (max-width: 390px) {
   .profilepic {
     width: 100px;

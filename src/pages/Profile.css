@@ -31,7 +31,7 @@
   background-color: var(--ion-color-primary);
   position: absolute;
   display: flex;
-  opacity: 0.8;
+  opacity: 0.7;
   z-index: 10;
 }
 
@@ -45,7 +45,6 @@
 
 .profile-text {
   flex-direction: column;
-  margin-top: 50px;
   z-index: 20;
   opacity: 1;
   color: white;
@@ -90,8 +89,11 @@
   color: white;
 }
 
-.btn-checkorder {
-  margin-left: 10px;
+.btn-container-profile {
+  position: relative;
+  display: flex;
+  margin-top: 90px;
+  justify-content: center;
 }
 
 .information-profile {
@@ -100,13 +102,7 @@
   padding: 20px;
   border-radius: 20px;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  margin-top: 50px;
   margin-bottom: 10px;
-}
-
-.btn-register-seller {
-  display: flex;
-  justify-content: center;
 }
 
 .information-detail {
@@ -114,11 +110,11 @@
   flex-direction: row;
 }
 
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 320px) {
   .information-profile {
+    margin-top: 10px;
     margin-left: 20px;
     margin-right: 20px;
-    margin-top: 50px;
     padding: 0px;
   }
 
@@ -127,15 +123,15 @@
   }
 
   .background-profile {
-    height: 180px;
+    height: 220px;
   }
 
   .box-transparent {
-    height: 180px;
+    height: 220px;
   }
 
   .profile-text {
-    margin-top: 20px;
+    margin-bottom: 10px;
   }
 
   .profile-picture {
@@ -155,14 +151,15 @@
     height: 95px;
   }
 
-  .btn-checkorder {
-    margin-left: 5px;
-  }
-
   .check-order {
     font-size: x-small;
   }
-
+  .btn-container-profile {
+    position: relative;
+    display: flex;
+    margin-top: 70px;
+    justify-content: center;
+  }
   .register-seller {
     font-size: small;
   }
@@ -170,11 +167,46 @@
 
 @media screen and (min-width: 400px) {
   .information-profile {
-    margin-top: 50px;
+    margin-top: 10px;
     margin-left: 15px;
     margin-right: 15px;
   }
   .text-information-detail {
     font-size: medium;
+  }
+}
+
+@media screen and (max-height: 600px) {
+  .background-profile {
+    height: 200px;
+  }
+
+  .box-transparent {
+    height: 200px;
+  }
+
+  .profile-text {
+    margin-bottom: 10px;
+  }
+
+  .profile-picture {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .circle-profile {
+    width: 110px;
+    height: 110px;
+  }
+
+  .profile-pic {
+    width: 95px;
+    height: 95px;
+  }
+
+  .btn-container-profile {
+    margin-top: 70px;
   }
 }

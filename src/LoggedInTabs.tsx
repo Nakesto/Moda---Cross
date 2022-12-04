@@ -5,23 +5,23 @@ import {
   IonTabBar,
   IonTabButton,
   IonTabs,
-} from "@ionic/react";
+} from '@ionic/react'
 import {
   chatboxOutline,
   home,
   person,
   personCircle,
   storefront,
-} from "ionicons/icons";
-import { Redirect, Route } from "react-router";
-import AddChat from "./pages/AddChat";
-import Cart from "./pages/Cart";
-import Chat from "./pages/Chat";
-import ChatDetail from "./pages/ChatDetail";
-import Home from "./pages/Home";
-import Payment from "./pages/Payment";
-import Profile from "./pages/Profile";
-import Store from "./pages/Store";
+} from 'ionicons/icons'
+import { Redirect, Route } from 'react-router'
+import AddChat from './pages/AddChat'
+import Cart from './pages/Cart'
+import Chat from './pages/Chat'
+import ChatDetail from './pages/ChatDetail'
+import Home from './pages/Home'
+import Payment from './pages/Payment'
+import Profile from './pages/Profile'
+import Store from './pages/Store'
 
 const LoggedInTabs = () => {
   return (
@@ -62,7 +62,7 @@ const LoggedInTabs = () => {
         </IonTabButton>
       </IonTabBar>
     </IonTabs>
-  );
-};
+  )
+}
 
-export default LoggedInTabs;
+export default LoggedInTabs

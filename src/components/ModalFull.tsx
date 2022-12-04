@@ -9,74 +9,74 @@ import {
   IonIcon,
   IonRow,
   IonSpinner,
-} from "@ionic/react";
-import React, { useState } from "react";
-import { arrowBackOutline, cartOutline } from "ionicons/icons";
-import { Product } from "../pages/Home";
-import { Toko } from "../pages/Store";
-import { useDebouncedCallback } from "use-debounce";
-import { collection, getDocs, query, where } from "firebase/firestore";
-import { db } from "../firebase";
+} from '@ionic/react'
+import React, { useState } from 'react'
+import { arrowBackOutline, cartOutline } from 'ionicons/icons'
+import { Product } from '../pages/Home'
+import { Toko } from '../pages/Store'
+import { useDebouncedCallback } from 'use-debounce'
+import { collection, getDocs, query, where } from 'firebase/firestore'
+import { db } from '../firebase'
 
 const ModalFull = ({
   onDismiss,
   role,
 }: {
-  onDismiss: (data?: string | null | undefined | number, role?: string) => void;
-  role: string;
+  onDismiss: (data?: string | null | undefined | number, role?: string) => void
+  role: string
 }) => {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [toko, setToko] = useState<Toko[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [products, setProducts] = useState<Product[]>([])
+  const [toko, setToko] = useState<Toko[]>([])
+  const [isLoading, setIsLoading] = useState(false)
 
   const handleChange = async (word: string) => {
-    if (word === "") {
-      setProducts([]);
-      setToko([]);
-      setIsLoading(false);
-      return;
+    if (word === '') {
+      setProducts([])
+      setToko([])
+      setIsLoading(false)
+      return
     }
 
-    if (role === "product") {
-      const q = query(collection(db, "product"), where("name", ">=", word));
+    if (role === 'product') {
+      const q = query(collection(db, 'product'), where('name', '>=', word))
 
       try {
-        const querySnapshot = await getDocs(q);
-        const data: Product[] = [];
+        const querySnapshot = await getDocs(q)
+        const data: Product[] = []
         querySnapshot.forEach((doc) => {
-          data.push(doc.data() as Product);
-        });
-        setProducts(data);
-        setIsLoading(false);
+          data.push(doc.data() as Product)
+        })
+        setProducts(data)
+        setIsLoading(false)
       } catch (err) {
-        console.log(err);
+        console.log(err)
       }
     } else {
-      const q = query(collection(db, "toko"), where("name", ">=", word));
+      const q = query(collection(db, 'toko'), where('name', '>=', word))
 
       try {
-        const querySnapshot = await getDocs(q);
-        const data: Toko[] = [];
+        const querySnapshot = await getDocs(q)
+        const data: Toko[] = []
         querySnapshot.forEach((doc) => {
-          data.push(doc.data() as Toko);
-        });
-        setToko(data);
-        setIsLoading(false);
+          data.push(doc.data() as Toko)
+        })
+        setToko(data)
+        setIsLoading(false)
       } catch (err) {
-        console.log(err);
+        console.log(err)
       }
     }
-  };
+  }
 
   const debounced = useDebouncedCallback(
     // function
     (value) => {
-      handleChange(value);
+      handleChange(value)
     },
     // delay in ms
     500,
-    { maxWait: 1000 }
-  );
+    { maxWait: 1000 },
+  )
 
   return (
     <IonPage>
@@ -84,15 +84,15 @@ const ModalFull = ({
         <IonToolbar
           color="primary"
           style={{
-            paddingLeft: "15px",
-            paddingRight: "15px",
+            paddingLeft: '15px',
+            paddingRight: '15px',
           }}
           className="center"
         >
           <IonButtons
             slot="start"
             style={{
-              marginTop: "9px",
+              marginTop: '9px',
             }}
           >
             <IonButton onClick={() => onDismiss(null)}>
@@ -101,15 +101,15 @@ const ModalFull = ({
           </IonButtons>
           <IonSearchbar
             style={{
-              marginTop: "9px",
+              marginTop: '9px',
             }}
             onIonChange={(e) => {
-              setIsLoading(true);
-              debounced(e.target.value);
+              setIsLoading(true)
+              debounced(e.target.value)
             }}
           ></IonSearchbar>
           <IonRow slot="end">
-            <IonButton onClick={() => onDismiss(null, "goToCart")}>
+            <IonButton onClick={() => onDismiss(null, 'goToCart')}>
               <IonIcon slot="icon-only" icon={cartOutline}></IonIcon>
             </IonButton>
           </IonRow>
@@ -119,16 +119,16 @@ const ModalFull = ({
         {isLoading && <IonSpinner color="black" name="lines"></IonSpinner>}
         {!isLoading &&
           products?.map((product) => {
-            return <div key={product.uid}>{product.name}</div>;
+            return <div key={product.uid}>{product.name}</div>
           })}
         {!isLoading &&
-          role === "toko" &&
+          role === 'toko' &&
           toko?.map((toko) => {
-            return <div key={toko.name}>{toko.name}</div>;
+            return <div key={toko.name}>{toko.name}</div>
           })}
       </IonContent>
     </IonPage>
-  );
-};
+  )
+}
 
-export default ModalFull;
+export default ModalFull

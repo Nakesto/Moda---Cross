@@ -2,6 +2,8 @@
   display: flex;
   flex-direction: column;
   background-color: #41c7ee;
+  min-height: 100%;
+  background-size: cover;
 }
 
 .content-date {
@@ -70,6 +72,8 @@
 
 .container-input {
   display: flex;
+  width: 100%;
+  max-width: 1024px;
   flex-direction: row;
   align-items: center;
   justify-content: center;

@@ -30,8 +30,8 @@ const ChatDetail = () => {
   }, [chatId])
 
   return (
-    <IonPage>
-      <IonHeader>
+    <IonPage className="page">
+      <IonHeader className="head">
         <IonToolbar color="primary">
           <IonTitle>Slebew Store</IonTitle>
           <IonButtons slot="start">
@@ -39,7 +39,7 @@ const ChatDetail = () => {
           </IonButtons>
         </IonToolbar>
       </IonHeader>
-      <IonContent>
+      <IonContent className="content">
         <div className="container-chat">
           <div className="content-date">
             <div className="date-chat">
