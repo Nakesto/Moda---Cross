@@ -1,5 +1,5 @@
 import { IonIcon, IonText } from "@ionic/react";
-import { arrayUnion, doc, updateDoc } from "firebase/firestore";
+import { arrayUnion, doc, setDoc, updateDoc } from "firebase/firestore";
 import { add } from "ionicons/icons";
 import React, { useContext } from "react";
 import { UserContext } from "../context/UserData";
@@ -11,7 +11,8 @@ const CardProduct = ({ product }: { product: Product }) => {
 
   const addCart = async (product: Product) => {
     await updateDoc(doc(db, "cart", userData!.uid), {
-      products: arrayUnion(product),
+      [userData!.uid + product.uid + ".product"]: product,
+      [userData!.uid + product.uid + ".quantity"]: 1,
     });
   };
 

@@ -2,12 +2,10 @@ import {
   IonBackButton,
   IonButton,
   IonButtons,
-  IonCard,
   IonCol,
   IonContent,
   IonGrid,
   IonHeader,
-  IonItem,
   IonLabel,
   IonList,
   IonPage,
@@ -15,52 +13,36 @@ import {
   IonSpinner,
   IonTitle,
   IonToolbar,
-  isPlatform,
 } from "@ionic/react";
 
-import produk from "../Assets/produk.png";
-import minus from "../Assets/minus.png";
-import plus from "../Assets/plus.png";
 import "./Cart.css";
 import { useContext, useEffect, useState } from "react";
-import { doc, getDoc, onSnapshot } from "firebase/firestore";
+import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "../firebase";
 import { UserContext } from "../context/UserData";
 import { Product } from "./Home";
+import { useHistory } from "react-router-dom";
+import ListCart from "../components/ListCart";
 
 const Cart: React.FC = () => {
-  const isApp = isPlatform("capacitor");
-  const [cart, setCart] = useState<Product[]>([]);
+  const [cart, setCart] = useState({});
   const { userData } = useContext(UserContext);
   const [isLoading, setIsLoading] = useState(true);
-  // const handleUpdateChat = async () => {
-  //   updateDoc(doc(db, "/userChats", "fvBEo6MuRBP0tLN7qFvG"), {
-  //     messages: ["hai"],
-  //   });
-  // };
-
-  // const handleCreateChat = async () => {
-  //   await setDoc(doc(db, "/userChats", "fvBEo6MuRBP0tLN7qFvG"), {
-  //     ["sadsa" + ".userinfo"]: {
-  //       uid: "JLQ4qfvHldnOfHeDXrLo",
-  //       displayName: "Rommy",
-  //       photoURL: "",
-  //     },
-  //     ["sadsa" + ".date"]: serverTimestamp(),
-  //   })
-  //     .then(() => alert("Data has added to firestore"))
-  //     .catch((err) => alert("Ini" + err));
-  // };
+  const history = useHistory();
 
   useEffect(() => {
     const unsub = onSnapshot(doc(db, "cart", userData!.uid), (doc) => {
-      setCart(doc.data()?.products as Product[]);
+      setCart(doc.data() as any);
       setIsLoading(false);
     });
     return () => {
       unsub();
     };
-  }, []);
+  }, [userData]);
+
+  const toPayment = () => {
+    history.push("/payment", { cart });
+  };
 
   if (isLoading) {
     return (
@@ -79,7 +61,7 @@ const Cart: React.FC = () => {
 
   return (
     <IonPage className="page">
-      <IonHeader className="toolbar">
+      <IonHeader className="head">
         <IonToolbar color={"primary"}>
           <IonButtons slot="start">
             <IonBackButton className="backbtn" />
@@ -92,51 +74,84 @@ const Cart: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent className="content">
-        <IonList className="list" color="primary">
-          {cart?.map((product, index) => (
-            <IonItem className="cardlist" lines="none" button key={index}>
-              <img
-                style={{ height: "60px", marginRight: "10px" }}
-                alt="produk"
-                src={produk}
-              />
-
-              <IonLabel style={{ paddingTop: "10px", paddingBottom: "10px" }}>
-                <h2 className="des">{product.name}</h2>
-                <h3 className="des">{"Rp" + product.price}</h3>
-                <IonRow>
-                  <IonButton className="btn">
-                    <img src={minus} alt="" />
-                  </IonButton>
-                  <IonCard className="ctr">1</IonCard>
-                  <IonButton className="btn">
-                    <img src={plus} alt="" />
-                  </IonButton>
-                  <input className="cb" type="checkbox"></input>
-                </IonRow>
-              </IonLabel>
-            </IonItem>
+        <IonList
+          color="primary"
+          style={{
+            overflow: "scroll",
+          }}
+        >
+          {Object.entries(cart).map((data: any, index) => (
+            <ListCart
+              product={data[1].product as Product}
+              quantity={data[1].quantity as number}
+              key={index}
+            />
           ))}
         </IonList>
-        <div className="bawah">
-          <IonRow>
-            <IonCol size="4">
-              <IonLabel className="totaltxt">Total</IonLabel>
-            </IonCol>
-            <IonCol size="4"></IonCol>
-            <IonCol size="4" style={{ justifyContent: "end", display: "flex" }}>
-              <IonLabel className="totalhrg">Rp. 100.000</IonLabel>
-            </IonCol>
-          </IonRow>
-          <IonRow>
-            <IonCol
-              size="12"
-              style={{ display: "flex", justifyContent: "center" }}
+        {/* <IonGrid color="secondary" className="bawah">
+            <IonRow style={{ width: "100%" }}>
+              <IonCol size="4">
+                <IonLabel className="totaltxt">Total</IonLabel>
+              </IonCol>
+              <IonCol size="4"></IonCol>
+              <IonCol
+                size="4"
+                style={{ justifyContent: "end", display: "flex" }}
+              >
+                <IonLabel className="totalhrg">Rp. 100.000</IonLabel>
+              </IonCol>
+            </IonRow>
+            <IonRow>
+              <IonCol
+                size="12"
+                style={{ display: "flex", justifyContent: "center" }}
+              >
+                <Link to="/payment">
+                  <IonButton className="ctp">Continue to Payment</IonButton>
+                </Link>
+              </IonCol>
+            </IonRow>
+          </IonGrid> */}
+        {Object.entries(cart).length !== 0 && (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              width: "100%",
+              position: "fixed",
+              bottom: 1,
+              left: 0,
+            }}
+          >
+            <IonGrid
+              style={{
+                maxWidth: "1024px",
+                height: "115px",
+                backgroundColor: "white",
+              }}
             >
-              <IonButton className="ctp">Continue to Payment</IonButton>
-            </IonCol>
-          </IonRow>
-        </div>
+              <IonRow>
+                <IonCol size="4">
+                  <IonLabel className="totaltxt">Total</IonLabel>
+                </IonCol>
+                <IonCol size="4"></IonCol>
+                <IonCol
+                  size="4"
+                  style={{ justifyContent: "end", display: "flex" }}
+                >
+                  <IonLabel className="totalhrg">Rp. 100.000</IonLabel>
+                </IonCol>
+              </IonRow>
+              <IonRow>
+                <IonCol size="12" style={{ textAlign: "center" }}>
+                  <IonButton onClick={toPayment} className="ctp">
+                    Continue to Payment
+                  </IonButton>
+                </IonCol>
+              </IonRow>
+            </IonGrid>
+          </div>
+        )}
       </IonContent>
     </IonPage>
   );
