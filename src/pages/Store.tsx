@@ -67,6 +67,10 @@ const Store = () => {
     })
   }
 
+  const goToDetail = () => {
+    history.push('/detailToko')
+  }
+
   return (
     <IonPage className="page">
       <IonHeader className="head">
@@ -102,7 +106,7 @@ const Store = () => {
           </IonRow>
         </IonToolbar>
       </IonHeader>
-      <IonContent className="content" color="medium">
+      <IonContent className="content">
         <IonGrid>
           <IonRow>
             {tokos.map((val, idx) => {
@@ -112,6 +116,9 @@ const Store = () => {
                     className="ion-padding"
                     style={{
                       borderRadius: '20px',
+                    }}
+                    onClick={() => {
+                      goToDetail()
                     }}
                   >
                     <img

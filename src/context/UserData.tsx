@@ -71,16 +71,10 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
   }
 
   return (
-<<<<<<< HEAD
-    <UserContext.Provider value={{ ...init }}>{children}</UserContext.Provider>
-  )
-}
-=======
     <UserContext.Provider value={{ ...init, logOut }}>
       {children}
     </UserContext.Provider>
-  );
-};
->>>>>>> 6c8e35fe89bb6c31eac0c8ebff83790f899d3c4e
+  )
+}
 
 export { UserProvider, UserContext }

@@ -18,7 +18,7 @@ import {
 } from '@ionic/react'
 import './RegisterPage.css'
 import { useContext, useEffect, useRef, useState } from 'react'
-import { mail, calendar } from 'ionicons/icons'
+import { mail, calendar, camera } from 'ionicons/icons'
 import { FaTransgender } from 'react-icons/fa'
 import { BsCameraFill, BsFillTelephoneFill } from 'react-icons/bs'
 import { RiLockPasswordFill } from 'react-icons/ri'
@@ -34,15 +34,17 @@ import { ErrorMessage } from '@hookform/error-message'
 import { storage, auth, db } from '../firebase'
 import { OverlayEventDetail } from '@ionic/react/dist/types/components/react-component-lib/interfaces'
 import { UserContext } from '../context/UserData'
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera'
+import { base64FromPath } from '@capacitor-community/filesystem-react'
 
 const RegisterPage: React.FC = () => {
-  const modal = useRef<HTMLIonModalElement>(null)
   const [takenPhoto, setTakenPhoto] = useState<string>()
   const [selectedfile, setSelectedFile] = useState<File>()
-  const [fileName, setFileName] = useState('profile.png')
   const [gender, setGender] = useState<'male' | 'female'>('male')
   const [errorEmail, setErrorEmail] = useState<string>()
+  const [modal, setModal] = useState<boolean>(false)
   const [result, setResult] = useState<OverlayEventDetail>()
+  const [typeFile, setTypeFile] = useState<'camera' | 'file'>('camera')
   const selectGender = (event: CustomEvent) => {
     const selectedGender = event.detail.value
     setGender(selectedGender)
@@ -66,14 +68,28 @@ const RegisterPage: React.FC = () => {
 
   const fileChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedFile(event.target!.files![0])
-    setFileName(event.target!.files![0].name)
+    setTypeFile('file')
     setTakenPhoto(URL.createObjectURL(event.target!.files![0]))
   }
-  const onSubmit = (data: any) => {
+
+  const onSubmit = async (data: any) => {
     setErrorEmail('')
-    const storageRef = ref(storage, fileName)
-    uploadBytes(storageRef, selectedfile as Blob).then((snapshot) => {
-      getDownloadURL(ref(storage, fileName)).then((url) => {
+    const base64 = await base64FromPath(takenPhoto!)
+    const value = await fetch(base64)
+    const blob: any = await value.blob()
+    let file: File
+    if (typeFile === 'camera') {
+      file = new File([await blob], Math.random().toString(), {
+        type: 'image/png',
+      })
+    } else {
+      file = selectedfile!
+    }
+    const nameFile = typeFile === 'camera' ? file.name + '.png' : file.name
+
+    const storageRef = ref(storage, nameFile)
+    await uploadBytes(storageRef, file as Blob).then((snapshot) => {
+      getDownloadURL(ref(storage, nameFile)).then((url) => {
         addData(url)
       })
     })
@@ -118,6 +134,23 @@ const RegisterPage: React.FC = () => {
     }
   }
 
+  const takePhotoHandler = async () => {
+    const photo = await Camera.getPhoto({
+      resultType: CameraResultType.Uri,
+      source: CameraSource.Camera,
+      quality: 80,
+      width: 500,
+    })
+    console.log(photo)
+
+    if (!photo || /*!photo.path ||*/ !photo.webPath) {
+      return
+    }
+
+    setTypeFile('camera')
+    setTakenPhoto(photo.webPath)
+  }
+
   if (isLoggedIn) {
     return <Redirect to="/home" />
   }
@@ -155,20 +188,34 @@ const RegisterPage: React.FC = () => {
                 />
               )}
               <div className="profilepic_content">
-                <label htmlFor="actual-btn">
+                <label htmlFor="actual-btn1">
                   <span className="profilepic_icon">
                     <BsCameraFill className="fas" />
                   </span>
                   <span className="profilepic_text">Edit Profile</span>
                 </label>
-                <button
-                  id="actual-btn"
-                  type="button"
-                  onClick={() => {}}
+                <input
+                  id="actual-btn1"
+                  type="file"
+                  onChange={fileChangeHandler}
                   hidden
                 />
               </div>
             </div>
+          </div>
+          <div className="open-camera">
+            <IonButton
+              onClick={() => {
+                takePhotoHandler()
+              }}
+            >
+              <IonIcon
+                slot="start"
+                icon={camera}
+                style={{ marginRight: '5px' }}
+              />
+              Take Photo
+            </IonButton>
           </div>
           <div className="login-group">
             <div className="input-item-register">
