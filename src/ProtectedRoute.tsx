@@ -13,7 +13,7 @@ const ProtectedRoute = ({
     <Route
       {...rest}
       render={() => {
-        return isLoggedIn === true ? children : <Redirect to="/selectlogin" />;
+        return isLoggedIn === true ? children : <Redirect to="/landing" />;
       }}
     />
   );
