@@ -85,6 +85,10 @@ const ModalFull = ({
     onDismiss({ toko: val }, 'goToDetail')
   }
 
+  const getDataProduk = (val: any) => {
+    onDismiss({ product: val }, 'goToProduct')
+  }
+
   return (
     <IonPage>
       <IonHeader className="head">
@@ -127,12 +131,15 @@ const ModalFull = ({
         {!isLoading &&
           products?.map((product) => {
             return (
-              <div key={product.uid} className="search-toko">
+              <div
+                key={product.uid}
+                className="search-toko"
+                onClick={() => {
+                  getDataProduk(product)
+                }}
+              >
                 <div className="img-toko-search">
-                  <img
-                    className="img-toko"
-                    src="https://awsimages.detik.net.id/community/media/visual/2019/07/08/dd5bb8bd-3562-4d34-98a1-282ca2ba9165_169.jpeg?w=700&q=90"
-                  />
+                  <img className="img-toko" src={product.image} />
                 </div>
                 <div className="toko-detail">
                   <h3 className="h1-search">
@@ -150,7 +157,13 @@ const ModalFull = ({
           role === 'toko' &&
           toko?.map((val, idx) => {
             return (
-              <div key={idx} className="search-toko">
+              <div
+                key={idx}
+                className="search-toko"
+                onClick={() => {
+                  getDataSearch(val)
+                }}
+              >
                 <div className="img-toko-search">
                   <img className="img-toko" src={val.image} />
                 </div>
@@ -159,13 +172,6 @@ const ModalFull = ({
                     <b>{val.name}</b>
                   </h3>
                   <h5 className="h3-search">{val.province}</h5>
-                  <IonButton
-                    onClick={() => {
-                      getDataSearch(val)
-                    }}
-                  >
-                    Go to store
-                  </IonButton>
                 </div>
               </div>
             )

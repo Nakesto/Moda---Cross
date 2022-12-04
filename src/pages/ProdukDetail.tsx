@@ -10,16 +10,22 @@ import {
   IonIcon,
   IonContent,
 } from '@ionic/react'
-import { cartOutline, heartOutline } from 'ionicons/icons'
-import { useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
-import { Product } from './Home'
+import {
+  cartOutline,
+  chatbubbleEllipsesOutline,
+  heartOutline,
+} from 'ionicons/icons'
+import { Link, Redirect, useLocation } from 'react-router-dom'
 import './ProdukDetail.css'
 
 const ProdukDetail = () => {
   const location = useLocation()
-  const [newProduct, setNewProduct] = useState<Product[]>([])
   const params: any = location.state
+
+  if (params == null) {
+    return <Redirect to="/home" />
+  }
+
   return (
     <IonPage className="page">
       <IonHeader className="head">
@@ -47,22 +53,34 @@ const ProdukDetail = () => {
       <IonContent className="content">
         <div className="container-produk">
           <div className="container-img-produk">
-            <img
-              className="img-produk"
-              src="https://firebasestorage.googleapis.com/v0/b/moda-65a6b.appspot.com/o/tokogigi.jpg?alt=media&token=9aa79a48-ef09-4134-a807-4f5f798f8a17"
-            />
+            <img className="img-produk" src={params.product.image} />
           </div>
           <div className="container-informasi-produk">
             <div className="infromasi-produk">
-              <h1>Rp. 100.000</h1>
-              <IonButton
-                style={{ width: '60px', height: '60px' }}
-                fill="outline"
-              >
-                {' '}
+              <h1 className="h1-produk">
+                <b>Rp. {params.product.price}</b>
+              </h1>
+              <IonButton className="btn-love" fill="outline">
                 <IonIcon icon={heartOutline} />
               </IonButton>
             </div>
+            <h2 className="h2-produk">{params.product.name}</h2>
+            <h4 className="h4-produk">Stock {params.product.stock}</h4>
+            <h3 className="h3-produk">
+              <b>Description</b>
+              <p>{params.product.description}</p>
+            </h3>
+          </div>
+        </div>
+        <div className="container-btn-produk">
+          <div className="content-btn-produk">
+            <IonButton fill="outline" className="btn-chat-produk">
+              <IonIcon icon={chatbubbleEllipsesOutline} />
+            </IonButton>
+            <IonButton className="btn-cart-produk" fill="outline">
+              Add To Cart
+            </IonButton>
+            <IonButton className="btn-buy-produk">Buy Now</IonButton>
           </div>
         </div>
       </IonContent>

@@ -28,10 +28,7 @@ const CardProduct = ({ product }: { product: Product }) => {
         goDetailProduk(product)
       }}
     >
-      <img
-        src="https://static.pullandbear.net/2/static2/itxwebstandard/images/home/2021-05/28/MOVIES.jpg?v=20221127020707"
-        className="card-image"
-      />
+      <img src={product.image} className="card-image" />
       <div
         style={{
           display: 'flex',

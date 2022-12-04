@@ -40,6 +40,8 @@ export type Product = {
   price: string
   description: string
   uid: string
+  stock: number
+  image: string
 }
 
 const Home: React.FC = () => {
@@ -58,7 +60,7 @@ const Home: React.FC = () => {
   const [newProduct, setNewProduct] = useState<Product[]>([])
 
   const [present, dismiss] = useIonModal(ModalFull, {
-    onDismiss: (data: string, role: string) => dismiss(data, role),
+    onDismiss: (data: { product: any }, role: string) => dismiss(data, role),
     role: 'product',
   })
 
@@ -83,6 +85,11 @@ const Home: React.FC = () => {
       onWillDismiss: (ev: CustomEvent<OverlayEventDetail>) => {
         if (ev.detail.role === 'goToCart') {
           history.push('/cart')
+        }
+
+        if (ev.detail.role === 'goToProduct') {
+          const product = ev.detail.data.product
+          history.push('/detailProduct', { product })
         }
       },
     })

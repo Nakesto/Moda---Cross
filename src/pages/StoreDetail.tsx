@@ -29,6 +29,8 @@ export type Product = {
   price: string
   description: string
   uid: string
+  stock: number
+  image: string
 }
 const StoreDetail = () => {
   const location = useLocation()
