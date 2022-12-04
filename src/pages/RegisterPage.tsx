@@ -122,14 +122,7 @@ const RegisterPage: React.FC = () => {
 
         //create empty user chats on firestore
         await setDoc(doc(db, 'userChats', userCredential.user.uid), {})
-
-<<<<<<< HEAD
-        await setDoc(doc(db, 'cart', userCredential.user.uid), {
-          products: [],
-        })
-=======
-        await setDoc(doc(db, "cart", userCredential.user.uid), {});
->>>>>>> master
+        await setDoc(doc(db, 'cart', userCredential.user.uid), {})
 
         history.push('/login')
       } catch (error) {

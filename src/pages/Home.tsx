@@ -43,12 +43,7 @@ export type Product = {
 }
 
 const Home: React.FC = () => {
-<<<<<<< HEAD
-  const isApp = isPlatform('capacitor')
   const history = useHistory()
-=======
-  const history = useHistory();
->>>>>>> master
   const settings = {
     dots: true,
     infinite: true,
@@ -60,21 +55,7 @@ const Home: React.FC = () => {
     pauseOnHover: true,
   }
 
-<<<<<<< HEAD
-  const setting = {
-    dots: false,
-    infinite: false,
-    speed: 900,
-    arrows: false,
-    slidesToShow: 2,
-    slidesToScroll: 1,
-    autoplay: false,
-  }
-
   const [newProduct, setNewProduct] = useState<Product[]>([])
-=======
-  const [newProduct, setNewProduct] = useState<Product[]>([]);
->>>>>>> master
 
   const [present, dismiss] = useIonModal(ModalFull, {
     onDismiss: (data: string, role: string) => dismiss(data, role),
@@ -145,97 +126,26 @@ const Home: React.FC = () => {
       <IonContent className="content">
         <div
           style={{
-<<<<<<< HEAD
-            marginTop: '-4rem',
-            backgroundColor: 'white',
-            marginLeft: '17px',
-            marginRight: '17px',
-            paddingRight: '10px',
-            paddingLeft: '10px',
-            paddingTop: '15px',
-            paddingBottom: '25px',
-            borderRadius: '10px',
-            boxShadow: '0 4px 6px rgb(0 0 0 / 0.3)',
-          }}
-          className="ion-padding-horizontal"
-        >
-          <Slider {...settings}>
-            <div>
-              <CardHero />
-            </div>
-            <div>
-              <CardHero />
-            </div>
-            <div>
-              <CardHero />
-            </div>
-          </Slider>
-        </div>
-        <div
-          style={{
-            display: 'flex',
-            marginLeft: '17px',
-            marginRight: '17px',
-            marginTop: '1.5rem',
-            justifyContent: 'center',
-            gap: '10px',
-=======
-            height: "90vh",
-            overflow: "scroll",
->>>>>>> master
+            height: '90vh',
+            overflow: 'scroll',
           }}
         >
           <div className="test"></div>
           <div
             style={{
-<<<<<<< HEAD
-              textAlign: 'center',
-              fontSize: '20px',
-              fontWeight: '600',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-=======
-              marginTop: "-4rem",
-              backgroundColor: "white",
-              marginLeft: "17px",
-              marginRight: "17px",
-              paddingRight: "10px",
-              paddingLeft: "10px",
-              paddingTop: "15px",
-              paddingBottom: "25px",
-              borderRadius: "10px",
-              boxShadow: "0 4px 6px rgb(0 0 0 / 0.3)",
->>>>>>> master
+              marginTop: '-4rem',
+              backgroundColor: 'white',
+              marginLeft: '17px',
+              marginRight: '17px',
+              paddingRight: '10px',
+              paddingLeft: '10px',
+              paddingTop: '15px',
+              paddingBottom: '25px',
+              borderRadius: '10px',
+              boxShadow: '0 4px 6px rgb(0 0 0 / 0.3)',
             }}
             className="ion-padding-horizontal"
           >
-<<<<<<< HEAD
-            <button
-              style={{
-                maxWidth: '200px',
-                padding: '13px',
-              }}
-              className="button-category"
-            >
-              <FaTshirt
-                style={{
-                  width: '50px',
-                  height: '50px',
-                }}
-              />
-            </button>
-            <IonText>Shirt</IonText>
-          </div>
-          <div
-            style={{
-              textAlign: 'center',
-              fontSize: '20px',
-              fontWeight: '600',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-=======
             <Slider {...settings}>
               <div>
                 <CardHero />
@@ -250,128 +160,35 @@ const Home: React.FC = () => {
           </div>
           <div
             style={{
-              display: "flex",
-              marginLeft: "17px",
-              marginRight: "17px",
-              marginTop: "1.5rem",
-              justifyContent: "center",
-              gap: "10px",
->>>>>>> master
+              display: 'flex',
+              marginLeft: '17px',
+              marginRight: '17px',
+              marginTop: '1.5rem',
+              justifyContent: 'center',
+              gap: '10px',
             }}
           >
             <div
               style={{
-<<<<<<< HEAD
-                maxWidth: '200px',
-                padding: '13px',
-              }}
-              className="button-category"
-            >
-              <GiArmoredPants
-                style={{
-                  width: '50px',
-                  height: '50px',
-                }}
-              />
-            </button>
-            <IonText>Pants</IonText>
-          </div>
-          <div
-            style={{
-              textAlign: 'center',
-              fontSize: '20px',
-              fontWeight: '600',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-            }}
-          >
-            <button
-              style={{
-                maxWidth: '200px',
-                padding: '13px',
-              }}
-              className="button-category"
-            >
-              <GiSonicShoes
-                style={{
-                  width: '50px',
-                  height: '50px',
-                }}
-              />
-            </button>
-            <IonText>Shoes</IonText>
-          </div>
-          <div
-            style={{
-              textAlign: 'center',
-              fontSize: '20px',
-              fontWeight: '600',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-            }}
-          >
-            <button
-              style={{
-                maxWidth: '200px',
-                padding: '13px',
-              }}
-              className="button-category"
-            >
-              <GiHandBag
-                style={{
-                  width: '50px',
-                  height: '50px',
-                }}
-              />
-            </button>
-            <IonText>Bag</IonText>
-          </div>
-        </div>
-        <div
-          style={{
-            width: '100%',
-            paddingRight: '17px',
-            paddingLeft: '17px',
-            marginTop: '15px',
-            // backgroundColor: '#F1F1F1',
-            paddingTop: '20px',
-            paddingBottom: '20px',
-          }}
-        >
-          <div
-            style={{
-              justifyContent: 'space-between',
-              display: 'flex',
-              alignItems: 'center',
-            }}
-          >
-            <IonText
-              style={{
-                fontSize: '30px',
+                textAlign: 'center',
+                fontSize: '20px',
                 fontWeight: '600',
-=======
-                textAlign: "center",
-                fontSize: "20px",
-                fontWeight: "600",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
->>>>>>> master
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
               }}
             >
               <button
                 style={{
-                  maxWidth: "200px",
-                  padding: "13px",
+                  maxWidth: '200px',
+                  padding: '13px',
                 }}
                 className="button-category"
               >
                 <FaTshirt
                   style={{
-                    width: "50px",
-                    height: "50px",
+                    width: '50px',
+                    height: '50px',
                   }}
                 />
               </button>
@@ -379,25 +196,25 @@ const Home: React.FC = () => {
             </div>
             <div
               style={{
-                textAlign: "center",
-                fontSize: "20px",
-                fontWeight: "600",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
+                textAlign: 'center',
+                fontSize: '20px',
+                fontWeight: '600',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
               }}
             >
               <button
                 style={{
-                  maxWidth: "200px",
-                  padding: "13px",
+                  maxWidth: '200px',
+                  padding: '13px',
                 }}
                 className="button-category"
               >
                 <GiArmoredPants
                   style={{
-                    width: "50px",
-                    height: "50px",
+                    width: '50px',
+                    height: '50px',
                   }}
                 />
               </button>
@@ -405,25 +222,25 @@ const Home: React.FC = () => {
             </div>
             <div
               style={{
-                textAlign: "center",
-                fontSize: "20px",
-                fontWeight: "600",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
+                textAlign: 'center',
+                fontSize: '20px',
+                fontWeight: '600',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
               }}
             >
               <button
                 style={{
-                  maxWidth: "200px",
-                  padding: "13px",
+                  maxWidth: '200px',
+                  padding: '13px',
                 }}
                 className="button-category"
               >
                 <GiSonicShoes
                   style={{
-                    width: "50px",
-                    height: "50px",
+                    width: '50px',
+                    height: '50px',
                   }}
                 />
               </button>
@@ -431,25 +248,25 @@ const Home: React.FC = () => {
             </div>
             <div
               style={{
-                textAlign: "center",
-                fontSize: "20px",
-                fontWeight: "600",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
+                textAlign: 'center',
+                fontSize: '20px',
+                fontWeight: '600',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
               }}
             >
               <button
                 style={{
-                  maxWidth: "200px",
-                  padding: "13px",
+                  maxWidth: '200px',
+                  padding: '13px',
                 }}
                 className="button-category"
               >
                 <GiHandBag
                   style={{
-                    width: "50px",
-                    height: "50px",
+                    width: '50px',
+                    height: '50px',
                   }}
                 />
               </button>
@@ -458,29 +275,26 @@ const Home: React.FC = () => {
           </div>
           <div
             style={{
-<<<<<<< HEAD
-              marginTop: '10px',
-=======
-              width: "100%",
-              paddingRight: "17px",
-              paddingLeft: "17px",
-              marginTop: "15px",
-              backgroundColor: "#F1F1F1",
-              paddingTop: "20px",
-              paddingBottom: "20px",
+              width: '100%',
+              paddingRight: '17px',
+              paddingLeft: '17px',
+              marginTop: '15px',
+              backgroundColor: '#F1F1F1',
+              paddingTop: '20px',
+              paddingBottom: '20px',
             }}
           >
             <div
               style={{
-                justifyContent: "space-between",
-                display: "flex",
-                alignItems: "center",
+                justifyContent: 'space-between',
+                display: 'flex',
+                alignItems: 'center',
               }}
             >
               <IonText
                 style={{
-                  fontSize: "30px",
-                  fontWeight: "600",
+                  fontSize: '30px',
+                  fontWeight: '600',
                 }}
               >
                 New products
@@ -489,14 +303,14 @@ const Home: React.FC = () => {
             </div>
             <div
               style={{
-                marginTop: "10px",
+                marginTop: '10px',
               }}
             >
               <div
                 style={{
-                  display: "flex",
-                  gap: "20px",
-                  overflow: "scroll",
+                  display: 'flex',
+                  gap: '20px',
+                  overflow: 'scroll',
                 }}
                 className="example"
               >
@@ -511,21 +325,14 @@ const Home: React.FC = () => {
           {/* <div
             style={{
               marginTop: "10px",
->>>>>>> master
             }}
           >
             <div
               style={{
-<<<<<<< HEAD
-                display: 'flex',
-                gap: '20px',
-                overflow: 'scroll',
-=======
                 display: "flex",
                 gap: "20px",
                 overflow: "scroll",
                 marginBottom: "60px",
->>>>>>> master
               }}
               className="example"
             >
@@ -542,45 +349,4 @@ const Home: React.FC = () => {
   )
 }
 
-<<<<<<< HEAD
-{
-  /* <IonTitle
-            className="ion-no-padding"
-            style={{ textAlign: "left", marginLeft: "16px", fontSize: "30px" }}
-          >
-            Chats
-          </IonTitle>
-          <IonButtons slot="primary">
-            <IonButton color="dark" routerLink="/addchat">
-              <IonIcon slot="icon-only" icon={personAdd}></IonIcon>
-            </IonButton>
-            <IonButton color="dark">
-              <IonIcon slot="icon-only" icon={ellipsisVertical}></IonIcon>
-            </IonButton>
-          </IonButtons> */
-}
-
-// <IonList color="primary">
-//   {[0, 1, 2].map((index) => (
-//     <IonItem lines="none" button key={index}>
-//       <IonAvatar
-//         style={{ marginRight: "20px", height: "60px", width: "60px" }}
-//       >
-//         <img
-//           alt="Silhouette of a person's head"
-//           src="https://ionicframework.com/docs/img/demos/avatar.svg"
-//         />
-//       </IonAvatar>
-
-//       <IonLabel style={{ paddingTop: "10px", paddingBottom: "10px" }}>
-//         <h2>Rommy</h2>
-//         <h3>Nk billiard dk?</h3>
-//       </IonLabel>
-//     </IonItem>
-//   ))}
-// </IonList>
-
 export default Home
-=======
-export default Home;
->>>>>>> master
