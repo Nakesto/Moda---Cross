@@ -52,6 +52,11 @@
   margin-left: -5px;
 }
 
+.h3-toko {
+  margin-top: -5px;
+  font-size: small;
+}
+
 @media screen and (max-width: 320px) {
   .profile-toko {
     border-radius: 20px;

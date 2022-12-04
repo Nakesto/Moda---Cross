@@ -23,11 +23,12 @@ import { db } from '../firebase'
 const Profile: React.FC = () => {
   const { userData, logOut } = useContext(UserContext)
   const [datas, setDatas] = useState({
-    photoUrls: '',
-    names: '',
-    phoneNumber: 0,
-    gender: '',
-    birthdate: '',
+    photoUrls: '-',
+    names: '-',
+    phoneNumber: '-',
+    gender: '-',
+    birthdate: '-',
+    regSeller: false,
   })
   useEffect(() => {
     const singleUser = query(
@@ -42,8 +43,8 @@ const Profile: React.FC = () => {
           phoneNumber: doc.data().phone,
           gender: doc.data().gender,
           birthdate: doc.data().birthdate,
+          regSeller: doc.data().regSeller,
         })
-        // console.log(doc.data())
       })
     })
     return () => {
@@ -51,14 +52,12 @@ const Profile: React.FC = () => {
     }
   }, [userData?.uid])
 
-  console.log(datas)
-
   return (
     <IonPage className="container">
       <IonContent className="content">
         <div className="content-profile">
           <div className="background-profile">
-            <img className="bg-pic" src={userData?.photoUrl} />
+            <img className="bg-pic" src={userData?.photoUrl} alt="no picture" />
             <div className="box-transparent"></div>
             <div className="btn-logout-container">
               <div className="btn-logout">
@@ -75,7 +74,7 @@ const Profile: React.FC = () => {
             </div>
             <div className="text-container">
               <div className="profile-text">
-                <h3>{datas.names}</h3>
+                <h3>{userData?.name}</h3>
                 <h3>
                   <FaMapMarkerAlt />
                   Jalan Jalan Kemana
@@ -85,13 +84,25 @@ const Profile: React.FC = () => {
           </div>
           <div className="profile-picture">
             <div className="circle-profile"></div>
-            <img className="profile-pic" src={userData?.photoUrl} />
+            <img
+              className="profile-pic"
+              src={datas.photoUrls}
+              alt="no picture"
+            />
           </div>
         </div>
-        <div className="btn-container-profile">
-          <IonButton className="register-seller">Register Seller</IonButton>
-          <IonButton className="register-seller">Check Order</IonButton>
-        </div>
+        {datas.regSeller == false ? (
+          <div className="btn-container-profile">
+            <IonButton className="register-seller" routerLink="/regseller">
+              Register Seller
+            </IonButton>
+            <IonButton className="register-seller">Check Order</IonButton>
+          </div>
+        ) : (
+          <div className="btn-container-profile">
+            <IonButton className="register-seller">Check Order</IonButton>
+          </div>
+        )}
         <div className="information-profile">
           <IonGrid>
             <IonRow>
@@ -121,7 +132,9 @@ const Profile: React.FC = () => {
                 </h2>
               </IonCol>
               <IonCol>
-                <h2 className="text-information-detail">{datas.phoneNumber}</h2>
+                <h2 className="text-information-detail">
+                  {userData?.phone === null ? datas.phoneNumber : '-'}
+                </h2>
               </IonCol>
             </IonRow>
             <IonRow>

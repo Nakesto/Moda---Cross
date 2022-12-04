@@ -21,22 +21,25 @@ import { collection, getDocs, limit, query } from 'firebase/firestore'
 import { cartOutline } from 'ionicons/icons'
 import React, { useEffect, useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
+import { validMethods } from 'workbox-routing/utils/constants'
 import ModalFull from '../components/ModalFull'
 import { db } from '../firebase'
 import { Product } from './Home'
 
 export type Toko = {
+  uid: string
   name: string
   description: string
   products: Product[]
   phoneNumber: string
   province: string
+  image: string
 }
 
 const Store = () => {
   const [tokos, setTokos] = useState<Toko[]>([])
   const [present, dismiss] = useIonModal(ModalFull, {
-    onDismiss: (data: string, role: string) => dismiss(data, role),
+    onDismiss: (data: { toko: null }, role: string) => dismiss(data, role),
     role: 'toko',
   })
   const history = useHistory()
@@ -63,12 +66,17 @@ const Store = () => {
         if (ev.detail.role === 'goToCart') {
           history.push('/cart')
         }
+
+        if (ev.detail.role === 'goToDetail') {
+          const tokos = ev.detail.data.toko
+          history.push('/detailToko', { tokos })
+        }
       },
     })
   }
 
-  const goToDetail = () => {
-    history.push('/detailToko')
+  const goToDetail = (tokos: Toko) => {
+    history.push('/detailToko', { tokos })
   }
 
   return (
@@ -118,11 +126,11 @@ const Store = () => {
                       borderRadius: '20px',
                     }}
                     onClick={() => {
-                      goToDetail()
+                      goToDetail(val)
                     }}
                   >
                     <img
-                      src="https://awsimages.detik.net.id/community/media/visual/2019/07/08/dd5bb8bd-3562-4d34-98a1-282ca2ba9165_169.jpeg?w=700&q=90"
+                      src={val.image}
                       alt=""
                       height="200px"
                       width="100%"

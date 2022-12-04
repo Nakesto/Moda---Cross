@@ -1,177 +1,171 @@
-.ion-h1{
-    width: 100%;
-    text-align: center;
-    justify-content: center;
-    display: flex;
+.ion-h1 {
+  width: 100%;
+  text-align: center;
+  justify-content: center;
+  display: flex;
 }
 
-.content-select{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+.content-select {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 
-.container-group{
-    margin-left: 10px;
-    margin-right: 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+.container-group {
+  margin-left: 10px;
+  margin-right: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-
-.button-shape{
-    border-radius: 10px;
-    width: 350px;
-    margin-bottom: 20px;
-    font-size: 25px;
-    height: 56px;
-    color: black;
-    transition-duration: .4s;
-    cursor: pointer;
-    letter-spacing: normal;
-    text-transform: none;
+.button-shape {
+  border-radius: 10px;
+  width: 350px;
+  margin-bottom: 20px;
+  font-size: 25px;
+  height: 56px;
+  color: black;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  letter-spacing: normal;
+  text-transform: none;
 }
 
-.button-shape-signin{
-    border-radius: 50px;
-    width: 350px;
-    height: 56px;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--ion-color-primary);
-    color: white;
-    font-size: 25px;
-    display: flex;
-    transition-duration: .4s;
-    cursor: pointer;
+.button-shape-signin {
+  border-radius: 50px;
+  width: 350px;
+  height: 56px;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--ion-color-primary);
+  color: white;
+  font-size: 25px;
+  display: flex;
+  transition-duration: 0.4s;
+  cursor: pointer;
 }
 
-.button-shape-signin:hover{
-    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+.button-shape-signin:hover {
+  box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24),
+    0 17px 50px 0 rgba(0, 0, 0, 0.19);
 }
 
-.button-shape-signin:active{
-    box-shadow: 0 5px #666;
-    transform: translateY(4px);
+.button-shape-signin:active {
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
 }
 
-ion-button{
-    --border-radius: 10px;
+ion-button {
+  --border-radius: 10px;
 }
 
-.button-shape:hover{
-    background-color: var(--ion-color-primary);
-    color: white;
-    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+.button-shape:hover {
+  background-color: var(--ion-color-primary);
+  color: white;
+  box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24),
+    0 17px 50px 0 rgba(0, 0, 0, 0.19);
 }
 
 .button-shape:active {
-    background-color: var(--ion-color-primary);
-    box-shadow: 0 5px #666;
-    transform: translateY(4px);
+  background-color: var(--ion-color-primary);
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
 }
 
-.img-select-login{
+.img-select-login {
+  width: 250px;
+  height: 300px;
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+.button-text {
+  text-align: center;
+  font-size: 20px;
+  margin-left: 20px;
+  margin-bottom: 15px;
+}
+
+.btn-isi {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-facebook {
+  color: #3880ff;
+  width: 40px;
+  height: 30px;
+  padding-right: 10px;
+}
+
+.btn-icon-google {
+  width: 40px;
+  height: 30px;
+  padding-right: 10px;
+  margin-left: -21px;
+}
+
+.btn-icon-apple {
+  width: 40px;
+  height: 30px;
+  padding-right: 16px;
+  margin-left: -32px;
+}
+
+.line-1 {
+  display: flex;
+  width: 350px;
+  flex-direction: row;
+  align-items: center;
+  padding-right: 0.5rem;
+  padding-left: 0.5rem;
+}
+
+@media (max-width: 390px) {
+  .button-shape {
     width: 250px;
-    height: 300px;
-    margin-top: 10px;
-    display: flex;
-    justify-content: center;
+  }
+
+  .button-shape-signin {
+    width: 250px;
+  }
+
+  .line-1 {
+    width: 250px;
+  }
+
+  .button-text {
+    font-size: small;
+  }
+
+  .btn-facebook {
+    width: 35px;
+    height: 35px;
+  }
+
+  .btn-icon-google {
+    width: 35px;
+    height: 35px;
+    margin-left: -15px;
+  }
+
+  .btn-icon-apple {
+    width: 35px;
+    height: 35px;
+    margin-left: -20px;
+  }
 }
 
-.button-text{
-    text-align: center;
-    font-size: 20px;
-    margin-left: 20px;
-    margin-bottom: 15px;
+@media (max-height: 655px) {
+  .img-select-login {
+    width: 130px;
+    height: 150px;
+  }
 }
-
-.btn-isi{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-}
-
-.btn-facebook{
-    color:#3880ff; 
-    width: 40px;
-    height:30px; 
-    padding-right:10px;
-}
-
-.btn-icon-google{
-    width: 40px;
-    height: 30px; 
-    padding-right:10px;
-    margin-left: -21px;
-}
-
-.btn-icon-apple{
-    color: black; 
-    width: 40px;
-    height:30px;
-    padding-right: 16px;
-    margin-left: -32px;
-}
-
-.line-1{
-    display: flex; 
-    width:350px; 
-    flex-direction: row; 
-    align-items: center; 
-    padding-right: .5rem; 
-    padding-left: .5rem;   
-}
-
-
-@media (max-width: 390px) { 
-    .button-shape{
-        width: 250px;
-    }
-
-    .button-shape-signin{
-        width: 250px;
-    }
-
-    .line-1{
-        width: 250px;
-    }
-
-    .button-text{
-        font-size: small;
-    }
-
-    .btn-facebook{
-        width: 35px;
-        height: 35px;
-    }
-
-    .btn-icon-google{
-        width: 35px;
-        height: 35px;
-        margin-left: -15px;
-    }
-
-
-    .btn-icon-apple{
-        width: 35px;
-        height: 35px;
-        margin-left: -20px;
-    }
-}
-
- @media (max-height: 655px)  {
-    .img-select-login{
-        width: 130px;
-        height: 150px;
-    }
- }
-
-
-
-

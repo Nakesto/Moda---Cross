@@ -1,0 +1,15 @@
+.container-produk {
+  display: flex;
+  flex-direction: column;
+}
+
+.container-img-produk {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.img-produk {
+  width: 300px;
+  height: 300px;
+}

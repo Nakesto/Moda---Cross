@@ -2,22 +2,32 @@ import { IonIcon, IonText } from '@ionic/react'
 import { arrayUnion, doc, setDoc, updateDoc } from 'firebase/firestore'
 import { add } from 'ionicons/icons'
 import React, { useContext } from 'react'
+import { useHistory } from 'react-router'
 import { UserContext } from '../context/UserData'
 import { db } from '../firebase'
 import { Product } from '../pages/Home'
+import './CardProduct.css'
 
 const CardProduct = ({ product }: { product: Product }) => {
   const { userData } = useContext(UserContext)
-
+  const history = useHistory()
   const addCart = async (product: Product) => {
     await updateDoc(doc(db, 'cart', userData!.uid), {
       [userData!.uid + product.uid + '.product']: product,
       [userData!.uid + product.uid + '.quantity']: 1,
     })
   }
+  const goDetailProduk = (product: Product) => {
+    history.push('/detailProduct', { product })
+  }
 
   return (
-    <div className="card-product">
+    <div
+      className="card-product"
+      onClick={() => {
+        goDetailProduk(product)
+      }}
+    >
       <img
         src="https://static.pullandbear.net/2/static2/itxwebstandard/images/home/2021-05/28/MOVIES.jpg?v=20221127020707"
         className="card-image"

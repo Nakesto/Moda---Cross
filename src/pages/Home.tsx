@@ -279,7 +279,6 @@ const Home: React.FC = () => {
               paddingRight: '17px',
               paddingLeft: '17px',
               marginTop: '15px',
-              backgroundColor: '#F1F1F1',
               paddingTop: '20px',
               paddingBottom: '20px',
             }}

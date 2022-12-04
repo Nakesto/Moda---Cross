@@ -15,7 +15,7 @@ import {
   IonBadge,
 } from '@ionic/react'
 import './loginPage.css'
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import loginImg from '../Assets/login.png'
 import { lockClosed, mailUnread } from 'ionicons/icons'
 import { FcGoogle } from 'react-icons/fc'
@@ -25,6 +25,7 @@ import {
   GoogleAuthProvider,
   signInWithEmailAndPassword,
   signInWithPopup,
+  TwitterAuthProvider,
 } from 'firebase/auth'
 import { useForm } from 'react-hook-form'
 import { Redirect, useHistory, useLocation } from 'react-router'
@@ -106,7 +107,6 @@ const LoginPage: React.FC = () => {
           const token = credential.accessToken
 
           const user = result.user
-          console.log(user)
         }
         history.push('/home')
       })
@@ -116,8 +116,30 @@ const LoginPage: React.FC = () => {
       })
   }
 
-  const loginApple = () => {
-    history.push('/home')
+  const loginTwitter = () => {
+    const providerTwitter = new TwitterAuthProvider()
+    signInWithPopup(auth, providerTwitter)
+      .then((result) => {
+        // The signed-in user info.
+        const user = result.user
+
+        // This gives you a Twitter Access Token. You can use it to access the Facebook API.
+        const credential = TwitterAuthProvider.credentialFromResult(result)
+        if (credential !== null) {
+          const token = credential.accessToken
+
+          const user = result.user
+          history.push('/home')
+        }
+      })
+      .catch((error) => {
+        const credential = TwitterAuthProvider.credentialFromError(error)
+        console.log(credential)
+      })
+  }
+
+  const checkKeyDown = (e: any) => {
+    if (e.code === 'Enter') handleSubmit(onSubmit)
   }
 
   if (isLoggedIn) {
@@ -125,8 +147,8 @@ const LoginPage: React.FC = () => {
   }
 
   return (
-    <IonPage>
-      <IonHeader>
+    <IonPage className="page">
+      <IonHeader className="head">
         <IonToolbar color="primary">
           <IonTitle>Sign in With Email</IonTitle>
           <IonButtons slot="start">
@@ -144,7 +166,10 @@ const LoginPage: React.FC = () => {
             <div className="error-message" style={{ color: 'red' }}>
               {errLogin}
             </div>
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              onKeyDown={(e) => checkKeyDown(e)}
+            >
               <div className="input-item">
                 <IonLabel>
                   <IonIcon
@@ -197,11 +222,16 @@ const LoginPage: React.FC = () => {
                 />
               </div>
               <div className="check-box">
-                <IonCheckbox style={{ marginRight: '5px' }}></IonCheckbox>
+                <IonCheckbox
+                  value="false"
+                  style={{ marginRight: '5px' }}
+                ></IonCheckbox>
                 <IonLabel>Remember Me!</IonLabel>
               </div>
               <IonRow>
-                <button className="btn-login">Sign In</button>
+                <button type="submit" className="btn-login">
+                  Sign In
+                </button>
               </IonRow>
             </form>
             <div className="line-1">

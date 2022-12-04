@@ -20,8 +20,11 @@ import Chat from './pages/Chat'
 import ChatDetail from './pages/ChatDetail'
 import Home from './pages/Home'
 import Payment from './pages/Payment'
+import ProdukDetail from './pages/ProdukDetail'
 import Profile from './pages/Profile'
+import RegisterSeller from './pages/RegisterSeller'
 import Store from './pages/Store'
+import StoreDetail from './pages/StoreDetail'
 
 const LoggedInTabs = () => {
   return (
@@ -39,6 +42,7 @@ const LoggedInTabs = () => {
         <Route exact path="/profile" component={Profile} />
         <Route exact path="/detail" component={ChatDetail} />
         <Route exact path="/payment" component={Payment} />
+        <Route exact path="/regseller" component={RegisterSeller} />
       </IonRouterOutlet>
       <IonTabBar slot="bottom">
         <IonTabButton tab="home" href="/home">

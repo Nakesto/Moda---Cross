@@ -1,73 +1,96 @@
-import { IonButton, IonContent, IonPage, IonRow } from "@ionic/react";
-import "./SelectLogin.css";
-import { FcGoogle } from "react-icons/fc";
-import { FaApple, FaFacebook } from "react-icons/fa";
-import { MdOutgoingMail } from "react-icons/md";
+import { IonButton, IonContent, IonPage, IonRow } from '@ionic/react'
+import './SelectLogin.css'
+import { FcGoogle } from 'react-icons/fc'
+import { FaApple, FaFacebook } from 'react-icons/fa'
+import { MdOutgoingMail } from 'react-icons/md'
 
-import SelectLogin from "../Assets/select.png";
-import { Redirect, useHistory, useLocation } from "react-router";
-import { auth, providerGoogle, providerFacebook } from "../firebase";
+import SelectLogin from '../Assets/select.png'
+import { Redirect, useHistory, useLocation } from 'react-router'
+import { auth, providerGoogle, providerFacebook } from '../firebase'
 import {
   FacebookAuthProvider,
   GoogleAuthProvider,
   signInWithPopup,
-} from "firebase/auth";
-import { useContext, useEffect } from "react";
-import { UserContext } from "../context/UserData";
-import { Link } from "react-router-dom";
+  TwitterAuthProvider,
+} from 'firebase/auth'
+import { useContext, useEffect } from 'react'
+import { UserContext } from '../context/UserData'
+import { Link } from 'react-router-dom'
+import { BsTwitter } from 'react-icons/bs'
 
 const SelectLoginPage: React.FC = () => {
-  const history = useHistory();
-  const location = useLocation();
-  const { isLoggedIn } = useContext(UserContext);
+  const history = useHistory()
+  const location = useLocation()
+  const { isLoggedIn } = useContext(UserContext)
 
   const loginGoogle = () => {
     signInWithPopup(auth, providerGoogle)
       .then((result) => {
         // This gives you a Google Access Token. You can use it to access the Google API.
-        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const credential = GoogleAuthProvider.credentialFromResult(result)
         if (credential !== null) {
-          const token = credential.accessToken;
+          const token = credential.accessToken
 
-          const user = result.user;
-          history.push("/register");
+          const user = result.user
+          console.log(user)
+          history.push('/home')
         }
       })
       .catch((error) => {
-        const credential = GoogleAuthProvider.credentialFromError(error);
-        console.log(credential);
-      });
-  };
+        const credential = GoogleAuthProvider.credentialFromError(error)
+        console.log(credential)
+      })
+  }
 
-  const loginApple = () => {};
+  const loginTwitter = () => {
+    const providerTwitter = new TwitterAuthProvider()
+    signInWithPopup(auth, providerTwitter)
+      .then((result) => {
+        // The signed-in user info.
+        const user = result.user
+
+        // This gives you a Twitter Access Token. You can use it to access the Facebook API.
+        const credential = TwitterAuthProvider.credentialFromResult(result)
+        if (credential !== null) {
+          const token = credential.accessToken
+
+          const user = result.user
+          history.push('/home')
+        }
+      })
+      .catch((error) => {
+        const credential = TwitterAuthProvider.credentialFromError(error)
+        console.log(credential)
+      })
+  }
 
   const loginFacebook = () => {
     signInWithPopup(auth, providerFacebook)
       .then((result) => {
         // The signed-in user info.
-        const user = result.user;
+        const user = result.user
 
         // This gives you a Facebook Access Token. You can use it to access the Facebook API.
-        const credential = FacebookAuthProvider.credentialFromResult(result);
+        const credential = FacebookAuthProvider.credentialFromResult(result)
         if (credential !== null) {
-          const token = credential.accessToken;
+          const token = credential.accessToken
 
-          const user = result.user;
-          history.push("/register");
+          const user = result.user
+          history.push('/home')
         }
       })
       .catch((error) => {
-        const credential = FacebookAuthProvider.credentialFromError(error);
-        console.log(credential);
-      });
-  };
+        const credential = FacebookAuthProvider.credentialFromError(error)
+        console.log(credential)
+      })
+  }
 
   // if (isLoading) {
   //   return <div>Loading...</div>;
   // }
 
   if (isLoggedIn) {
-    return <Redirect to="/home" />;
+    return <Redirect to="/home" />
   }
 
   return (
@@ -107,27 +130,27 @@ const SelectLoginPage: React.FC = () => {
             </IonRow>
             <IonRow>
               <IonButton
-                style={{ marginBottom: "0px" }}
+                style={{ marginBottom: '0px' }}
                 size="large"
                 className="button-shape"
                 fill="outline"
-                onClick={loginApple}
+                onClick={loginTwitter}
               >
                 <div className="btn-isi">
-                  <FaApple className="btn-icon-apple" />
-                  <h2 className="button-text">Continue with Apple</h2>
+                  <BsTwitter className="btn-icon-apple" />
+                  <h2 className="button-text">Continue with Twitter</h2>
                 </div>
               </IonButton>
             </IonRow>
             <div className="line-1">
               <div
-                style={{ flex: 1, height: "1px", backgroundColor: "black" }}
+                style={{ flex: 1, height: '1px', backgroundColor: 'black' }}
               />
               <div>
-                <p style={{ width: "70px", textAlign: "center" }}>OR</p>
+                <p style={{ width: '70px', textAlign: 'center' }}>OR</p>
               </div>
               <div
-                style={{ flex: 1, height: "1px", backgroundColor: "black" }}
+                style={{ flex: 1, height: '1px', backgroundColor: 'black' }}
               />
             </div>
             <IonRow>
@@ -135,10 +158,10 @@ const SelectLoginPage: React.FC = () => {
                 <button className="button-shape-signin">
                   <MdOutgoingMail
                     style={{
-                      color: "white",
-                      width: "40px",
-                      height: "30px",
-                      paddingRight: "10px",
+                      color: 'white',
+                      width: '40px',
+                      height: '30px',
+                      paddingRight: '10px',
                     }}
                   />
                   <h2 className="button-text">Sign In With Email</h2>
@@ -147,17 +170,17 @@ const SelectLoginPage: React.FC = () => {
             </IonRow>
             <IonRow>
               <h5
-                style={{ fontSize: "15px", marginTop: "10px", marginLeft: "0" }}
+                style={{ fontSize: '15px', marginTop: '10px', marginLeft: '0' }}
               >
                 Don't have an account?
               </h5>
               <Link
                 style={{
-                  fontSize: "15px",
-                  marginTop: "10px",
-                  textDecorationLine: "underline",
-                  marginLeft: "5px",
-                  cursor: "pointer",
+                  fontSize: '15px',
+                  marginTop: '10px',
+                  textDecorationLine: 'underline',
+                  marginLeft: '5px',
+                  cursor: 'pointer',
                 }}
                 to="/register"
               >
@@ -168,7 +191,7 @@ const SelectLoginPage: React.FC = () => {
         </div>
       </IonContent>
     </IonPage>
-  );
-};
+  )
+}
 
-export default SelectLoginPage;
+export default SelectLoginPage
