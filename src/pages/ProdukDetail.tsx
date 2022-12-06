@@ -9,21 +9,76 @@ import {
   IonButton,
   IonIcon,
   IonContent,
-} from '@ionic/react'
+} from "@ionic/react";
+import {
+  getDoc,
+  doc,
+  setDoc,
+  updateDoc,
+  serverTimestamp,
+} from "firebase/firestore";
 import {
   cartOutline,
   chatbubbleEllipsesOutline,
   heartOutline,
-} from 'ionicons/icons'
-import { Link, Redirect, useLocation } from 'react-router-dom'
-import './ProdukDetail.css'
+} from "ionicons/icons";
+import { Link, Redirect, useLocation } from "react-router-dom";
+import { auth, db } from "../firebase";
+import { Product } from "./Home";
+import "./ProdukDetail.css";
 
 const ProdukDetail = () => {
-  const location = useLocation()
-  const params: any = location.state
+  const location = useLocation();
+  const params: any = location.state;
+  const { currentUser } = auth;
+
+  const addCart = async (product: Product) => {
+    await updateDoc(doc(db, "cart", currentUser!.uid), {
+      [currentUser!.uid + product.uid + ".product"]: product,
+      [currentUser!.uid + product.uid + ".quantity"]: 1,
+    });
+  };
+
+  const addUserChats = async () => {
+    if (currentUser) {
+      const combinedId =
+        currentUser.uid > params.product.toko.uid
+          ? currentUser.uid + params.product.toko.uid
+          : params.product.toko.uid + currentUser.uid;
+
+      try {
+        const res = await getDoc(doc(db, "chats", combinedId));
+
+        if (!res.exists()) {
+          //create a chat in chats collection
+          await setDoc(doc(db, "chats", combinedId), { messages: [] });
+
+          //create user chats
+          await updateDoc(doc(db, "userChats", currentUser.uid), {
+            [combinedId + ".userInfo"]: {
+              uid: params.product.toko.uid,
+              displayName: params.product.toko.name,
+              photoURL:
+                "https://store.sirclo.com/blog/wp-content/uploads/2022/05/Banner-Blog-08-5.jpg",
+            },
+            [combinedId + ".date"]: serverTimestamp(),
+          });
+
+          await updateDoc(doc(db, "userChats", params.product.toko.uid), {
+            [combinedId + ".userInfo"]: {
+              uid: currentUser.uid,
+              displayName: currentUser.displayName,
+              photoURL: currentUser.photoURL,
+            },
+            [combinedId + ".date"]: serverTimestamp(),
+          });
+        }
+      } catch (err) {}
+    }
+  };
 
   if (params == null) {
-    return <Redirect to="/home" />
+    return <Redirect to="/home" />;
   }
 
   return (
@@ -32,8 +87,8 @@ const ProdukDetail = () => {
         <IonToolbar
           color="primary"
           style={{
-            paddingLeft: '15px',
-            paddingRight: '15px',
+            paddingLeft: "15px",
+            paddingRight: "15px",
           }}
           className="center"
         >
@@ -74,10 +129,21 @@ const ProdukDetail = () => {
         </div>
         <div className="container-btn-produk">
           <div className="content-btn-produk">
-            <IonButton fill="outline" className="btn-chat-produk">
-              <IonIcon icon={chatbubbleEllipsesOutline} />
-            </IonButton>
-            <IonButton className="btn-cart-produk" fill="outline">
+            {currentUser?.uid !== params.product.toko.uid && (
+              <IonButton
+                onClick={addUserChats}
+                fill="outline"
+                className="btn-chat-produk"
+              >
+                <IonIcon icon={chatbubbleEllipsesOutline} />
+              </IonButton>
+            )}
+
+            <IonButton
+              className="btn-cart-produk"
+              fill="outline"
+              onClick={() => addCart(params.product as Product)}
+            >
               Add To Cart
             </IonButton>
             <IonButton className="btn-buy-produk">Buy Now</IonButton>
@@ -85,7 +151,7 @@ const ProdukDetail = () => {
         </div>
       </IonContent>
     </IonPage>
-  )
-}
+  );
+};
 
-export default ProdukDetail
+export default ProdukDetail;

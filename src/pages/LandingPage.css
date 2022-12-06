@@ -8,7 +8,7 @@
 }
 
 .slide-gambar {
-  height: 60vh;
+  height: 65vh;
   display: flex;
   align-items: center;
 }
@@ -18,4 +18,60 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.image {
+  width: 200px;
+  height: 330px;
+}
+
+.bottom-ctn {
+  height: 10vh;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.slick-dots li button {
+  pointer-events: none;
+}
+
+@media (min-height: 600px) {
+  .image {
+    width: 250px;
+    height: 380px;
+  }
+}
+
+@media (min-height: 750px) {
+  .image {
+    width: 320px;
+    height: 450px;
+  }
+
+  .slide-text {
+    height: 10vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .slide-gambar {
+    height: 70vh;
+    display: flex;
+    align-items: center;
+  }
+
+  .bottom-ctn {
+    height: 15vh;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
 }

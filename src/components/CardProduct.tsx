@@ -1,68 +1,105 @@
-import { IonIcon, IonText } from '@ionic/react'
-import { arrayUnion, doc, setDoc, updateDoc } from 'firebase/firestore'
-import { add } from 'ionicons/icons'
-import React, { useContext } from 'react'
-import { useHistory } from 'react-router'
-import { UserContext } from '../context/UserData'
-import { db } from '../firebase'
-import { Product } from '../pages/Home'
-import './CardProduct.css'
+import { IonIcon, IonText } from "@ionic/react";
+import {
+  collection,
+  doc,
+  getDocs,
+  query,
+  updateDoc,
+  where,
+} from "firebase/firestore";
+import { add } from "ionicons/icons";
+import React, { useContext } from "react";
+import { useHistory } from "react-router";
+import { UserContext } from "../context/UserData";
+import { db } from "../firebase";
+import { Product } from "../pages/Home";
+import "./CardProduct.css";
 
 const CardProduct = ({ product }: { product: Product }) => {
-  const { userData } = useContext(UserContext)
-  const history = useHistory()
+  const { userData } = useContext(UserContext);
+  const history = useHistory();
   const addCart = async (product: Product) => {
-    await updateDoc(doc(db, 'cart', userData!.uid), {
-      [userData!.uid + product.uid + '.product']: product,
-      [userData!.uid + product.uid + '.quantity']: 1,
-    })
-  }
+    try {
+      const q = query(
+        collection(db, "cart"),
+        where(userData!.uid + product.uid + ".product.name", "==", product.name)
+      );
+      const res = await getDocs(q);
+      let data: any = null;
+      res.forEach((doc) => {
+        data = doc.data();
+      });
+
+      if (data !== null) {
+        data = Object.entries(data);
+        await updateDoc(doc(db, "cart", userData!.uid), {
+          [userData!.uid + product.uid + ".product"]: product,
+          [userData!.uid + product.uid + ".quantity"]: data[0][1].quantity + 1,
+        });
+      } else {
+        await updateDoc(doc(db, "cart", userData!.uid), {
+          [userData!.uid + product.uid + ".product"]: product,
+          [userData!.uid + product.uid + ".quantity"]: 1,
+        });
+      }
+    } catch (err) {}
+  };
+
   const goDetailProduk = (product: Product) => {
-    history.push('/detailProduct', { product })
-  }
+    history.push("/detailProduct", { product });
+  };
 
   return (
     <div
       className="card-product"
       onClick={() => {
-        goDetailProduk(product)
+        goDetailProduk(product);
       }}
     >
       <img src={product.image} className="card-image" />
       <div
         style={{
-          display: 'flex',
-          flexDirection: 'column',
+          display: "flex",
+          flexDirection: "column",
         }}
       >
         <IonText
           style={{
-            marginBottom: '5px',
+            marginBottom: "5px",
           }}
         >
           {product.name}
         </IonText>
         <IonText
           style={{
-            marginBottom: '15px',
+            marginBottom: "15px",
           }}
         >
           {product.toko.name}
         </IonText>
         <div
           style={{
-            display: 'flex',
-            justifyContent: 'space-between',
+            display: "flex",
+            justifyContent: "space-between",
           }}
         >
-          <IonText>{'Rp.' + product.price}</IonText>
-          <button onClick={() => addCart(product)}>
+          <IonText>{"Rp." + product.price}</IonText>
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              addCart(product);
+            }}
+            style={{
+              padding: "5px",
+              zIndex: 10,
+            }}
+          >
             <IonIcon icon={add} />
           </button>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default CardProduct
+export default CardProduct;

@@ -13,57 +13,58 @@ import {
   IonSelectOption,
   IonTitle,
   IonToolbar,
-} from '@ionic/react'
-import './RegisterPage.css'
-import { useContext, useEffect, useState } from 'react'
-import { mail, calendar, camera } from 'ionicons/icons'
-import { FaAddressBook, FaIdCard, FaTransgender } from 'react-icons/fa'
-import { BsCameraFill, BsFillTelephoneFill } from 'react-icons/bs'
-import { RiLockPasswordFill } from 'react-icons/ri'
-import { HiIdentification } from 'react-icons/hi'
-import { AiTwotoneSecurityScan } from 'react-icons/ai'
-import profile from '../Assets/profile.png'
-import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
+} from "@ionic/react";
+import "./RegisterPage.css";
+import { useContext, useEffect, useState } from "react";
+import { mail, calendar, camera } from "ionicons/icons";
+import { FaAddressBook, FaIdCard, FaTransgender } from "react-icons/fa";
+import { BsCameraFill, BsFillTelephoneFill } from "react-icons/bs";
+import { RiLockPasswordFill } from "react-icons/ri";
+import { HiIdentification } from "react-icons/hi";
+import { AiTwotoneSecurityScan } from "react-icons/ai";
+import profile from "../Assets/profile.png";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import {
   addDoc,
   collection,
   doc,
   onSnapshot,
   query,
+  setDoc,
   updateDoc,
   where,
-} from 'firebase/firestore'
-import { useHistory, useLocation } from 'react-router'
-import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth'
-import { useForm } from 'react-hook-form'
-import { ErrorMessage } from '@hookform/error-message'
-import { storage, auth, db } from '../firebase'
-import { UserContext } from '../context/UserData'
-import { Camera, CameraResultType, CameraSource } from '@capacitor/camera'
-import { base64FromPath } from '@capacitor-community/filesystem-react'
+} from "firebase/firestore";
+import { useHistory, useLocation } from "react-router";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { useForm } from "react-hook-form";
+import { ErrorMessage } from "@hookform/error-message";
+import { storage, auth, db } from "../firebase";
+import { UserContext } from "../context/UserData";
+import { Camera, CameraResultType, CameraSource } from "@capacitor/camera";
+import { base64FromPath } from "@capacitor-community/filesystem-react";
 const RegisterSeller = () => {
-  const [takenPhoto, setTakenPhoto] = useState<string>()
-  const [selectedfile, setSelectedFile] = useState<File>()
-  const { userData } = useContext(UserContext)
-  const [typeFile, setTypeFile] = useState<'camera' | 'file'>('camera')
-  const history = useHistory()
+  const [takenPhoto, setTakenPhoto] = useState<string>();
+  const [selectedfile, setSelectedFile] = useState<File>();
+  const { userData } = useContext(UserContext);
+  const [typeFile, setTypeFile] = useState<"camera" | "file">("camera");
+  const history = useHistory();
   const [datas, setDatas] = useState({
-    photoUrls: '-',
-    names: '-',
-    phoneNumber: '-',
-    gender: '-',
-    birthdate: '-',
-    userDoc: '',
-  })
+    photoUrls: "-",
+    names: "-",
+    phoneNumber: "-",
+    gender: "-",
+    birthdate: "-",
+    userDoc: "",
+  });
 
   const {
     register,
     formState: { errors },
     handleSubmit,
-  } = useForm()
+  } = useForm();
 
-  const location = useLocation()
-  const { isLoggedIn } = useContext(UserContext)
+  const location = useLocation();
+  const { isLoggedIn } = useContext(UserContext);
 
   //   useEffect(() => {
   //     if (isLoggedIn === true) {
@@ -72,35 +73,35 @@ const RegisterSeller = () => {
   //   }, [location.pathname, isLoggedIn, history])
 
   const fileChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedFile(event.target!.files![0])
-    setTypeFile('file')
-    setTakenPhoto(URL.createObjectURL(event.target!.files![0]))
-  }
+    setSelectedFile(event.target!.files![0]);
+    setTypeFile("file");
+    setTakenPhoto(URL.createObjectURL(event.target!.files![0]));
+  };
 
   const onSubmit = async (data: any) => {
-    const base64 = await base64FromPath(takenPhoto!)
-    const value = await fetch(base64)
-    const blob: any = await value.blob()
-    let file: File
-    if (typeFile === 'camera') {
+    const base64 = await base64FromPath(takenPhoto!);
+    const value = await fetch(base64);
+    const blob: any = await value.blob();
+    let file: File;
+    if (typeFile === "camera") {
       file = new File([await blob], Math.random().toString(), {
-        type: 'image/png',
-      })
+        type: "image/png",
+      });
     } else {
-      file = selectedfile!
+      file = selectedfile!;
     }
-    const nameFile = typeFile === 'camera' ? file.name + '.png' : file.name
+    const nameFile = typeFile === "camera" ? file.name + ".png" : file.name;
 
-    const storageRef = ref(storage, nameFile)
+    const storageRef = ref(storage, nameFile);
     await uploadBytes(storageRef, file as Blob).then((snapshot) => {
       getDownloadURL(ref(storage, nameFile)).then((url) => {
-        addData(url)
-      })
-    })
+        addData(url);
+      });
+    });
 
     const addData = async (url: string) => {
       try {
-        const docRef = await addDoc(collection(db, 'toko'), {
+        const docRef = await setDoc(doc(db, "toko", userData!.uid), {
           name: data.storeName as string,
           phoneNumber: data.phone as string,
           address: data.address as string,
@@ -108,21 +109,22 @@ const RegisterSeller = () => {
           ktpName: data.ktpName as string,
           ktpNumber: data.ktpNumber as string,
           image: url,
-        })
+          uid: userData!.uid,
+        });
 
-        console.log(datas.userDoc)
+        console.log(datas.userDoc);
 
-        const dbRef = doc(db, 'user', datas.userDoc)
+        const dbRef = doc(db, "user", datas.userDoc);
         await updateDoc(dbRef, {
           regSeller: true,
-        })
+        });
 
-        history.push('/profile')
+        history.push("/profile");
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
-    }
-  }
+    };
+  };
 
   const takePhotoHandler = async () => {
     const photo = await Camera.getPhoto({
@@ -130,22 +132,22 @@ const RegisterSeller = () => {
       source: CameraSource.Camera,
       quality: 80,
       width: 500,
-    })
-    console.log(photo)
+    });
+    console.log(photo);
 
     if (!photo || /*!photo.path ||*/ !photo.webPath) {
-      return
+      return;
     }
 
-    setTypeFile('camera')
-    setTakenPhoto(photo.webPath)
-  }
+    setTypeFile("camera");
+    setTakenPhoto(photo.webPath);
+  };
 
   useEffect(() => {
     const singleUser = query(
-      collection(db, 'user'),
-      where('uid', '==', userData?.uid),
-    )
+      collection(db, "user"),
+      where("uid", "==", userData?.uid)
+    );
     const unsub = onSnapshot(singleUser, (snapshot) => {
       snapshot.docs.forEach((doc) => {
         setDatas({
@@ -155,13 +157,13 @@ const RegisterSeller = () => {
           gender: doc.data().gender,
           birthdate: doc.data().birthdate,
           userDoc: doc.id,
-        })
-      })
-    })
+        });
+      });
+    });
     return () => {
-      unsub()
-    }
-  }, [userData?.uid])
+      unsub();
+    };
+  }, [userData?.uid]);
 
   return (
     <IonPage className="page">
@@ -214,13 +216,13 @@ const RegisterSeller = () => {
           <div className="open-camera">
             <IonButton
               onClick={() => {
-                takePhotoHandler()
+                takePhotoHandler();
               }}
             >
               <IonIcon
                 slot="start"
                 icon={camera}
-                style={{ marginRight: '5px' }}
+                style={{ marginRight: "5px" }}
               />
               Take Photo
             </IonButton>
@@ -231,11 +233,11 @@ const RegisterSeller = () => {
                 <HiIdentification className="input-icon" />
               </IonLabel>
               <IonInput
-                {...register('storeName', {
-                  required: 'This is a required field',
+                {...register("storeName", {
+                  required: "This is a required field",
                   minLength: {
                     value: 3,
-                    message: 'Store name cannot be less than 3 chars!',
+                    message: "Store name cannot be less than 3 chars!",
                   },
                 })}
                 placeholder="Store Name"
@@ -246,18 +248,18 @@ const RegisterSeller = () => {
             <ErrorMessage
               errors={errors}
               name="storeName"
-              as={<div className="error-message" style={{ color: 'red' }} />}
+              as={<div className="error-message" style={{ color: "red" }} />}
             />
             <div className="input-item-register">
               <IonLabel>
                 <FaAddressBook className="input-icon" />
               </IonLabel>
               <IonInput
-                {...register('address', {
-                  required: 'This is a required field',
+                {...register("address", {
+                  required: "This is a required field",
                   minLength: {
                     value: 3,
-                    message: 'Address name cannot be less than 3 chars!',
+                    message: "Address name cannot be less than 3 chars!",
                   },
                 })}
                 placeholder="Address"
@@ -268,18 +270,18 @@ const RegisterSeller = () => {
             <ErrorMessage
               errors={errors}
               name="address"
-              as={<div className="error-message" style={{ color: 'red' }} />}
+              as={<div className="error-message" style={{ color: "red" }} />}
             />
             <div className="input-item-register">
               <IonLabel>
                 <FaAddressBook className="input-icon" />
               </IonLabel>
               <IonInput
-                {...register('province', {
-                  required: 'This is a required field',
+                {...register("province", {
+                  required: "This is a required field",
                   minLength: {
                     value: 3,
-                    message: 'Province name cannot be less than 3 chars!',
+                    message: "Province name cannot be less than 3 chars!",
                   },
                 })}
                 placeholder="province"
@@ -290,22 +292,22 @@ const RegisterSeller = () => {
             <ErrorMessage
               errors={errors}
               name="province"
-              as={<div className="error-message" style={{ color: 'red' }} />}
+              as={<div className="error-message" style={{ color: "red" }} />}
             />
             <div className="input-item-register">
               <IonLabel>
                 <BsFillTelephoneFill className="input-icon" />
               </IonLabel>
               <IonInput
-                {...register('phone', {
-                  required: 'This is a required field',
+                {...register("phone", {
+                  required: "This is a required field",
                   minLength: {
                     value: 11,
-                    message: 'Phone number cannot less than 11 number!',
+                    message: "Phone number cannot less than 11 number!",
                   },
                   maxLength: {
                     value: 13,
-                    message: 'Phone number cannot more than 13 number!',
+                    message: "Phone number cannot more than 13 number!",
                   },
                 })}
                 className="input-text"
@@ -317,18 +319,18 @@ const RegisterSeller = () => {
             <ErrorMessage
               errors={errors}
               name="phone"
-              as={<div className="error-message" style={{ color: 'red' }} />}
+              as={<div className="error-message" style={{ color: "red" }} />}
             />
             <div className="input-item-register">
               <IonLabel>
                 <HiIdentification className="input-icon" />
               </IonLabel>
               <IonInput
-                {...register('ktpName', {
-                  required: 'This is a required field',
+                {...register("ktpName", {
+                  required: "This is a required field",
                   minLength: {
                     value: 3,
-                    message: 'KTP name cannot be less than 3 chars!',
+                    message: "KTP name cannot be less than 3 chars!",
                   },
                 })}
                 placeholder="KTP Name"
@@ -340,22 +342,22 @@ const RegisterSeller = () => {
             <ErrorMessage
               errors={errors}
               name="ktpName"
-              as={<div className="error-message" style={{ color: 'red' }} />}
+              as={<div className="error-message" style={{ color: "red" }} />}
             />
             <div className="input-item-register">
               <IonLabel>
                 <FaIdCard className="input-icon" />
               </IonLabel>
               <IonInput
-                {...register('ktpNumber', {
-                  required: 'This is a required field',
+                {...register("ktpNumber", {
+                  required: "This is a required field",
                   minLength: {
                     value: 11,
-                    message: 'KTP number cannot less than 11 number!',
+                    message: "KTP number cannot less than 11 number!",
                   },
                   maxLength: {
                     value: 13,
-                    message: 'KTP number cannot more than 13 number!',
+                    message: "KTP number cannot more than 13 number!",
                   },
                 })}
                 className="input-text"
@@ -367,11 +369,11 @@ const RegisterSeller = () => {
             <ErrorMessage
               errors={errors}
               name="ktpNumber"
-              as={<div className="error-message" style={{ color: 'red' }} />}
+              as={<div className="error-message" style={{ color: "red" }} />}
             />
             <IonRow>
               <button
-                style={{ marginTop: '10px', marginBottom: '5px' }}
+                style={{ marginTop: "10px", marginBottom: "5px" }}
                 className="btn-login"
               >
                 Register Seller
@@ -381,7 +383,7 @@ const RegisterSeller = () => {
         </form>
       </IonContent>
     </IonPage>
-  )
-}
+  );
+};
 
-export default RegisterSeller
+export default RegisterSeller;
