@@ -1,11 +1,11 @@
-import { IonIcon, IonText } from "@ionic/react";
+import { IonText, IonIcon } from "@ionic/react";
 import {
-  collection,
-  doc,
-  getDocs,
   query,
-  updateDoc,
+  collection,
   where,
+  getDocs,
+  updateDoc,
+  doc,
 } from "firebase/firestore";
 import { add } from "ionicons/icons";
 import React, { useContext } from "react";
@@ -13,9 +13,9 @@ import { useHistory } from "react-router";
 import { UserContext } from "../context/UserData";
 import { db } from "../firebase";
 import { Product } from "../pages/Home";
-import "./CardProduct.css";
+import "./CardCategory.css";
 
-const CardProduct = ({ product }: { product: Product }) => {
+const CardCategory = ({ product }: { product: Product }) => {
   const { userData } = useContext(UserContext);
   const history = useHistory();
   const addCart = async (product: Product) => {
@@ -51,13 +51,10 @@ const CardProduct = ({ product }: { product: Product }) => {
 
   return (
     <div
-      className="card-product"
       onClick={() => {
         goDetailProduk(product);
       }}
-      style={{
-        cursor: "pointer",
-      }}
+      className="card-container"
     >
       <img src={product.image} className="card-image" />
       <div
@@ -105,4 +102,4 @@ const CardProduct = ({ product }: { product: Product }) => {
   );
 };
 
-export default CardProduct;
+export default CardCategory;

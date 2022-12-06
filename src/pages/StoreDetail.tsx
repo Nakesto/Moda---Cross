@@ -9,52 +9,53 @@ import {
   IonRow,
   IonTitle,
   IonToolbar,
-} from '@ionic/react'
-import { query, collection, limit, getDocs, where } from 'firebase/firestore'
-import { cartOutline, chatbubbleEllipses } from 'ionicons/icons'
-import { useState, useEffect } from 'react'
-import { Link, Redirect, useLocation } from 'react-router-dom'
-import CardProduct from '../components/CardProduct'
-import { db } from '../firebase'
-import './StoreDetail.css'
-import { BsFillStarFill } from 'react-icons/bs'
+} from "@ionic/react";
+import { query, collection, getDocs, where } from "firebase/firestore";
+import { cartOutline, chatbubbleEllipses } from "ionicons/icons";
+import { useState, useEffect } from "react";
+import { Link, Redirect, useLocation } from "react-router-dom";
+import CardProduct from "../components/CardProduct";
+import { db } from "../firebase";
+import "./StoreDetail.css";
 
 export type Product = {
-  name: string
+  name: string;
   toko: {
-    name: string
-    uid: string
-    province: string
-  }
-  price: string
-  description: string
-  uid: string
-  stock: number
-  image: string
-}
+    name: string;
+    uid: string;
+    province: string;
+  };
+  price: string;
+  description: string;
+  uid: string;
+  stock: number;
+  image: string;
+};
 const StoreDetail = () => {
-  const location = useLocation()
-  const [newProduct, setNewProduct] = useState<Product[]>([])
-  const params: any = location.state
+  const location = useLocation();
+  const [newProduct, setNewProduct] = useState<Product[]>([]);
+  const params: any = location.state;
   useEffect(() => {
     const getProduct = async () => {
       const q = query(
-        collection(db, 'product'),
-        where('toko.name', '==', params.tokos.name),
-      )
-      const querySnapshot = await getDocs(q)
-      const data: Product[] = []
+        collection(db, "product"),
+        where("toko.name", "==", params.tokos.name)
+      );
+      const querySnapshot = await getDocs(q);
+      const data: Product[] = [];
       querySnapshot.forEach((doc) => {
         // doc.data() is never undefined for query doc snapshots
-        data.push(doc.data() as Product)
-      })
-      setNewProduct(data)
+        data.push(doc.data() as Product);
+      });
+      setNewProduct(data);
+    };
+    if (params != null) {
+      getProduct();
     }
-    getProduct()
-  }, [])
+  }, [params]);
 
-  if (params == null) {
-    return <Redirect to="/store" />
+  if (params === null) {
+    return <Redirect to="/store" />;
   }
   return (
     <IonPage className="page">
@@ -62,8 +63,8 @@ const StoreDetail = () => {
         <IonToolbar
           color="primary"
           style={{
-            paddingLeft: '15px',
-            paddingRight: '15px',
+            paddingLeft: "15px",
+            paddingRight: "15px",
           }}
           className="center"
         >
@@ -83,7 +84,11 @@ const StoreDetail = () => {
       <IonContent className="content">
         <div className="profile-toko">
           <div className="image-container-toko">
-            <img className="image-toko" src={params.tokos.image} />
+            <img
+              className="image-toko"
+              src={params.tokos.image}
+              alt={params.tokos.name}
+            />
           </div>
           <div className="detail-toko">
             <h1 className="h1-toko">
@@ -99,26 +104,26 @@ const StoreDetail = () => {
         </div>
 
         <div className="line-toko">
-          <div style={{ flex: 1, height: '1px', backgroundColor: 'black' }} />
+          <div style={{ flex: 1, height: "1px", backgroundColor: "black" }} />
           <div>
             <h2
               className="h2-toko"
-              style={{ width: '150px', textAlign: 'center' }}
+              style={{ width: "150px", textAlign: "center" }}
             >
               <b>Product</b>
             </h2>
           </div>
-          <div style={{ flex: 1, height: '1px', backgroundColor: 'black' }} />
+          <div style={{ flex: 1, height: "1px", backgroundColor: "black" }} />
         </div>
         <div
           style={{
-            marginTop: '10px',
-            marginBottom: '10px',
+            marginTop: "10px",
+            marginBottom: "10px",
           }}
         >
-          {newProduct.length == 0 ? (
+          {newProduct.length === 0 ? (
             <div>
-              <h2 style={{ textAlign: 'center' }}>Produk tidak ada...</h2>
+              <h2 style={{ textAlign: "center" }}>Produk tidak ada...</h2>
             </div>
           ) : (
             <div className="product-card">
@@ -132,7 +137,7 @@ const StoreDetail = () => {
         </div>
       </IonContent>
     </IonPage>
-  )
-}
+  );
+};
 
-export default StoreDetail
+export default StoreDetail;

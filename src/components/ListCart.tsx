@@ -1,5 +1,12 @@
-import { IonButton, IonCard, IonItem, IonLabel, IonRow } from "@ionic/react";
-import React, { useContext } from "react";
+import {
+  IonButton,
+  IonCard,
+  IonItem,
+  IonLabel,
+  IonRow,
+  IonToast,
+} from "@ionic/react";
+import React, { useContext, useState } from "react";
 import produk from "../Assets/produk.png";
 import minus from "../Assets/minus.png";
 import plus from "../Assets/plus.png";
@@ -11,12 +18,13 @@ import { db } from "../firebase";
 const ListCart = ({
   product,
   quantity,
+  trigger,
 }: {
   product: Product;
   quantity: number;
+  trigger: () => void;
 }) => {
   const { userData } = useContext(UserContext);
-
   const plussCart = async () => {
     await updateDoc(doc(db, "cart", userData!.uid), {
       [userData!.uid + product.uid + ".quantity"]: quantity + 1,
@@ -32,6 +40,7 @@ const ListCart = ({
         [userData!.uid + product.uid]: deleteField(),
       });
 
+      trigger();
       return;
     }
 
