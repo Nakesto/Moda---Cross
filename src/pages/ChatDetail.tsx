@@ -6,34 +6,34 @@ import {
   IonPage,
   IonTitle,
   IonToolbar,
-} from '@ionic/react'
-import { doc, onSnapshot } from 'firebase/firestore'
-import React, { useContext, useEffect, useState } from 'react'
-import Input from '../components/Input'
-import Message from '../components/Message'
-import { ChatContext } from '../context/Provider'
-import { db } from '../firebase'
-import './ChatDetail.css'
+} from "@ionic/react";
+import { doc, onSnapshot } from "firebase/firestore";
+import React, { useContext, useEffect, useState } from "react";
+import Input from "../components/Input";
+import Message from "../components/Message";
+import { ChatContext } from "../context/Provider";
+import { db } from "../firebase";
+import "./ChatDetail.css";
 
 const ChatDetail = () => {
-  const [messages, setMessages] = useState([])
-  const { chatId } = useContext(ChatContext)
+  const [messages, setMessages] = useState([]);
+  const { chatId } = useContext(ChatContext);
 
   useEffect(() => {
-    const unSub = onSnapshot(doc(db, 'chats', chatId), (doc) => {
-      doc.exists() && setMessages(doc.data().messages)
-    })
+    const unSub = onSnapshot(doc(db, "chats", chatId), (doc) => {
+      doc.exists() && setMessages(doc.data().messages);
+    });
 
     return () => {
-      unSub()
-    }
-  }, [chatId])
+      unSub();
+    };
+  }, [chatId]);
 
   return (
     <IonPage className="page">
       <IonHeader className="head">
         <IonToolbar color="primary">
-          <IonTitle>Slebew Store</IonTitle>
+          <IonTitle>Chat Toko</IonTitle>
           <IonButtons slot="start">
             <IonBackButton />
           </IonButtons>
@@ -91,7 +91,7 @@ const ChatDetail = () => {
       </IonContent>
       <Input />
     </IonPage>
-  )
-}
+  );
+};
 
-export default ChatDetail
+export default ChatDetail;
