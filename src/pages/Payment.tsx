@@ -1,4 +1,4 @@
-import { IonBackButton, IonButton, IonButtons, IonCard, IonCheckbox, IonCol, IonContent, IonGrid, IonHeader, IonItem, IonLabel, IonList, IonPage, IonRow, IonTitle, IonToast, IonToolbar } from "@ionic/react";
+import { IonBackButton, IonButton, IonButtons, IonCard, IonCheckbox, IonCol, IonContent, IonGrid, IonHeader, IonItem, IonLabel, IonList, IonPage, IonRadio, IonRadioGroup, IonRow, IonTitle, IonToast, IonToolbar } from "@ionic/react";
 import produk from "../Assets/produk.png";
 import gopay from "../Assets/gopay.png";
 import ovo from "../Assets/OVO.png";
@@ -6,13 +6,7 @@ import dana from "../Assets/dana.png";
 import "./Payment.css";
 import { Redirect, useHistory, useLocation } from "react-router";
 import { useContext, useState } from "react";
-import {
-  arrayUnion,
-  deleteField,
-  doc,
-  setDoc,
-  updateDoc,
-} from "firebase/firestore";
+import { arrayUnion, deleteField, doc, setDoc, updateDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import { UserContext } from "../context/UserData";
 
@@ -80,28 +74,32 @@ const Payment: React.FC = () => {
         </IonList>
         <div>
           <h3 style={{ fontWeight: "bold", marginLeft: "20px" }}>Metode Pembayaran</h3>
-          <IonItem className="cardlist" lines="none">
-            <img style={{ width: "60px", marginRight: "10px", marginLeft: "20px" }} alt="pembayaran" src={gopay}></img>
-            <IonLabel style={{ paddingBottom: "10px" }}>
-              <h2 className="des">Gopay</h2>
-            </IonLabel>
+          <IonList>
+            <IonRadioGroup>
+              <IonItem className="cardlist" lines="none">
+                <img style={{ width: "60px", marginRight: "10px", marginLeft: "20px" }} alt="pembayaran" src={gopay}></img>
+                <IonLabel style={{ paddingBottom: "10px" }}>
+                  <h2 className="des">Gopay</h2>
+                </IonLabel>
 
-            <IonCheckbox slot="end"></IonCheckbox>
-          </IonItem>
-          <IonItem className="cardlist" lines="none">
-            <img style={{ width: "60px", marginRight: "10px", marginLeft: "20px" }} alt="pembayaran" src={ovo}></img>
-            <IonLabel style={{ paddingBottom: "10px" }}>
-              <h2 className="des">OVO</h2>
-            </IonLabel>
-            <IonCheckbox slot="end"></IonCheckbox>
-          </IonItem>
-          <IonItem className="cardlist" lines="none">
-            <img style={{ width: "60px", marginRight: "10px", marginLeft: "20px" }} alt="pembayaran" src={dana}></img>
-            <IonLabel style={{ paddingBottom: "10px" }}>
-              <h2 className="des">Dana</h2>
-            </IonLabel>
-            <IonCheckbox slot="end"></IonCheckbox>
-          </IonItem>
+                <IonRadio slot="end" value="Gopay"></IonRadio>
+              </IonItem>
+              <IonItem className="cardlist" lines="none">
+                <img style={{ width: "60px", marginRight: "10px", marginLeft: "20px" }} alt="pembayaran" src={ovo}></img>
+                <IonLabel style={{ paddingBottom: "10px" }}>
+                  <h2 className="des">OVO</h2>
+                </IonLabel>
+                <IonRadio slot="end" value="OVO"></IonRadio>
+              </IonItem>
+              <IonItem className="cardlist" lines="none">
+                <img style={{ width: "60px", marginRight: "10px", marginLeft: "20px" }} alt="pembayaran" src={dana}></img>
+                <IonLabel style={{ paddingBottom: "10px" }}>
+                  <h2 className="des">Dana</h2>
+                </IonLabel>
+                <IonRadio slot="end" value="Dana"></IonRadio>
+              </IonItem>
+            </IonRadioGroup>
+          </IonList>
         </div>
         <div
           style={{
