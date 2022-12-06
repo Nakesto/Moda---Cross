@@ -1,12 +1,10 @@
 import {
   IonBackButton,
-  IonButton,
   IonButtons,
   IonCol,
   IonContent,
   IonGrid,
   IonHeader,
-  IonIcon,
   IonPage,
   IonRow,
   IonSearchbar,
@@ -16,7 +14,6 @@ import { collection, getDocs, query, where } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { Redirect, useLocation } from "react-router";
 import CardCategory from "../components/CardCategory";
-import CardProduct from "../components/CardProduct";
 import { auth, db } from "../firebase";
 import { Product } from "./Home";
 
@@ -24,7 +21,6 @@ const Category = () => {
   const location = useLocation();
   const params: any = location.state;
   const [product, setProduct] = useState<Product[]>([]);
-  const { currentUser } = auth;
 
   useEffect(() => {
     const getProduct = async () => {

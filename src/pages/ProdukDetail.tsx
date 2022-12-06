@@ -113,7 +113,11 @@ const ProdukDetail = () => {
       <IonContent className="content">
         <div className="container-produk">
           <div className="container-img-produk">
-            <img className="img-produk" src={params.product.image} />
+            <img
+              className="img-produk"
+              src={params.product.image}
+              alt={params.product.name}
+            />
           </div>
           <div className="container-informasi-produk">
             <div className="infromasi-produk">

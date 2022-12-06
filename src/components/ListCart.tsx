@@ -1,12 +1,5 @@
-import {
-  IonButton,
-  IonCard,
-  IonItem,
-  IonLabel,
-  IonRow,
-  IonToast,
-} from "@ionic/react";
-import React, { useContext, useState } from "react";
+import { IonButton, IonCard, IonItem, IonLabel, IonRow } from "@ionic/react";
+import React, { useContext } from "react";
 import produk from "../Assets/produk.png";
 import minus from "../Assets/minus.png";
 import plus from "../Assets/plus.png";
