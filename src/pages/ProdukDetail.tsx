@@ -85,8 +85,6 @@ const ProdukDetail = () => {
     return <Redirect to="/home" />;
   }
 
-  console.log(params.product.toko.uid);
-
   return (
     <IonPage className="page">
       <IonHeader className="head">

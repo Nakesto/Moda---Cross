@@ -15,7 +15,13 @@ import { db } from "../firebase";
 import { Product } from "../pages/Home";
 import "./CardCategory.css";
 
-const CardCategory = ({ product }: { product: Product }) => {
+const CardCategory = ({
+  product,
+  notif,
+}: {
+  product: Product;
+  notif: () => void;
+}) => {
   const { userData } = useContext(UserContext);
   const history = useHistory();
   const addCart = async (product: Product) => {
@@ -41,6 +47,8 @@ const CardCategory = ({ product }: { product: Product }) => {
           [userData!.uid + product.uid + ".product"]: product,
           [userData!.uid + product.uid + ".quantity"]: 1,
         });
+
+        notif();
       }
     } catch (err) {}
   };

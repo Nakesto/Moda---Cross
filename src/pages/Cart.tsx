@@ -27,12 +27,17 @@ import ListCart from "../components/ListCart";
 
 const Cart: React.FC = () => {
   const [cart, setCart] = useState({});
-  const { userData } = useContext(UserContext);
+  const { userData, isLoggedIn } = useContext(UserContext);
   const [isLoading, setIsLoading] = useState(true);
   const history = useHistory();
   const [success, setSuccess] = useState(false);
 
   useEffect(() => {
+    if (isLoggedIn === false) {
+      history.push("/");
+
+      return;
+    }
     const unsub = onSnapshot(doc(db, "cart", userData!.uid), (doc) => {
       setCart(doc.data() as any);
       setIsLoading(false);
@@ -162,7 +167,7 @@ const Cart: React.FC = () => {
         <IonToast
           color="danger"
           isOpen={success}
-          onDidDismiss={() => setSuccess(true)}
+          onDidDismiss={() => setSuccess(false)}
           message={`Removed item from your Cart`}
           duration={1500}
         />
