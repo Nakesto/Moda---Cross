@@ -29,6 +29,7 @@ const Cart: React.FC = () => {
   const { userData } = useContext(UserContext)
   const [isLoading, setIsLoading] = useState(true)
   const history = useHistory()
+  const [price, setPrice] = useState(0)
 
   useEffect(() => {
     const unsub = onSnapshot(doc(db, 'cart', userData!.uid), (doc) => {
@@ -39,6 +40,15 @@ const Cart: React.FC = () => {
       unsub()
     }
   }, [userData])
+
+  useEffect(() => {
+    let sum = 0
+    Object.entries(cart).map((data: any, index) => {
+      let temp = parseInt(data[1].product.price)
+      sum += temp
+      setPrice(sum)
+    })
+  }, [cart])
 
   const toPayment = () => {
     history.push('/payment', { cart })
@@ -139,7 +149,7 @@ const Cart: React.FC = () => {
                   size="4"
                   style={{ justifyContent: 'end', display: 'flex' }}
                 >
-                  <IonLabel className="totalhrg">Rp. 100.000</IonLabel>
+                  <IonLabel className="totalhrg">Rp. {price}</IonLabel>
                 </IonCol>
               </IonRow>
               <IonRow>

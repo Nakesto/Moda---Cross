@@ -64,8 +64,11 @@ const ProdukDetail = () => {
                 <IonIcon icon={heartOutline} />
               </IonButton>
             </div>
-            <h2 className="h2-produk">{params.product.name}</h2>
+            <h2 className="h2-produk">
+              <b>{params.product.name}</b>
+            </h2>
             <h4 className="h4-produk">Stock {params.product.stock}</h4>
+            <h4 className="h4-produk">Kategori: {params.product.category}</h4>
             <h3 className="h3-produk">
               <b>Description</b>
               <p>{params.product.description}</p>

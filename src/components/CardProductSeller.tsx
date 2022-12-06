@@ -1,4 +1,10 @@
-import { IonIcon, IonText, useIonToast } from '@ionic/react'
+import {
+  IonBadge,
+  IonButton,
+  IonIcon,
+  IonText,
+  useIonToast,
+} from '@ionic/react'
 import { arrayUnion, doc, setDoc, updateDoc } from 'firebase/firestore'
 import { add, checkmarkDoneOutline } from 'ionicons/icons'
 import React, { useContext } from 'react'
@@ -6,9 +12,9 @@ import { useHistory } from 'react-router'
 import { UserContext } from '../context/UserData'
 import { db } from '../firebase'
 import { Product } from '../pages/Home'
-import './CardProduct.css'
+import './CardProductSeller.css'
 
-const CardProduct = ({ product }: { product: Product }) => {
+const CardProductSeller = ({ product }: { product: Product }) => {
   const [present] = useIonToast()
 
   const presentToast = (position: 'middle') => {
@@ -34,45 +40,31 @@ const CardProduct = ({ product }: { product: Product }) => {
   }
 
   return (
-    <div className="card-product">
-      <img src={product.image} className="card-image" />
+    <div
+      className="produk-card"
+      onClick={() => {
+        goDetailProduk(product)
+      }}
+    >
+      <img src={product.image} className="produk-image" />
       <div
         style={{
           display: 'flex',
           flexDirection: 'column',
+          justifyContent: 'center',
         }}
       >
-        <IonText
-          style={{
-            marginBottom: '5px',
-          }}
-        >
-          {product.name}
+        <IonText className="produk-name">
+          <b>{product.name}</b>
         </IonText>
-        <IonText
-          style={{
-            marginBottom: '15px',
-          }}
-          onClick={() => {
-            goDetailProduk(product)
-          }}
-        >
-          {product.toko.name}
+        <IonText className="produk-stock">Stock: {product.stock}</IonText>
+        <IonText className="produk-price">
+          <b>Rp. {product.price}</b>
         </IonText>
-      </div>
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-        }}
-      >
-        <IonText>{'Rp.' + product.price}</IonText>
-        <button onClick={() => addCart(product)}>
-          <IonIcon icon={add} />
-        </button>
+        <IonBadge className="verif-badge">Unverified</IonBadge>
       </div>
     </div>
   )
 }
 
-export default CardProduct
+export default CardProductSeller

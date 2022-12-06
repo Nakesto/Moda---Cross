@@ -11,8 +11,9 @@
 }
 
 .img-produk {
-  width: 300px;
-  height: 300px;
+  height: 600px;
+  object-fit: cover;
+  margin-bottom: 10px;
 }
 
 .container-informasi-produk {
@@ -20,6 +21,7 @@
   flex-direction: column;
   margin-left: 30px;
   margin-right: 30px;
+  box-shadow: 0 -5px 5px -5px #746e6ef4;
 }
 
 .infromasi-produk {
@@ -38,6 +40,7 @@
 }
 
 .content-btn-produk {
+  max-width: 1024px;
   width: 100%;
   background-color: white;
   display: flex;
@@ -286,14 +289,15 @@
 }
 
 @media screen and (min-width: 1024px) {
-  .img-produk {
-    width: 350px;
-    height: 350px;
-  }
-
   .container-informasi-produk {
     margin-left: 35px;
     margin-right: 35px;
+  }
+
+  .img-produk {
+    width: 600px;
+    height: 600px;
+    object-fit: cover;
   }
   .h1-produk {
     font-size: 30px;
@@ -335,10 +339,15 @@
     height: 250px;
   }
 
+  .content-btn-produk {
+    box-shadow: 0 -5px 5px -5px #746e6ef4;
+  }
+
   .container-informasi-produk {
     margin-left: 35px;
     margin-right: 35px;
   }
+
   .h1-produk {
     font-size: 30px;
   }

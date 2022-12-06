@@ -34,6 +34,7 @@ export type Toko = {
   phoneNumber: string
   province: string
   image: string
+  address: string
 }
 
 const Store = () => {

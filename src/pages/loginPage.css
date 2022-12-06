@@ -75,6 +75,7 @@ ion-back-button {
   display: flex;
   color: #595959;
   align-items: center;
+  padding-left: 10px;
 }
 
 .input-text:focus-within {

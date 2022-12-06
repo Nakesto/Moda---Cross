@@ -31,6 +31,7 @@ export type Product = {
   uid: string
   stock: number
   image: string
+  category: string
 }
 const StoreDetail = () => {
   const location = useLocation()
@@ -40,7 +41,7 @@ const StoreDetail = () => {
     const getProduct = async () => {
       const q = query(
         collection(db, 'product'),
-        where('toko.name', '==', params.tokos.name),
+        where('toko.uid', '==', params.tokos.uid),
       )
       const querySnapshot = await getDocs(q)
       const data: Product[] = []
@@ -89,6 +90,7 @@ const StoreDetail = () => {
             <h1 className="h1-toko">
               <b>{params.tokos.name}</b>
             </h1>
+            <h4 className="h3-toko">{params.tokos.address}</h4>
             <h4 className="h3-toko">{params.tokos.province}</h4>
             <IonButton className="btn-chat-toko">
               <IonIcon slot="end" icon={chatbubbleEllipses}></IonIcon>Chat

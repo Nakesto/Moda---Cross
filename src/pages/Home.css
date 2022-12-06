@@ -48,11 +48,11 @@
 }
 
 .horizontal {
-  display: "flex";
-  gap: "20px";
-  overflow: "scroll";
+  display: 'flex';
+  gap: '20px';
+  overflow: 'scroll';
 }
 
 .horizontal::-webkit-scrollbar {
-  display: "none";
+  display: 'none';
 }

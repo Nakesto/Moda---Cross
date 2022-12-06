@@ -11,17 +11,22 @@ import {
   IonRow,
   IonSelect,
   IonSelectOption,
+  IonTextarea,
   IonTitle,
   IonToolbar,
 } from '@ionic/react'
-import './RegisterPage.css'
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import { mail, calendar, camera } from 'ionicons/icons'
 import { FaAddressBook, FaIdCard, FaTransgender } from 'react-icons/fa'
 import { BsCameraFill, BsFillTelephoneFill } from 'react-icons/bs'
 import { RiLockPasswordFill } from 'react-icons/ri'
 import { HiIdentification } from 'react-icons/hi'
-import { AiTwotoneSecurityScan } from 'react-icons/ai'
+import {
+  AiFillTags,
+  AiOutlineStock,
+  AiTwotoneBook,
+  AiTwotoneSecurityScan,
+} from 'react-icons/ai'
 import profile from '../Assets/profile.png'
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
 import {
@@ -42,35 +47,53 @@ import { storage, auth, db } from '../firebase'
 import { UserContext } from '../context/UserData'
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera'
 import { base64FromPath } from '@capacitor-community/filesystem-react'
-const RegisterSeller = () => {
+import { MdCategory, MdOutlineCancel } from 'react-icons/md'
+import { BiMoney } from 'react-icons/bi'
+import { CgNametag, CgProductHunt } from 'react-icons/cg'
+import { GiCancel } from 'react-icons/gi'
+import './AddProduct.css'
+import { stringify } from 'querystring'
+
+const AddProduct = ({
+  onDismiss,
+  role,
+}: {
+  onDismiss: (data?: any, role?: string) => void
+  role: string
+}) => {
   const [takenPhoto, setTakenPhoto] = useState<string>()
-  const [selectedfile, setSelectedFile] = useState<File>()
-  const { userData } = useContext(UserContext)
-  const [typeFile, setTypeFile] = useState<'camera' | 'file'>('camera')
-  const history = useHistory()
-  const [datas, setDatas] = useState({
-    photoUrls: '-',
-    names: '-',
-    phoneNumber: '-',
-    gender: '-',
-    birthdate: '-',
-    userDoc: '',
+  const [dataProduct, setDataProduct] = useState({
+    name: '',
+    toko: {
+      name: '',
+      uid: '',
+      province: '',
+      photoURL: '',
+    },
+    price: '',
+    description: '',
+    uid: '',
+    stock: '',
+    image: '',
+    category: '',
   })
+  const [selectedfile, setSelectedFile] = useState<File>()
+  const [typeFile, setTypeFile] = useState<'camera' | 'file'>('camera')
+  const { userData } = useContext(UserContext)
+  const [category, setCategory] = useState<'top' | 'pants' | 'bag' | 'shoes'>(
+    'top',
+  )
+  //   const [description, setDescription] = useState('')
+  const selectCategory = (event: CustomEvent) => {
+    const selectedGender = event.detail.value
+    setCategory(selectedGender)
+  }
 
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm()
-
-  const location = useLocation()
-  const { isLoggedIn } = useContext(UserContext)
-
-  //   useEffect(() => {
-  //     if (isLoggedIn === true) {
-  //       history.push('/home')
-  //     }
-  //   }, [location.pathname, isLoggedIn, history])
 
   const fileChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedFile(event.target!.files![0])
@@ -82,6 +105,7 @@ const RegisterSeller = () => {
     const base64 = await base64FromPath(takenPhoto!)
     const value = await fetch(base64)
     const blob: any = await value.blob()
+    const valCategory = (await category) as string
     let file: File
     if (typeFile === 'camera') {
       file = new File([await blob], Math.random().toString(), {
@@ -100,28 +124,23 @@ const RegisterSeller = () => {
     })
 
     const addData = async (url: string) => {
-      try {
-        await setDoc(doc(db, 'toko', `${userData?.uid}`), {
-          name: data.storeName as string,
-          phoneNumber: data.phone as string,
-          address: data.address as string,
-          province: data.province as string,
-          ktpName: data.ktpName as string,
-          ktpNumber: data.ktpNumber as string,
-          image: url,
-          uid: userData?.uid,
-        })
-
-        const dbRef = doc(db, 'user', datas.userDoc)
-        await updateDoc(dbRef, {
-          regSeller: true,
-        })
-
-        history.push('/profile')
-      } catch (error) {
-        console.log(error)
-      }
+      await setDataProduct({
+        name: data.product_name as string,
+        toko: {
+          name: '',
+          uid: '',
+          province: '',
+          photoURL: '',
+        },
+        price: data.price as string,
+        description: data.description as string,
+        uid: '',
+        stock: data.stock as string,
+        image: url,
+        category: valCategory,
+      })
     }
+    onDismiss(dataProduct, 'confirm')
   }
 
   const takePhotoHandler = async () => {
@@ -141,35 +160,21 @@ const RegisterSeller = () => {
     setTakenPhoto(photo.webPath)
   }
 
-  useEffect(() => {
-    const singleUser = query(
-      collection(db, 'user'),
-      where('uid', '==', userData?.uid),
-    )
-    const unsub = onSnapshot(singleUser, (snapshot) => {
-      snapshot.docs.forEach((doc) => {
-        setDatas({
-          photoUrls: doc.data().photoUrl,
-          names: doc.data().name,
-          phoneNumber: doc.data().phone,
-          gender: doc.data().gender,
-          birthdate: doc.data().birthdate,
-          userDoc: doc.id,
-        })
-      })
-    })
-    return () => {
-      unsub()
-    }
-  }, [userData?.uid])
+  //   const handleDescription = (e: any) => {
+  //     setDescription(e.target.value)
+  //     console.log(e.target.value)
+  //   }
 
   return (
     <IonPage className="page">
       <IonHeader className="head">
         <IonToolbar color="primary">
-          <IonTitle>Fill Your Store Profile</IonTitle>
+          <IonTitle>Add Product Detail</IonTitle>
           <IonButtons slot="start">
-            <IonBackButton />
+            <GiCancel
+              style={{ height: '30px', width: '30px', marginLeft: '10px' }}
+              onClick={() => onDismiss(null, 'cancel')}
+            />
           </IonButtons>
         </IonToolbar>
       </IonHeader>
@@ -200,7 +205,7 @@ const RegisterSeller = () => {
                   <span className="profilepic_icon">
                     <BsCameraFill className="fas" />
                   </span>
-                  <span className="profilepic_text">Edit Profile</span>
+                  <span className="profilepic_text">Input Photo Product</span>
                 </label>
                 <input
                   id="actual-btn1"
@@ -228,153 +233,127 @@ const RegisterSeller = () => {
           <div className="login-group">
             <div className="input-item-register">
               <IonLabel>
-                <HiIdentification className="input-icon" />
+                <CgNametag className="input-icon" />
               </IonLabel>
               <IonInput
-                {...register('storeName', {
+                {...register('product_name', {
                   required: 'This is a required field',
                   minLength: {
                     value: 3,
-                    message: 'Store name cannot be less than 3 chars!',
+                    message: 'Name cannot be less than 3 chars!',
                   },
                 })}
-                placeholder="Store Name"
+                placeholder="Product Name"
                 className="input-text"
-                name="storeName"
+                name="product_name"
               />
             </div>
             <ErrorMessage
               errors={errors}
-              name="storeName"
+              name="product_name"
               as={<div className="error-message" style={{ color: 'red' }} />}
             />
             <div className="input-item-register">
               <IonLabel>
-                <FaAddressBook className="input-icon" />
+                <AiFillTags className="input-icon" />
               </IonLabel>
-              <IonInput
-                {...register('address', {
-                  required: 'This is a required field',
-                  minLength: {
-                    value: 3,
-                    message: 'Address name cannot be less than 3 chars!',
-                  },
-                })}
-                placeholder="Address"
-                className="input-text"
-                name="address"
-              />
+              <IonSelect
+                className="gender-dropdown"
+                interface="popover"
+                placeholder="Select Gender"
+                onIonChange={selectCategory}
+                value={category}
+              >
+                <IonSelectOption className="item-dropdown" value="top">
+                  Top
+                </IonSelectOption>
+                <IonSelectOption className="item-dropdown" value="pants">
+                  Pants
+                </IonSelectOption>
+                <IonSelectOption className="item-dropdown" value="shoes">
+                  Shoes
+                </IonSelectOption>
+                <IonSelectOption className="item-dropdown" value="bag">
+                  Bag
+                </IonSelectOption>
+              </IonSelect>
             </div>
-            <ErrorMessage
-              errors={errors}
-              name="address"
-              as={<div className="error-message" style={{ color: 'red' }} />}
-            />
             <div className="input-item-register">
               <IonLabel>
-                <FaAddressBook className="input-icon" />
+                <BiMoney className="input-icon" />
               </IonLabel>
               <IonInput
-                {...register('province', {
+                {...register('price', {
                   required: 'This is a required field',
-                  minLength: {
-                    value: 3,
-                    message: 'Province name cannot be less than 3 chars!',
-                  },
-                })}
-                placeholder="province"
-                className="input-text"
-                name="province"
-              />
-            </div>
-            <ErrorMessage
-              errors={errors}
-              name="province"
-              as={<div className="error-message" style={{ color: 'red' }} />}
-            />
-            <div className="input-item-register">
-              <IonLabel>
-                <BsFillTelephoneFill className="input-icon" />
-              </IonLabel>
-              <IonInput
-                {...register('phone', {
-                  required: 'This is a required field',
-                  minLength: {
-                    value: 11,
-                    message: 'Phone number cannot less than 11 number!',
-                  },
-                  maxLength: {
-                    value: 13,
-                    message: 'Phone number cannot more than 13 number!',
+                  pattern: {
+                    value: /[0-9]/,
+                    message: 'Price must be number',
                   },
                 })}
                 className="input-text"
-                placeholder="Phone Number"
-                type="number"
-                name="phone"
-              />
-            </div>
-            <ErrorMessage
-              errors={errors}
-              name="phone"
-              as={<div className="error-message" style={{ color: 'red' }} />}
-            />
-            <div className="input-item-register">
-              <IonLabel>
-                <HiIdentification className="input-icon" />
-              </IonLabel>
-              <IonInput
-                {...register('ktpName', {
-                  required: 'This is a required field',
-                  minLength: {
-                    value: 3,
-                    message: 'KTP name cannot be less than 3 chars!',
-                  },
-                })}
-                placeholder="KTP Name"
-                className="input-text"
-                name="ktpName"
+                placeholder="Price"
                 type="text"
+                name="price"
               />
             </div>
             <ErrorMessage
               errors={errors}
-              name="ktpName"
+              name="price"
               as={<div className="error-message" style={{ color: 'red' }} />}
             />
             <div className="input-item-register">
               <IonLabel>
-                <FaIdCard className="input-icon" />
+                <AiOutlineStock className="input-icon" />
               </IonLabel>
               <IonInput
-                {...register('ktpNumber', {
+                {...register('stock', {
                   required: 'This is a required field',
-                  minLength: {
-                    value: 11,
-                    message: 'KTP number cannot less than 11 number!',
-                  },
-                  maxLength: {
-                    value: 13,
-                    message: 'KTP number cannot more than 13 number!',
+                  pattern: {
+                    value: /[0-9]/,
+                    message: 'Stock cannot be zero & must be number!',
                   },
                 })}
                 className="input-text"
-                placeholder="KTP Number"
-                type="number"
-                name="ktpNumber"
+                placeholder="Stock"
+                type="text"
+                name="stock"
               />
             </div>
             <ErrorMessage
               errors={errors}
-              name="ktpNumber"
+              name="stock"
               as={<div className="error-message" style={{ color: 'red' }} />}
             />
+            <div className="text-input-area">
+              <IonLabel>
+                <AiOutlineStock className="input-icon" />
+              </IonLabel>
+              <IonInput
+                {...register('description', {
+                  required: 'This is a required field',
+                })}
+                className="input-text-area"
+                placeholder="Description"
+                name="description"
+                id="description"
+                type="text"
+                // value={description}
+                // onChange={handleDescription}
+                style={{ paddingRight: '10px' }}
+              />
+            </div>
+            <ErrorMessage
+              errors={errors}
+              name="description"
+              as={<div className="error-message" style={{ color: 'red' }} />}
+            />
+
             <IonRow>
               <button
                 style={{ marginTop: '10px', marginBottom: '5px' }}
                 className="btn-login"
               >
-                Register Seller
+                Add Product
               </button>
             </IonRow>
           </div>
@@ -384,4 +363,30 @@ const RegisterSeller = () => {
   )
 }
 
-export default RegisterSeller
+//   function openModal() {
+//     present({
+//       onWillDismiss: (ev: CustomEvent<OverlayEventDetail>) => {
+//         if (ev.detail.role === 'confirm') {
+//           setMessage(`Hello, ${ev.detail.data}!`)
+//         }
+//       },
+//     })
+//   }
+
+//   return (
+//     <IonPage>
+//       <IonHeader>
+//         <IonToolbar>
+//           <IonTitle>Controller Modal</IonTitle>
+//         </IonToolbar>
+//       </IonHeader>
+//       <IonContent className="ion-padding">
+//         <IonButton expand="block" onClick={() => openModal()}>
+//           Open
+//         </IonButton>
+//         <p>{message}</p>
+//       </IonContent>
+//     </IonPage>
+//   )
+
+export default AddProduct
