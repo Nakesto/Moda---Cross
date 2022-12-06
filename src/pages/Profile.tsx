@@ -21,8 +21,10 @@ import {
   where,
 } from "firebase/firestore";
 import { db } from "../firebase";
+import { useHistory } from "react-router";
 const Profile: React.FC = () => {
   const { userData, logOut } = useContext(UserContext);
+  const history = useHistory();
   const [datas, setDatas] = useState({
     photoUrls: "-",
     names: "-",
@@ -67,6 +69,7 @@ const Profile: React.FC = () => {
                   className="register-seller"
                   onClick={() => {
                     logOut();
+                    history.push("/selectlogin");
                   }}
                 >
                   <FiLogOut style={{ marginRight: "5px" }} />

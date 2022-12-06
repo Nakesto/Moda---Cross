@@ -15,69 +15,68 @@ import {
   IonText,
   IonToolbar,
   useIonModal,
-} from '@ionic/react'
-import { OverlayEventDetail } from '@ionic/react/dist/types/components/react-component-lib/interfaces'
-import { collection, getDocs, limit, query } from 'firebase/firestore'
-import { cartOutline } from 'ionicons/icons'
-import React, { useEffect, useState } from 'react'
-import { Link, useHistory } from 'react-router-dom'
-import { validMethods } from 'workbox-routing/utils/constants'
-import ModalFull from '../components/ModalFull'
-import { db } from '../firebase'
-import { Product } from './Home'
+} from "@ionic/react";
+import { OverlayEventDetail } from "@ionic/react/dist/types/components/react-component-lib/interfaces";
+import { collection, getDocs, limit, query } from "firebase/firestore";
+import { cartOutline } from "ionicons/icons";
+import React, { useEffect, useState } from "react";
+import { Link, useHistory } from "react-router-dom";
+import ModalFull from "../components/ModalFull";
+import { db } from "../firebase";
+import { Product } from "./Home";
 
 export type Toko = {
-  uid: string
-  name: string
-  description: string
-  products: Product[]
-  phoneNumber: string
-  province: string
-  image: string
-}
+  uid: string;
+  name: string;
+  description: string;
+  products: Product[];
+  phoneNumber: string;
+  province: string;
+  image: string;
+};
 
 const Store = () => {
-  const [tokos, setTokos] = useState<Toko[]>([])
+  const [tokos, setTokos] = useState<Toko[]>([]);
   const [present, dismiss] = useIonModal(ModalFull, {
     onDismiss: (data: { toko: null }, role: string) => dismiss(data, role),
-    role: 'toko',
-  })
-  const history = useHistory()
+    role: "toko",
+  });
+  const history = useHistory();
 
   useEffect(() => {
     const getProduct = async () => {
-      const q = query(collection(db, 'toko'), limit(5))
-      const querySnapshot = await getDocs(q)
-      const data: Toko[] = []
+      const q = query(collection(db, "toko"), limit(15));
+      const querySnapshot = await getDocs(q);
+      const data: Toko[] = [];
       querySnapshot.forEach((doc) => {
         // doc.data() is never undefined for query doc snapshots
-        data.push(doc.data() as Toko)
-      })
+        data.push(doc.data() as Toko);
+      });
 
-      setTokos(data)
-    }
+      setTokos(data);
+    };
 
-    getProduct()
-  }, [])
+    getProduct();
+  }, []);
 
   function openModal() {
     present({
       onWillDismiss: (ev: CustomEvent<OverlayEventDetail>) => {
-        if (ev.detail.role === 'goToCart') {
-          history.push('/cart')
+        if (ev.detail.role === "goToCart") {
+          history.push("/cart");
         }
 
-        if (ev.detail.role === 'goToDetail') {
-          const tokos = ev.detail.data.toko
-          history.push('/detailToko', { tokos })
+        if (ev.detail.role === "goToDetail") {
+          const tokos = ev.detail.data.toko;
+          history.push("/detailToko", { tokos });
         }
       },
-    })
+    });
   }
 
   const goToDetail = (tokos: Toko) => {
-    history.push('/detailToko', { tokos })
-  }
+    history.push("/detailToko", { tokos });
+  };
 
   return (
     <IonPage className="page">
@@ -85,14 +84,14 @@ const Store = () => {
         <IonToolbar
           color="primary"
           style={{
-            paddingLeft: '15px',
-            paddingRight: '15px',
+            paddingLeft: "15px",
+            paddingRight: "15px",
           }}
           className="center"
         >
           <IonText
             style={{
-              marginTop: '9px',
+              marginTop: "9px",
             }}
             slot="start"
             className="text-toolbar"
@@ -101,7 +100,7 @@ const Store = () => {
           </IonText>
           <IonSearchbar
             style={{
-              marginTop: '9px',
+              marginTop: "9px",
             }}
             onClick={() => openModal()}
           ></IonSearchbar>
@@ -123,10 +122,10 @@ const Store = () => {
                   <IonCard
                     className="ion-padding"
                     style={{
-                      borderRadius: '20px',
+                      borderRadius: "20px",
                     }}
                     onClick={() => {
-                      goToDetail(val)
+                      goToDetail(val);
                     }}
                   >
                     <img
@@ -135,14 +134,14 @@ const Store = () => {
                       height="200px"
                       width="100%"
                       style={{
-                        borderRadius: '20px',
-                        objectFit: 'cover',
+                        borderRadius: "20px",
+                        objectFit: "cover",
                       }}
                     />
                     <IonCardHeader
                       className="ion-no-padding"
                       style={{
-                        marginTop: '10px',
+                        marginTop: "10px",
                       }}
                     >
                       <IonCardTitle>{val.name}</IonCardTitle>
@@ -150,13 +149,13 @@ const Store = () => {
                     </IonCardHeader>
                   </IonCard>
                 </IonCol>
-              )
+              );
             })}
           </IonRow>
         </IonGrid>
       </IonContent>
     </IonPage>
-  )
-}
+  );
+};
 
-export default Store
+export default Store;

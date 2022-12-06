@@ -56,7 +56,7 @@ const CardCategory = ({ product }: { product: Product }) => {
       }}
       className="card-container"
     >
-      <img src={product.image} className="card-image" />
+      <img src={product.image} className="card-image" alt={product.name} />
       <div
         style={{
           display: "flex",

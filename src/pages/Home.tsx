@@ -66,7 +66,7 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     const getProduct = async () => {
-      const q = query(collection(db, "product"), limit(5));
+      const q = query(collection(db, "product"), limit(10));
       const querySnapshot = await getDocs(q);
       const data: Product[] = [];
       querySnapshot.forEach((doc) => {
