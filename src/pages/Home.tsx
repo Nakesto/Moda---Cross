@@ -36,6 +36,7 @@ export type Product = {
     name: string;
     uid: string;
     province: string;
+    photoURL: string;
   };
   price: string;
   description: string;
