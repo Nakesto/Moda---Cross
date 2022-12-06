@@ -63,7 +63,7 @@ const ProdukDetail = () => {
             [combinedId + ".userInfo"]: {
               uid: params.product.toko.uid,
               displayName: params.product.toko.name,
-              photoURL: params.product.photoURL,
+              photoURL: params.product.toko.photoURL,
             },
             [combinedId + ".date"]: serverTimestamp(),
           });
