@@ -1,15 +1,4 @@
-import {
-  IonButton,
-  IonContent,
-  IonHeader,
-  IonIcon,
-  IonPage,
-  IonRow,
-  IonSearchbar,
-  IonText,
-  IonToolbar,
-  useIonModal,
-} from "@ionic/react";
+import { IonButton, IonContent, IonHeader, IonIcon, IonPage, IonRow, IonSearchbar, IonText, IonToolbar, useIonModal } from "@ionic/react";
 // import { doc, serverTimestamp, setDoc, updateDoc } from "firebase/firestore";
 // import { useEffect, useState } from "react";
 // import { db } from "../firebase";

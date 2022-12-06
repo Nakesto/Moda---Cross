@@ -1,27 +1,13 @@
-import {
-  IonButton,
-  IonCol,
-  IonContent,
-  IonGrid,
-  IonHeader,
-  IonPage,
-  IonRow,
-} from "@ionic/react";
+import { IonButton, IonCol, IonContent, IonGrid, IonHeader, IonPage, IonRow } from "@ionic/react";
 import React, { useContext, useEffect, useState } from "react";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { UserContext } from "../context/UserData";
 import { FiLogOut } from "react-icons/fi";
 import "./Profile.css";
-import {
-  collection,
-  doc,
-  getDocs,
-  onSnapshot,
-  query,
-  where,
-} from "firebase/firestore";
+import { collection, doc, getDocs, onSnapshot, query, where } from "firebase/firestore";
 import { db } from "../firebase";
 import { useHistory } from "react-router";
+import { Link } from "react-router-dom";
 const Profile: React.FC = () => {
   const { userData, logOut } = useContext(UserContext);
   const history = useHistory();
@@ -34,10 +20,7 @@ const Profile: React.FC = () => {
     regSeller: false,
   });
   useEffect(() => {
-    const singleUser = query(
-      collection(db, "user"),
-      where("uid", "==", userData?.uid)
-    );
+    const singleUser = query(collection(db, "user"), where("uid", "==", userData?.uid));
     const unsub = onSnapshot(singleUser, (snapshot) => {
       snapshot.docs.forEach((doc) => {
         setDatas({
@@ -89,11 +72,7 @@ const Profile: React.FC = () => {
           </div>
           <div className="profile-picture">
             <div className="circle-profile"></div>
-            <img
-              className="profile-pic"
-              src={datas.photoUrls}
-              alt="no picture"
-            />
+            <img className="profile-pic" src={datas.photoUrls} alt="no picture" />
           </div>
         </div>
         {datas.regSeller === false ? (
@@ -105,7 +84,9 @@ const Profile: React.FC = () => {
           </div>
         ) : (
           <div className="btn-container-profile">
-            <IonButton className="register-seller">Check Order</IonButton>
+            <Link to="/history">
+              <IonButton className="register-seller">Check Order</IonButton>
+            </Link>
           </div>
         )}
         <div className="information-profile">
@@ -137,9 +118,7 @@ const Profile: React.FC = () => {
                 </h2>
               </IonCol>
               <IonCol>
-                <h2 className="text-information-detail">
-                  {userData?.phone === null ? datas.phoneNumber : "-"}
-                </h2>
+                <h2 className="text-information-detail">{userData?.phone === null ? datas.phoneNumber : "-"}</h2>
               </IonCol>
             </IonRow>
             <IonRow>

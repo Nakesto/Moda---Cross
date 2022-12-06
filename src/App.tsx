@@ -1,11 +1,5 @@
 import { Route, Switch } from "react-router-dom";
-import {
-  IonApp,
-  IonPage,
-  IonRouterOutlet,
-  IonSpinner,
-  setupIonicReact,
-} from "@ionic/react";
+import { IonApp, IonPage, IonRouterOutlet, IonSpinner, setupIonicReact } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
 
 /* Core CSS required for Ionic components to work properly */
@@ -38,6 +32,7 @@ import StoreDetail from "./pages/StoreDetail";
 import LandingPage from "./pages/LandingPage";
 import Payment from "./pages/Payment";
 import Cart from "./pages/Cart";
+import History from "./pages/History";
 
 setupIonicReact();
 
@@ -67,6 +62,7 @@ const App: React.FC = () => {
               <Route exact path="/detailProduct" component={ProdukDetail} />
               <Route exact path="/cart" component={Cart} />
               <Route exact path="/payment" component={Payment} />
+              <Route exact path="/history" component={History} />
               <Route exact path="/landing" component={LandingPage} />
               <ProtectedRoute>
                 <LoggedInTabs />
