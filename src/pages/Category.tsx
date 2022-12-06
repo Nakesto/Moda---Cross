@@ -8,6 +8,8 @@ import {
   IonPage,
   IonRow,
   IonSearchbar,
+  IonSpinner,
+  IonToast,
   IonToolbar,
 } from "@ionic/react";
 import { collection, getDocs, query, where } from "firebase/firestore";
@@ -21,6 +23,8 @@ const Category = () => {
   const location = useLocation();
   const params: any = location.state;
   const [product, setProduct] = useState<Product[]>([]);
+  const [success, setSuccess] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const getProduct = async () => {
@@ -35,14 +39,34 @@ const Category = () => {
         data.push(doc.data() as Product);
       });
       setProduct(data);
+      setIsLoading(false);
     };
-    if (params != null) {
+    if (params !== null) {
       getProduct();
     }
   }, []);
 
-  if (params === null) {
+  const notif = () => {
+    setSuccess(true);
+  };
+
+  if (params == null) {
     <Redirect to="/home" />;
+  }
+
+  if (isLoading) {
+    return (
+      <IonPage
+        style={{
+          height: "100vh",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <IonSpinner color="black" name="lines"></IonSpinner>
+      </IonPage>
+    );
   }
 
   return (
@@ -88,14 +112,21 @@ const Category = () => {
                   sizeXs="6"
                   sizeSm="4"
                   sizeMd="3"
-                  key={prod.name}
+                  key={prod.uid}
                 >
-                  <CardCategory product={prod} />
+                  <CardCategory product={prod} notif={notif} />
                 </IonCol>
               );
             })}
           </IonRow>
         </IonGrid>
+        <IonToast
+          color="success"
+          isOpen={success}
+          onDidDismiss={() => setSuccess(false)}
+          message={`Added item to your Cart`}
+          duration={1500}
+        />
       </IonContent>
     </IonPage>
   );

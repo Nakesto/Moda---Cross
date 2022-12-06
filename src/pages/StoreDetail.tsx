@@ -55,8 +55,8 @@ const StoreDetail = () => {
     }
   }, [params]);
 
-  if (params === null) {
-    return <Redirect to="/store" />;
+  if (params == null) {
+    return <Redirect to="/home" />;
   }
   return (
     <IonPage className="page">
