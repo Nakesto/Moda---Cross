@@ -42,8 +42,6 @@ const RegisterPage: React.FC = () => {
   const [selectedfile, setSelectedFile] = useState<File>()
   const [gender, setGender] = useState<'male' | 'female'>('male')
   const [errorEmail, setErrorEmail] = useState<string>()
-  const [modal, setModal] = useState<boolean>(false)
-  const [result, setResult] = useState<OverlayEventDetail>()
   const [typeFile, setTypeFile] = useState<'camera' | 'file'>('camera')
   const selectGender = (event: CustomEvent) => {
     const selectedGender = event.detail.value
@@ -124,6 +122,9 @@ const RegisterPage: React.FC = () => {
         //create empty user chats on firestore
         await setDoc(doc(db, 'userChats', userCredential.user.uid), {})
         await setDoc(doc(db, 'cart', userCredential.user.uid), {})
+        await setDoc(doc(db, 'history', userCredential.user.uid), {
+          products: [],
+        })
 
         history.push('/login')
       } catch (error) {

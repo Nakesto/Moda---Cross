@@ -11,12 +11,13 @@ import { db } from '../firebase'
 const ListCart = ({
   product,
   quantity,
+  trigger,
 }: {
   product: Product
   quantity: number
+  trigger: () => void
 }) => {
   const { userData } = useContext(UserContext)
-
   const plussCart = async () => {
     await updateDoc(doc(db, 'cart', userData!.uid), {
       [userData!.uid + product.uid + '.quantity']: quantity + 1,
@@ -32,6 +33,7 @@ const ListCart = ({
         [userData!.uid + product.uid]: deleteField(),
       })
 
+      trigger()
       return
     }
 
@@ -43,7 +45,12 @@ const ListCart = ({
   return (
     <IonItem className="cardlist" lines="none" button>
       <img
-        style={{ height: '60px', marginRight: '10px' }}
+        style={{
+          height: '100px',
+          width: '120px',
+          borderRadius: '10px',
+          marginRight: '10px',
+        }}
         alt="produk"
         src={product.image}
       />

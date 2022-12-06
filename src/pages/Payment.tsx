@@ -3,6 +3,7 @@ import {
   IonButton,
   IonButtons,
   IonCard,
+  IonCheckbox,
   IonCol,
   IonContent,
   IonGrid,
@@ -11,6 +12,8 @@ import {
   IonLabel,
   IonList,
   IonPage,
+  IonRadio,
+  IonRadioGroup,
   IonRow,
   IonTitle,
   IonToast,
@@ -18,10 +21,18 @@ import {
 } from '@ionic/react'
 import produk from '../Assets/produk.png'
 import gopay from '../Assets/gopay.png'
+import ovo from '../Assets/OVO.png'
+import dana from '../Assets/dana.png'
 import './Payment.css'
 import { Redirect, useHistory, useLocation } from 'react-router'
 import { useContext, useEffect, useState } from 'react'
-import { deleteField, doc, Index, updateDoc } from 'firebase/firestore'
+import {
+  arrayUnion,
+  deleteField,
+  doc,
+  setDoc,
+  updateDoc,
+} from 'firebase/firestore'
 import { db } from '../firebase'
 import { UserContext } from '../context/UserData'
 
@@ -29,7 +40,7 @@ const Payment: React.FC = () => {
   const location = useLocation()
   const params: any = location.state
   const history = useHistory()
-  const { userData } = useContext(UserContext)
+  const { userData, isLoggedIn } = useContext(UserContext)
   const [success, setSuccess] = useState(false)
   const [price, setPrice] = useState(0)
 
@@ -43,21 +54,23 @@ const Payment: React.FC = () => {
       })
         .then(() => {
           if (length - 1 === index) {
-            setSuccess(true)
+            setDoc(doc(db, 'history', userData!.uid), {
+              products: arrayUnion({
+                product: data[1].product,
+                quantity: data[1].quantity,
+              }),
+            }).then(() => {
+              setSuccess(true)
+            })
           }
         })
         .catch((err) => {})
     })
   }
 
-  useEffect(() => {
-    let sum = 0
-    Object.entries(params.cart).map((product: any, index) => {
-      let temp = parseInt(product[1].product.price)
-      sum += temp
-      setPrice(sum)
-    })
-  }, [])
+  if (params == null || isLoggedIn === false) {
+    return <Redirect to="/home" />
+  }
 
   return (
     <IonPage className="page">
@@ -79,7 +92,12 @@ const Payment: React.FC = () => {
             Object.entries(params.cart).map((product: any, index) => (
               <IonItem className="cardlist" lines="none" button key={index}>
                 <img
-                  style={{ height: '60px', marginRight: '10px' }}
+                  style={{
+                    height: '100px',
+                    width: '120px',
+                    borderRadius: '10px',
+                    marginRight: '10px',
+                  }}
                   alt="produk"
                   src={product[1].product.image}
                 />
@@ -88,7 +106,7 @@ const Payment: React.FC = () => {
                   <h2 className="des">{product[1].product.name}</h2>
                   <h3 className="des">Rp. {product[1].product.price}</h3>
                   <IonRow>
-                    <IonCard className="ctr">1</IonCard>
+                    <IonCard className="ctr">{product[1].quantity}</IonCard>
                   </IonRow>
                 </IonLabel>
               </IonItem>
@@ -98,36 +116,56 @@ const Payment: React.FC = () => {
           <h3 style={{ fontWeight: 'bold', marginLeft: '20px' }}>
             Metode Pembayaran
           </h3>
-          <IonItem className="cardlist" lines="none">
-            <img
-              style={{ width: '60px', marginRight: '10px', marginLeft: '20px' }}
-              alt="pembayaran"
-              src={gopay}
-            ></img>
-            <IonLabel style={{ paddingBottom: '10px' }}>
-              <h2 className="des">Gopay</h2>
-            </IonLabel>
-          </IonItem>
-          <IonItem className="cardlist" lines="none">
-            <img
-              style={{ width: '60px', marginRight: '10px', marginLeft: '20px' }}
-              alt="pembayaran"
-              src={gopay}
-            ></img>
-            <IonLabel style={{ paddingBottom: '10px' }}>
-              <h2 className="des">Gopay</h2>
-            </IonLabel>
-          </IonItem>
-          <IonItem className="cardlist" lines="none">
-            <img
-              style={{ width: '60px', marginRight: '10px', marginLeft: '20px' }}
-              alt="pembayaran"
-              src={gopay}
-            ></img>
-            <IonLabel style={{ paddingBottom: '10px' }}>
-              <h2 className="des">Gopay</h2>
-            </IonLabel>
-          </IonItem>
+          <IonList>
+            <IonRadioGroup>
+              <IonItem className="cardlist" lines="none">
+                <img
+                  style={{
+                    width: '60px',
+                    marginRight: '10px',
+                    marginLeft: '20px',
+                  }}
+                  alt="pembayaran"
+                  src={gopay}
+                ></img>
+                <IonLabel style={{ paddingBottom: '10px' }}>
+                  <h2 className="des">Gopay</h2>
+                </IonLabel>
+
+                <IonRadio slot="end" value="Gopay"></IonRadio>
+              </IonItem>
+              <IonItem className="cardlist" lines="none">
+                <img
+                  style={{
+                    width: '60px',
+                    marginRight: '10px',
+                    marginLeft: '20px',
+                  }}
+                  alt="pembayaran"
+                  src={ovo}
+                ></img>
+                <IonLabel style={{ paddingBottom: '10px' }}>
+                  <h2 className="des">OVO</h2>
+                </IonLabel>
+                <IonRadio slot="end" value="OVO"></IonRadio>
+              </IonItem>
+              <IonItem className="cardlist" lines="none">
+                <img
+                  style={{
+                    width: '60px',
+                    marginRight: '10px',
+                    marginLeft: '20px',
+                  }}
+                  alt="pembayaran"
+                  src={dana}
+                ></img>
+                <IonLabel style={{ paddingBottom: '10px' }}>
+                  <h2 className="des">Dana</h2>
+                </IonLabel>
+                <IonRadio slot="end" value="Dana"></IonRadio>
+              </IonItem>
+            </IonRadioGroup>
+          </IonList>
         </div>
         <div
           style={{

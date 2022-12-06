@@ -25,6 +25,7 @@ export type Product = {
     name: string
     uid: string
     province: string
+    photoURL: string
   }
   price: string
   description: string
@@ -97,7 +98,6 @@ const StoreDetail = () => {
               Penjual
             </IonButton>
           </div>
-          <div></div>
         </div>
 
         <div className="line-toko">

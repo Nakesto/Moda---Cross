@@ -21,7 +21,6 @@ import { collection, getDocs, limit, query } from 'firebase/firestore'
 import { cartOutline } from 'ionicons/icons'
 import React, { useEffect, useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
-import { validMethods } from 'workbox-routing/utils/constants'
 import ModalFull from '../components/ModalFull'
 import { db } from '../firebase'
 import { Product } from './Home'
@@ -34,7 +33,6 @@ export type Toko = {
   phoneNumber: string
   province: string
   image: string
-  address: string
 }
 
 const Store = () => {
@@ -47,7 +45,7 @@ const Store = () => {
 
   useEffect(() => {
     const getProduct = async () => {
-      const q = query(collection(db, 'toko'), limit(5))
+      const q = query(collection(db, 'toko'), limit(15))
       const querySnapshot = await getDocs(q)
       const data: Toko[] = []
       querySnapshot.forEach((doc) => {

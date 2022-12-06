@@ -63,9 +63,6 @@ const RegisterSeller = () => {
     handleSubmit,
   } = useForm()
 
-  const location = useLocation()
-  const { isLoggedIn } = useContext(UserContext)
-
   //   useEffect(() => {
   //     if (isLoggedIn === true) {
   //       history.push('/home')

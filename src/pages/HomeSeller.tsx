@@ -36,6 +36,7 @@ export type Product = {
     name: string
     uid: string
     province: string
+    photoURL: string
   }
   price: string
   description: string
@@ -139,7 +140,6 @@ const HomeSeller: React.FC = () => {
         <div
           style={{
             height: '90vh',
-            overflow: 'scroll',
           }}
         >
           <div className="test"></div>
@@ -239,6 +239,7 @@ const HomeSeller: React.FC = () => {
                   marginBottom: '5px',
                 }}
                 className="button-category"
+                onClick={() => openModal()}
               >
                 <AiOutlineAppstoreAdd
                   style={{
@@ -391,7 +392,6 @@ const HomeSeller: React.FC = () => {
               style={{
                 display: 'flex',
                 gap: '20px',
-                overflow: 'scroll',
                 marginBottom: '60px',
                 paddingLeft: '20px',
                 justifyContent: 'center',

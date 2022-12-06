@@ -46,13 +46,14 @@ const LandingPage = () => {
           <div>
             <div className="container-slide">
               <div className="slide-gambar">
-                <img src={Gambar1} alt="gambar1" width="320px" height="450px" />
+                <img src={Gambar1} alt="gambar1" className="image" />
               </div>
               <div className="slide-text">
                 <IonText
                   style={{
                     fontSize: "35px",
                     fontWeight: "800",
+                    textAlign: "center",
                   }}
                 >
                   Welcome to MODA!
@@ -61,6 +62,7 @@ const LandingPage = () => {
                   style={{
                     fontSize: "15px",
                     fontWeight: "500",
+                    textAlign: "center",
                   }}
                 >
                   Thrifting Application
@@ -71,7 +73,7 @@ const LandingPage = () => {
           <div>
             <div className="container-slide">
               <div className="slide-gambar">
-                <img src={Gambar2} alt="gambar1" width="320px" height="450px" />
+                <img src={Gambar2} alt="gambar1" className="image" />
               </div>
               <div className="slide-text">
                 <IonText
@@ -89,7 +91,7 @@ const LandingPage = () => {
           <div>
             <div className="container-slide">
               <div className="slide-gambar">
-                <img src={Gambar3} alt="gambar1" width="320px" height="450px" />
+                <img src={Gambar3} alt="gambar1" className="image" />
               </div>
               <div className="slide-text">
                 <IonText

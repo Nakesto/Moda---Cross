@@ -87,7 +87,7 @@ const Chat = () => {
                 >
                   <img
                     alt="Silhouette of a person's head"
-                    src="https://ionicframework.com/docs/img/demos/avatar.svg"
+                    src={chat[1].userInfo.photoURL}
                   />
                 </IonAvatar>
 

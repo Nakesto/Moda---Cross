@@ -12,6 +12,7 @@ import {
   IonRow,
   IonSpinner,
   IonTitle,
+  IonToast,
   IonToolbar,
 } from '@ionic/react'
 
@@ -26,12 +27,18 @@ import ListCart from '../components/ListCart'
 
 const Cart: React.FC = () => {
   const [cart, setCart] = useState({})
-  const { userData } = useContext(UserContext)
+  const { userData, isLoggedIn } = useContext(UserContext)
   const [isLoading, setIsLoading] = useState(true)
   const history = useHistory()
+  const [success, setSuccess] = useState(false)
   const [price, setPrice] = useState(0)
 
   useEffect(() => {
+    if (isLoggedIn === false) {
+      history.push('/')
+
+      return
+    }
     const unsub = onSnapshot(doc(db, 'cart', userData!.uid), (doc) => {
       setCart(doc.data() as any)
       setIsLoading(false)
@@ -52,6 +59,10 @@ const Cart: React.FC = () => {
 
   const toPayment = () => {
     history.push('/payment', { cart })
+  }
+
+  const trigger = () => {
+    setSuccess(true)
   }
 
   if (isLoading) {
@@ -94,6 +105,7 @@ const Cart: React.FC = () => {
             <ListCart
               product={data[1].product as Product}
               quantity={data[1].quantity as number}
+              trigger={trigger}
               key={index}
             />
           ))}
@@ -162,6 +174,13 @@ const Cart: React.FC = () => {
             </IonGrid>
           </div>
         )}
+        <IonToast
+          color="danger"
+          isOpen={success}
+          onDidDismiss={() => setSuccess(false)}
+          message={`Removed item from your Cart`}
+          duration={1500}
+        />
       </IonContent>
     </IonPage>
   )

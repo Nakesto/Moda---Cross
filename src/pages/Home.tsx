@@ -36,13 +36,13 @@ export type Product = {
     name: string
     uid: string
     province: string
+    photoURL: string
   }
   price: string
   description: string
   uid: string
   stock: number
   image: string
-  category: string
 }
 
 const Home: React.FC = () => {
@@ -67,7 +67,7 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     const getProduct = async () => {
-      const q = query(collection(db, 'product'), limit(5))
+      const q = query(collection(db, 'product'), limit(10))
       const querySnapshot = await getDocs(q)
       const data: Product[] = []
       querySnapshot.forEach((doc) => {
@@ -192,6 +192,7 @@ const Home: React.FC = () => {
                   padding: '13px',
                 }}
                 className="button-category"
+                onClick={() => history.push('/category', { category: 'top' })}
               >
                 <FaTshirt
                   style={{
@@ -218,6 +219,7 @@ const Home: React.FC = () => {
                   padding: '13px',
                 }}
                 className="button-category"
+                onClick={() => history.push('/category', { category: 'pants' })}
               >
                 <GiArmoredPants
                   style={{
@@ -244,6 +246,7 @@ const Home: React.FC = () => {
                   padding: '13px',
                 }}
                 className="button-category"
+                onClick={() => history.push('/category', { category: 'shoes' })}
               >
                 <GiSonicShoes
                   style={{
@@ -270,6 +273,7 @@ const Home: React.FC = () => {
                   padding: '13px',
                 }}
                 className="button-category"
+                onClick={() => history.push('/category', { category: 'bag' })}
               >
                 <GiHandBag
                   style={{
@@ -302,7 +306,6 @@ const Home: React.FC = () => {
                 style={{
                   fontSize: '30px',
                   fontWeight: '600',
-                  marginTop: '20px',
                 }}
               >
                 New products
