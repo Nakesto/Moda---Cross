@@ -1,23 +1,8 @@
-import {
-  IonBackButton,
-  IonButton,
-  IonButtons,
-  IonCard,
-  IonCol,
-  IonContent,
-  IonGrid,
-  IonHeader,
-  IonItem,
-  IonLabel,
-  IonList,
-  IonPage,
-  IonRow,
-  IonTitle,
-  IonToast,
-  IonToolbar,
-} from "@ionic/react";
+import { IonBackButton, IonButton, IonButtons, IonCard, IonCheckbox, IonCol, IonContent, IonGrid, IonHeader, IonItem, IonLabel, IonList, IonPage, IonRow, IonTitle, IonToast, IonToolbar } from "@ionic/react";
 import produk from "../Assets/produk.png";
 import gopay from "../Assets/gopay.png";
+import ovo from "../Assets/OVO.png";
+import dana from "../Assets/dana.png";
 import "./Payment.css";
 import { Redirect, useHistory, useLocation } from "react-router";
 import { useContext, useState } from "react";
@@ -60,11 +45,7 @@ const Payment: React.FC = () => {
           <IonButtons slot="start">
             <IonBackButton className="backbtn" defaultHref="/cart" />
           </IonButtons>
-          <IonTitle
-            style={{ textAlign: "left", marginLeft: "16px", fontSize: "30px" }}
-          >
-            Payment
-          </IonTitle>
+          <IonTitle style={{ textAlign: "left", marginLeft: "16px", fontSize: "30px" }}>Payment</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent className="content">
@@ -72,11 +53,7 @@ const Payment: React.FC = () => {
           {params != null &&
             Object.entries(params.cart).map((product: any, index) => (
               <IonItem className="cardlist" lines="none" button key={index}>
-                <img
-                  style={{ height: "60px", marginRight: "10px" }}
-                  alt="produk"
-                  src={produk}
-                />
+                <img style={{ height: "60px", marginRight: "10px" }} alt="produk" src={produk} />
 
                 <IonLabel style={{ paddingTop: "10px", paddingBottom: "10px" }}>
                   <h2 className="des">{product[1].product.name}</h2>
@@ -89,38 +66,28 @@ const Payment: React.FC = () => {
             ))}
         </IonList>
         <div>
-          <h3 style={{ fontWeight: "bold", marginLeft: "20px" }}>
-            Metode Pembayaran
-          </h3>
+          <h3 style={{ fontWeight: "bold", marginLeft: "20px" }}>Metode Pembayaran</h3>
           <IonItem className="cardlist" lines="none">
-            <img
-              style={{ width: "60px", marginRight: "10px", marginLeft: "20px" }}
-              alt="pembayaran"
-              src={gopay}
-            ></img>
+            <img style={{ width: "60px", marginRight: "10px", marginLeft: "20px" }} alt="pembayaran" src={gopay}></img>
             <IonLabel style={{ paddingBottom: "10px" }}>
               <h2 className="des">Gopay</h2>
             </IonLabel>
+
+            <IonCheckbox slot="end"></IonCheckbox>
           </IonItem>
           <IonItem className="cardlist" lines="none">
-            <img
-              style={{ width: "60px", marginRight: "10px", marginLeft: "20px" }}
-              alt="pembayaran"
-              src={gopay}
-            ></img>
+            <img style={{ width: "60px", marginRight: "10px", marginLeft: "20px" }} alt="pembayaran" src={ovo}></img>
             <IonLabel style={{ paddingBottom: "10px" }}>
-              <h2 className="des">Gopay</h2>
+              <h2 className="des">OVO</h2>
             </IonLabel>
+            <IonCheckbox slot="end"></IonCheckbox>
           </IonItem>
           <IonItem className="cardlist" lines="none">
-            <img
-              style={{ width: "60px", marginRight: "10px", marginLeft: "20px" }}
-              alt="pembayaran"
-              src={gopay}
-            ></img>
+            <img style={{ width: "60px", marginRight: "10px", marginLeft: "20px" }} alt="pembayaran" src={dana}></img>
             <IonLabel style={{ paddingBottom: "10px" }}>
-              <h2 className="des">Gopay</h2>
+              <h2 className="des">Dana</h2>
             </IonLabel>
+            <IonCheckbox slot="end"></IonCheckbox>
           </IonItem>
         </div>
         <div
@@ -145,10 +112,7 @@ const Payment: React.FC = () => {
                 <IonLabel className="totaltxt">Total</IonLabel>
               </IonCol>
               <IonCol size="4"></IonCol>
-              <IonCol
-                size="4"
-                style={{ justifyContent: "end", display: "flex" }}
-              >
+              <IonCol size="4" style={{ justifyContent: "end", display: "flex" }}>
                 <IonLabel className="totalhrg">Rp. 100.000</IonLabel>
               </IonCol>
             </IonRow>
@@ -161,13 +125,7 @@ const Payment: React.FC = () => {
             </IonRow>
           </IonGrid>
         </div>
-        <IonToast
-          color="success"
-          isOpen={success}
-          onDidDismiss={() => history.push("/home")}
-          message="Payment Success"
-          duration={1500}
-        />
+        <IonToast color="success" isOpen={success} onDidDismiss={() => history.push("/home")} message="Payment Success" duration={1500} />
       </IonContent>
     </IonPage>
   );
