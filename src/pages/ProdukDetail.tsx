@@ -63,8 +63,7 @@ const ProdukDetail = () => {
             [combinedId + ".userInfo"]: {
               uid: params.product.toko.uid,
               displayName: params.product.toko.name,
-              photoURL:
-                "https://store.sirclo.com/blog/wp-content/uploads/2022/05/Banner-Blog-08-5.jpg",
+              photoURL: params.product.photoURL,
             },
             [combinedId + ".date"]: serverTimestamp(),
           });
@@ -85,6 +84,8 @@ const ProdukDetail = () => {
   if (params == null) {
     return <Redirect to="/home" />;
   }
+
+  console.log(params.product.toko.uid);
 
   return (
     <IonPage className="page">
@@ -138,7 +139,7 @@ const ProdukDetail = () => {
         </div>
         <div className="container-btn-produk">
           <div className="content-btn-produk">
-            {currentUser?.uid !== params.product.toko.uid && (
+            {currentUser!.uid !== params.product.toko.uid && (
               <IonButton
                 onClick={addUserChats}
                 fill="outline"

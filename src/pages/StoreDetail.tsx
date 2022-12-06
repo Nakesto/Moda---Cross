@@ -24,6 +24,7 @@ export type Product = {
     name: string;
     uid: string;
     province: string;
+    photoURL: string;
   };
   price: string;
   description: string;
@@ -127,7 +128,7 @@ const StoreDetail = () => {
             </div>
           ) : (
             <div className="product-card">
-              {newProduct.map((product) => (
+              {newProduct.map((product: Product) => (
                 <div key={product.name}>
                   <CardProduct product={product} />
                 </div>
