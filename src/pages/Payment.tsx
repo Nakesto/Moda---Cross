@@ -3,7 +3,6 @@ import {
   IonButton,
   IonButtons,
   IonCard,
-  IonCheckbox,
   IonCol,
   IonContent,
   IonGrid,
@@ -25,14 +24,8 @@ import ovo from '../Assets/OVO.png'
 import dana from '../Assets/dana.png'
 import './Payment.css'
 import { Redirect, useHistory, useLocation } from 'react-router'
-import { useContext, useEffect, useState } from 'react'
-import {
-  arrayUnion,
-  deleteField,
-  doc,
-  setDoc,
-  updateDoc,
-} from 'firebase/firestore'
+import { useContext, useState } from 'react'
+import { arrayUnion, deleteField, doc, updateDoc } from 'firebase/firestore'
 import { db } from '../firebase'
 import { UserContext } from '../context/UserData'
 
@@ -54,7 +47,7 @@ const Payment: React.FC = () => {
       })
         .then(() => {
           if (length - 1 === index) {
-            setDoc(doc(db, 'history', userData!.uid), {
+            updateDoc(doc(db, 'history', userData!.uid), {
               products: arrayUnion({
                 product: data[1].product,
                 quantity: data[1].quantity,

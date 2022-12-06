@@ -101,14 +101,18 @@ const Profile: React.FC = () => {
             <IonButton className="register-seller" routerLink="/regseller">
               Register Seller
             </IonButton>
-            <IonButton className="register-seller">Check Order</IonButton>
+            <IonButton className="register-seller" routerLink="/history">
+              Check Order
+            </IonButton>
           </div>
         ) : (
           <div className="btn-container-profile">
             <IonButton className="register-seller" routerLink="/homeseller">
               Switch to Seller
             </IonButton>
-            <IonButton className="register-seller">Check Order</IonButton>
+            <IonButton className="register-seller" routerLink="/history">
+              Check Order
+            </IonButton>
           </div>
         )}
         <div className="information-profile">

@@ -12,10 +12,6 @@ import {
 // import { useEffect, useState } from "react";
 // import { db } from "../firebase";
 import Slider from 'react-slick'
-import 'slick-carousel/slick/slick.css'
-import 'slick-carousel/slick/slick-theme.css'
-import './Home.css'
-import './Home2.css'
 import { useHistory } from 'react-router-dom'
 import { useContext, useEffect, useState } from 'react'
 import { collection, getDocs, query, where } from 'firebase/firestore'
@@ -85,8 +81,6 @@ const HomeSeller: React.FC = () => {
     getToko()
     getProduct()
   }, [])
-
-  console.log(userData)
 
   function openModal() {
     present({
