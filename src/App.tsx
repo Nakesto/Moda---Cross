@@ -36,6 +36,8 @@ import ProtectedRoute from "./ProtectedRoute";
 import ProdukDetail from "./pages/ProdukDetail";
 import StoreDetail from "./pages/StoreDetail";
 import LandingPage from "./pages/LandingPage";
+import Payment from "./pages/Payment";
+import Cart from "./pages/Cart";
 
 setupIonicReact();
 
@@ -63,6 +65,8 @@ const App: React.FC = () => {
               <Route exact path="/register" component={RegisterPage} />
               <Route exact path="/detailToko" component={StoreDetail} />
               <Route exact path="/detailProduct" component={ProdukDetail} />
+              <Route exact path="/cart" component={Cart} />
+              <Route exact path="/payment" component={Payment} />
               <Route exact path="/landing" component={LandingPage} />
               <ProtectedRoute>
                 <LoggedInTabs />

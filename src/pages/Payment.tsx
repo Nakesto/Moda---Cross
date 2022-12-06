@@ -21,7 +21,13 @@ import gopay from "../Assets/gopay.png";
 import "./Payment.css";
 import { Redirect, useHistory, useLocation } from "react-router";
 import { useContext, useState } from "react";
-import { deleteField, doc, updateDoc } from "firebase/firestore";
+import {
+  arrayUnion,
+  deleteField,
+  doc,
+  setDoc,
+  updateDoc,
+} from "firebase/firestore";
 import { db } from "../firebase";
 import { UserContext } from "../context/UserData";
 
@@ -29,7 +35,7 @@ const Payment: React.FC = () => {
   const location = useLocation();
   const params: any = location.state;
   const history = useHistory();
-  const { userData } = useContext(UserContext);
+  const { userData, isLoggedIn } = useContext(UserContext);
   const [success, setSuccess] = useState(false);
 
   const removeCart = async () => {
@@ -42,14 +48,21 @@ const Payment: React.FC = () => {
       })
         .then(() => {
           if (length - 1 === index) {
-            setSuccess(true);
+            setDoc(doc(db, "history", userData!.uid), {
+              products: arrayUnion({
+                product: data[1].product,
+                quantity: data[1].quantity,
+              }),
+            }).then(() => {
+              setSuccess(true);
+            });
           }
         })
         .catch((err) => {});
     });
   };
 
-  if (params == null) {
+  if (params == null || isLoggedIn === false) {
     return <Redirect to="/home" />;
   }
 
@@ -82,7 +95,7 @@ const Payment: React.FC = () => {
                   <h2 className="des">{product[1].product.name}</h2>
                   <h3 className="des">Rp. {product[1].product.price}</h3>
                   <IonRow>
-                    <IonCard className="ctr">1</IonCard>
+                    <IonCard className="ctr">{product[1].quantity}</IonCard>
                   </IonRow>
                 </IonLabel>
               </IonItem>

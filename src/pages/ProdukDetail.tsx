@@ -9,6 +9,7 @@ import {
   IonButton,
   IonIcon,
   IonContent,
+  IonToast,
 } from "@ionic/react";
 import {
   getDoc,
@@ -22,6 +23,7 @@ import {
   chatbubbleEllipsesOutline,
   heartOutline,
 } from "ionicons/icons";
+import { useState } from "react";
 import { Link, Redirect, useLocation } from "react-router-dom";
 import { auth, db } from "../firebase";
 import { Product } from "./Home";
@@ -31,11 +33,14 @@ const ProdukDetail = () => {
   const location = useLocation();
   const params: any = location.state;
   const { currentUser } = auth;
+  const [isSuccess, setIsSuccess] = useState(false);
 
-  const addCart = async (product: Product) => {
-    await updateDoc(doc(db, "cart", currentUser!.uid), {
+  const addCart = (product: Product) => {
+    updateDoc(doc(db, "cart", currentUser!.uid), {
       [currentUser!.uid + product.uid + ".product"]: product,
       [currentUser!.uid + product.uid + ".quantity"]: 1,
+    }).then(() => {
+      setIsSuccess(true);
     });
   };
 
@@ -149,6 +154,13 @@ const ProdukDetail = () => {
             <IonButton className="btn-buy-produk">Buy Now</IonButton>
           </div>
         </div>
+        <IonToast
+          color="success"
+          isOpen={isSuccess}
+          onDidDismiss={() => setIsSuccess(false)}
+          message={`Add ${params.product.name} to Cart Successfull`}
+          duration={1500}
+        />
       </IonContent>
     </IonPage>
   );

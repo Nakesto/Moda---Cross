@@ -5,26 +5,27 @@ import {
   IonTabBar,
   IonTabButton,
   IonTabs,
-} from '@ionic/react'
+} from "@ionic/react";
 import {
   chatboxOutline,
   home,
   person,
   personCircle,
   storefront,
-} from 'ionicons/icons'
-import { Redirect, Route } from 'react-router'
-import AddChat from './pages/AddChat'
-import Cart from './pages/Cart'
-import Chat from './pages/Chat'
-import ChatDetail from './pages/ChatDetail'
-import Home from './pages/Home'
-import Payment from './pages/Payment'
-import ProdukDetail from './pages/ProdukDetail'
-import Profile from './pages/Profile'
-import RegisterSeller from './pages/RegisterSeller'
-import Store from './pages/Store'
-import StoreDetail from './pages/StoreDetail'
+} from "ionicons/icons";
+import { Redirect, Route } from "react-router";
+import AddChat from "./pages/AddChat";
+import Cart from "./pages/Cart";
+import Category from "./pages/Category";
+import Chat from "./pages/Chat";
+import ChatDetail from "./pages/ChatDetail";
+import Home from "./pages/Home";
+import Payment from "./pages/Payment";
+import ProdukDetail from "./pages/ProdukDetail";
+import Profile from "./pages/Profile";
+import RegisterSeller from "./pages/RegisterSeller";
+import Store from "./pages/Store";
+import StoreDetail from "./pages/StoreDetail";
 
 const LoggedInTabs = () => {
   return (
@@ -38,11 +39,9 @@ const LoggedInTabs = () => {
         <Route exact path="/chat" component={Chat} />
         <Route exact path="/store" component={Store} />
         <Route exact path="/profile" component={Profile} />
-        <Route exact path="/cart" component={Cart} />
-        <Route exact path="/profile" component={Profile} />
         <Route exact path="/detail" component={ChatDetail} />
-        <Route exact path="/payment" component={Payment} />
         <Route exact path="/regseller" component={RegisterSeller} />
+        <Route exact path="/category" component={Category} />
       </IonRouterOutlet>
       <IonTabBar slot="bottom">
         <IonTabButton tab="home" href="/home">
@@ -66,7 +65,7 @@ const LoggedInTabs = () => {
         </IonTabButton>
       </IonTabBar>
     </IonTabs>
-  )
-}
+  );
+};
 
-export default LoggedInTabs
+export default LoggedInTabs;
