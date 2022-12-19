@@ -17,7 +17,7 @@ import { Link, Redirect, useLocation } from 'react-router-dom'
 import CardProduct from '../components/CardProduct'
 import { db } from '../firebase'
 import './StoreDetail.css'
-import { BsFillStarFill } from 'react-icons/bs'
+import NotFound from '../Assets/no_data.png'
 
 export type Product = {
   name: string
@@ -119,7 +119,14 @@ const StoreDetail = () => {
           }}
         >
           {newProduct.length == 0 ? (
-            <div>
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                flexDirection: 'column',
+              }}
+            >
+              <img className="not-found" src={NotFound}></img>
               <h2 style={{ textAlign: 'center' }}>Produk tidak ada...</h2>
             </div>
           ) : (

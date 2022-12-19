@@ -57,6 +57,11 @@
   font-size: small;
 }
 
+.not-found {
+  width: 500px;
+  height: 500px;
+}
+
 @media screen and (max-width: 320px) {
   .profile-toko {
     border-radius: 20px;
@@ -162,5 +167,12 @@
     grid-template-columns: repeat(5, 180px);
     margin: auto;
     row-gap: 20px;
+  }
+}
+
+@media screen and (max-height: 600px) {
+  .not-found {
+    width: 300px;
+    height: 300px;
   }
 }

@@ -24,6 +24,7 @@ import { Link, useHistory } from 'react-router-dom'
 import ModalFull from '../components/ModalFull'
 import { db } from '../firebase'
 import { Product } from './Home'
+import StoreDefault from '../Assets/store_default.png'
 
 export type Toko = {
   uid: string
@@ -129,7 +130,7 @@ const Store = () => {
                     }}
                   >
                     <img
-                      src={val.image}
+                      src={val.image === null ? StoreDefault : val.image}
                       alt=""
                       height="200px"
                       width="100%"

@@ -4,7 +4,7 @@ import { FcGoogle } from 'react-icons/fc'
 import { FaApple, FaFacebook } from 'react-icons/fa'
 import { MdOutgoingMail } from 'react-icons/md'
 
-import SelectLogin from '../Assets/select.png'
+import SelectLogin from '../Assets/authentication.png'
 import { Redirect, useHistory, useLocation } from 'react-router'
 import { auth, providerGoogle, providerFacebook } from '../firebase'
 import {

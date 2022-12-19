@@ -7,17 +7,15 @@ import {
   IonIcon,
   IonInput,
   IonLabel,
-  IonModal,
   IonPage,
   IonRow,
   IonSelect,
   IonSelectOption,
   IonTitle,
   IonToolbar,
-  useIonActionSheet,
 } from '@ionic/react'
 import './RegisterPage.css'
-import { useContext, useEffect, useRef, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { mail, calendar, camera } from 'ionicons/icons'
 import { FaTransgender } from 'react-icons/fa'
 import { BsCameraFill, BsFillTelephoneFill } from 'react-icons/bs'
@@ -32,7 +30,6 @@ import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth'
 import { useForm } from 'react-hook-form'
 import { ErrorMessage } from '@hookform/error-message'
 import { storage, auth, db } from '../firebase'
-import { OverlayEventDetail } from '@ionic/react/dist/types/components/react-component-lib/interfaces'
 import { UserContext } from '../context/UserData'
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera'
 import { base64FromPath } from '@capacitor-community/filesystem-react'
@@ -171,7 +168,7 @@ const RegisterPage: React.FC = () => {
               {takenPhoto && (
                 <img
                   className="profilepic_image"
-                  src={takenPhoto}
+                  src={profile}
                   width="150"
                   height="150"
                   alt="Profibild"

@@ -16,7 +16,7 @@ import {
 } from '@ionic/react'
 import './loginPage.css'
 import { useContext, useEffect, useState } from 'react'
-import loginImg from '../Assets/login.png'
+import loginImg from '../Assets/select_login.png'
 import { lockClosed, mailUnread } from 'ionicons/icons'
 import { FcGoogle } from 'react-icons/fc'
 import { FaApple, FaFacebook } from 'react-icons/fa'
@@ -32,7 +32,6 @@ import { Redirect, useHistory, useLocation } from 'react-router'
 import { ErrorMessage } from '@hookform/error-message'
 import { auth, providerFacebook, providerGoogle } from '../firebase'
 import { UserContext, UserProvider } from '../context/UserData'
-import { Link } from 'react-router-dom'
 
 export type DataUser = {
   token: string

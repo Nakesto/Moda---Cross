@@ -12,6 +12,7 @@ import { FaMapMarkerAlt } from 'react-icons/fa'
 import { UserContext } from '../context/UserData'
 import { FiLogOut } from 'react-icons/fi'
 import './Profile.css'
+import FotoProfile from '../Assets/profile.png'
 import {
   collection,
   doc,
@@ -61,7 +62,11 @@ const Profile: React.FC = () => {
       <IonContent className="content">
         <div className="content-profile">
           <div className="background-profile">
-            <img className="bg-pic" src={userData?.photoUrl} alt="no picture" />
+            <img
+              className="bg-pic"
+              src={userData?.photoUrl === null ? FotoProfile : datas.photoUrls}
+              alt="no picture"
+            />
             <div className="box-transparent"></div>
             <div className="btn-logout-container">
               <div className="btn-logout">
@@ -79,7 +84,7 @@ const Profile: React.FC = () => {
             </div>
             <div className="text-container">
               <div className="profile-text">
-                <h3>{userData?.name}</h3>
+                <h3>{userData?.name === null ? datas.names : datas.names}</h3>
                 <h3>
                   <FaMapMarkerAlt />
                   Jalan Jalan Kemana
@@ -91,7 +96,7 @@ const Profile: React.FC = () => {
             <div className="circle-profile"></div>
             <img
               className="profile-pic"
-              src={datas.photoUrls}
+              src={userData?.photoUrl === null ? FotoProfile : datas.photoUrls}
               alt="no picture"
             />
           </div>
@@ -124,7 +129,7 @@ const Profile: React.FC = () => {
                 </h2>
               </IonCol>
               <IonCol>
-                <h2 className="text-information-detail">{userData?.name}</h2>
+                <h2 className="text-information-detail">{datas.names}</h2>
               </IonCol>
             </IonRow>
             <IonRow>

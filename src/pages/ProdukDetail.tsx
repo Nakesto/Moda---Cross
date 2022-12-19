@@ -28,6 +28,7 @@ import { Link, Redirect, useLocation } from 'react-router-dom'
 import { auth, db } from '../firebase'
 import { Product } from './Home'
 import './ProdukDetail.css'
+import { rupiah } from '../pages/Cart'
 
 const ProdukDetail = () => {
   const location = useLocation()
@@ -121,21 +122,21 @@ const ProdukDetail = () => {
           <div className="container-informasi-produk">
             <div className="infromasi-produk">
               <h1 className="h1-produk">
-                <b>Rp. {params.product.price}</b>
+                <b>{params.product.name}</b>
               </h1>
               <IonButton className="btn-love" fill="outline">
                 <IonIcon icon={heartOutline} />
               </IonButton>
             </div>
             <h2 className="h2-produk">
-              <b>{params.product.name}</b>
+              <b>{rupiah(parseInt(params.product.price))}</b>
             </h2>
             <h4 className="h4-produk">Stock {params.product.stock}</h4>
             <h4 className="h4-produk">Kategori: {params.product.category}</h4>
             <h3 className="h3-produk">
               <b>Description</b>
-              <p className="description">{params.product.description}</p>
             </h3>
+            <p className="description">{params.product.description}</p>
           </div>
         </div>
         <div className="container-btn-produk">

@@ -6,7 +6,7 @@ import {
   IonTabButton,
   IonTabs,
 } from '@ionic/react'
-import { chatboxOutline, home, person, storefront } from 'ionicons/icons'
+import { chatbox, home, person, storefront } from 'ionicons/icons'
 import { Redirect, Route } from 'react-router'
 import AddChat from './pages/AddChat'
 import Category from './pages/Category'
@@ -47,7 +47,7 @@ const LoggedInTabs = () => {
         </IonTabButton>
 
         <IonTabButton tab="chat" href="/chat">
-          <IonIcon icon={chatboxOutline} />
+          <IonIcon icon={chatbox} />
           <IonLabel>Chat</IonLabel>
         </IonTabButton>
 
