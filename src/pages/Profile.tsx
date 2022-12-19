@@ -13,14 +13,7 @@ import { UserContext } from '../context/UserData'
 import { FiLogOut } from 'react-icons/fi'
 import './Profile.css'
 import FotoProfile from '../Assets/profile.png'
-import {
-  collection,
-  doc,
-  getDocs,
-  onSnapshot,
-  query,
-  where,
-} from 'firebase/firestore'
+import { collection, onSnapshot, query, where } from 'firebase/firestore'
 import { db } from '../firebase'
 import { useHistory } from 'react-router'
 const Profile: React.FC = () => {

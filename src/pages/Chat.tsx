@@ -1,7 +1,5 @@
 import {
   IonAvatar,
-  IonButton,
-  IonCard,
   IonContent,
   IonHeader,
   IonItem,
@@ -10,40 +8,41 @@ import {
   IonPage,
   IonText,
   IonToolbar,
-} from "@ionic/react";
-import { doc, onSnapshot } from "firebase/firestore";
-import React, { useContext, useEffect, useState } from "react";
-import { useHistory } from "react-router";
-import { Link } from "react-router-dom";
-import { ChatContext, Provider } from "../context/Provider";
-import { UserContext } from "../context/UserData";
-import { db } from "../firebase";
-import { User } from "./AddChat";
+} from '@ionic/react'
+import { doc, onSnapshot } from 'firebase/firestore'
+import { useContext, useEffect, useState } from 'react'
+import { useHistory } from 'react-router'
+import { ChatContext } from '../context/Provider'
+import { UserContext } from '../context/UserData'
+import { db } from '../firebase'
+
+export type User = {
+  name: string
+  umur: number
+  photoUrl: string
+  uid: string
+}
 
 const Chat = () => {
-  const [chats, setChats] = useState([]);
-  const history = useHistory();
-  const { userData } = useContext(UserContext);
-  const { activeRoomChat } = useContext(ChatContext);
-
-  const goAdd = () => {
-    history.push("/addchat");
-  };
+  const [chats, setChats] = useState([])
+  const history = useHistory()
+  const { userData } = useContext(UserContext)
+  const { activeRoomChat } = useContext(ChatContext)
 
   useEffect(() => {
-    const unsub = onSnapshot(doc(db, "userChats", userData!.uid), (doc) => {
-      setChats(doc.data() as any);
-    });
+    const unsub = onSnapshot(doc(db, 'userChats', userData!.uid), (doc) => {
+      setChats(doc.data() as any)
+    })
 
     return () => {
-      unsub();
-    };
-  }, [userData]);
+      unsub()
+    }
+  }, [userData])
 
   const handleSelect = (u: User) => {
-    activeRoomChat(u);
-    history.push("/detail");
-  };
+    activeRoomChat(u)
+    history.push('/detail')
+  }
 
   return (
     <IonPage className="container">
@@ -51,22 +50,19 @@ const Chat = () => {
         <IonToolbar
           color="primary"
           style={{
-            textAlign: "center",
+            textAlign: 'center',
           }}
         >
           <IonText>Chat</IonText>
-          <IonButton slot="primary" onClick={goAdd}>
-            +
-          </IonButton>
         </IonToolbar>
       </IonHeader>
       <IonContent className="content">
         <IonList
           style={{
-            backgroundColor: "rgb(65, 199, 238, 0.4)",
-            paddingBottom: "35px",
-            height: "90vh",
-            overflow: "scroll",
+            backgroundColor: 'rgb(65, 199, 238, 0.4)',
+            paddingBottom: '35px',
+            height: '90vh',
+            overflow: 'scroll',
           }}
         >
           {Object.entries(chats)
@@ -78,12 +74,12 @@ const Chat = () => {
                 key={chat[0]}
                 className="ion-margin"
                 style={{
-                  borderRadius: "12px",
+                  borderRadius: '12px',
                 }}
                 onClick={() => handleSelect(chat[1].userInfo)}
               >
                 <IonAvatar
-                  style={{ marginRight: "20px", height: "60px", width: "60px" }}
+                  style={{ marginRight: '20px', height: '60px', width: '60px' }}
                 >
                   <img
                     alt="Silhouette of a person's head"
@@ -91,10 +87,10 @@ const Chat = () => {
                   />
                 </IonAvatar>
 
-                <IonLabel style={{ paddingTop: "10px", paddingBottom: "10px" }}>
+                <IonLabel style={{ paddingTop: '10px', paddingBottom: '10px' }}>
                   <h2
                     style={{
-                      paddingBottom: "15px",
+                      paddingBottom: '15px',
                     }}
                   >
                     {chat[1]?.userInfo.displayName}
@@ -137,7 +133,7 @@ const Chat = () => {
         </IonList>
       </IonContent>
     </IonPage>
-  );
-};
+  )
+}
 
-export default Chat;
+export default Chat

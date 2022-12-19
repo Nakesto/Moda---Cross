@@ -310,7 +310,12 @@ const Home: React.FC = () => {
               >
                 New products
               </IonText>
-              <IonButton style={{ marginTop: '20px' }}>View All</IonButton>
+              <IonButton
+                routerLink="/viewallproduct"
+                style={{ marginTop: '20px' }}
+              >
+                View All
+              </IonButton>
             </div>
             <div
               style={{

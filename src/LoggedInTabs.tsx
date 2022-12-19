@@ -8,12 +8,10 @@ import {
 } from '@ionic/react'
 import { chatbox, home, person, storefront } from 'ionicons/icons'
 import { Redirect, Route } from 'react-router'
-import AddChat from './pages/AddChat'
 import Category from './pages/Category'
 import Chat from './pages/Chat'
 import ChatDetail from './pages/ChatDetail'
 import Home from './pages/Home'
-import HomeSeller from './pages/HomeSeller'
 import Profile from './pages/Profile'
 import RegisterSeller from './pages/RegisterSeller'
 import Store from './pages/Store'
@@ -26,7 +24,6 @@ const LoggedInTabs = () => {
           <Redirect to="/home" />
         </Route>
         <Route exact path="/home" component={Home} />
-        <Route exact path="/addchat" component={AddChat} />
         <Route exact path="/chat" component={Chat} />
         <Route exact path="/store" component={Store} />
         <Route exact path="/profile" component={Profile} />

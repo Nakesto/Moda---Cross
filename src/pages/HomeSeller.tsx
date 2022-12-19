@@ -2,6 +2,7 @@ import {
   IonButton,
   IonContent,
   IonHeader,
+  IonIcon,
   IonPage,
   IonText,
   IonToolbar,
@@ -14,19 +15,18 @@ import {
   collection,
   doc,
   getDocs,
+  onSnapshot,
   query,
   setDoc,
   where,
 } from 'firebase/firestore'
 import { db } from '../firebase'
 import { OverlayEventDetail } from '@ionic/react/dist/types/components/react-component-lib/interfaces'
-import { AiOutlineAppstoreAdd } from 'react-icons/ai'
-import { CiSquareRemove } from 'react-icons/ci'
-import { MdDriveFileRenameOutline, MdVerified } from 'react-icons/md'
 import { UserContext } from '../context/UserData'
 import { Toko } from './Store'
 import CardProductSeller from '../components/CardProductSeller'
 import AddProduct from '../components/AddProduct'
+import { add } from 'ionicons/icons'
 
 export type Product = {
   name: string
@@ -42,6 +42,7 @@ export type Product = {
   stock: number
   image: string
   category: string
+  verified: string
 }
 
 const HomeSeller: React.FC = () => {
@@ -73,13 +74,14 @@ const HomeSeller: React.FC = () => {
         collection(db, 'product'),
         where('toko.uid', '==', userData?.uid),
       )
-      const querySnapshot = await getDocs(q)
-      const data: Product[] = []
-      querySnapshot.forEach((doc) => {
-        // doc.data() is never undefined for query doc snapshots
-        data.push(doc.data() as Product)
+      onSnapshot(q, (snapshot) => {
+        const data: Product[] = []
+        snapshot.forEach((doc) => {
+          // doc.data() is never undefined for query doc snapshots
+          data.push(doc.data() as Product)
+        })
+        setdataproduct(data)
       })
-      setdataproduct(data)
     }
     getToko()
     getProduct()
@@ -94,33 +96,31 @@ const HomeSeller: React.FC = () => {
         }
 
         if (ev.detail.role === 'confirm') {
-          const productData = ev.detail.data.product
-          setAddProduct(productData)
-          addData()
+          addData(ev.detail.data.product)
         }
       },
     })
   }
 
-  const addData = async () => {
+  const addData = async (data: any) => {
     try {
       const newDocRef = doc(collection(db, 'product'))
       await setDoc(newDocRef, {
-        name: addproduct[0].name,
+        name: data[0].name,
         toko: {
           name: datatoko[0].name,
           uid: datatoko[0].uid,
           province: datatoko[0].province,
           photoURL: datatoko[0].image,
         },
-        price: addproduct[0].price,
-        description: addproduct[0].description as string,
+        price: data[0].price,
+        description: data[0].description as string,
         uid: newDocRef.id,
-        stock: addproduct[0].stock,
-        image: addproduct[0].image as string,
-        category: addproduct[0].category as string,
+        stock: data[0].stock,
+        image: data[0].image as string,
+        category: data[0].category as string,
       })
-      history.push('/homeseller')
+      console.log('berhasil')
     } catch (error) {
       console.log(error)
     }
@@ -245,66 +245,7 @@ const HomeSeller: React.FC = () => {
               justifyContent: 'center',
               gap: '10px',
             }}
-          >
-            <div
-              style={{
-                textAlign: 'center',
-                fontSize: '20px',
-                fontWeight: '600',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                marginRight: '10px',
-              }}
-            >
-              <button
-                style={{
-                  maxWidth: '200px',
-                  padding: '13px',
-                  marginBottom: '5px',
-                }}
-                className="button-category"
-                onClick={() => openModal()}
-              >
-                <AiOutlineAppstoreAdd
-                  style={{
-                    width: '50px',
-                    height: '50px',
-                  }}
-                />
-              </button>
-              <IonText>Add</IonText>
-            </div>
-            <div
-              style={{
-                textAlign: 'center',
-                fontSize: '20px',
-                fontWeight: '600',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                marginLeft: '10px',
-                marginRight: '10px',
-              }}
-            >
-              <button
-                style={{
-                  maxWidth: '200px',
-                  padding: '13px',
-                  marginBottom: '5px',
-                }}
-                className="button-category"
-              >
-                <MdVerified
-                  style={{
-                    width: '50px',
-                    height: '50px',
-                  }}
-                />
-              </button>
-              <IonText>Verify</IonText>
-            </div>
-          </div>
+          ></div>
           <div
             style={{
               width: '100%',
@@ -331,6 +272,13 @@ const HomeSeller: React.FC = () => {
               >
                 Product List
               </IonText>
+              <IonButton
+                style={{ marginTop: '20px' }}
+                onClick={() => openModal()}
+              >
+                <IonIcon icon={add} style={{ marginRight: '5px' }} />
+                Add product
+              </IonButton>
             </div>
           </div>
           <div

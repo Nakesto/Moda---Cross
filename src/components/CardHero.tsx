@@ -1,6 +1,4 @@
 import { IonButton, IonText } from '@ionic/react'
-import React from 'react'
-import Tom from '../Assets/tom_holland.jpg'
 
 const CardHero = () => {
   return (

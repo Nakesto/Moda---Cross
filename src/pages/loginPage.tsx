@@ -12,10 +12,9 @@ import {
   IonRow,
   IonTitle,
   IonToolbar,
-  IonBadge,
 } from '@ionic/react'
 import './loginPage.css'
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useState } from 'react'
 import loginImg from '../Assets/select_login.png'
 import { lockClosed, mailUnread } from 'ionicons/icons'
 import { FcGoogle } from 'react-icons/fc'
@@ -31,7 +30,7 @@ import { useForm } from 'react-hook-form'
 import { Redirect, useHistory, useLocation } from 'react-router'
 import { ErrorMessage } from '@hookform/error-message'
 import { auth, providerFacebook, providerGoogle } from '../firebase'
-import { UserContext, UserProvider } from '../context/UserData'
+import { UserContext } from '../context/UserData'
 
 export type DataUser = {
   token: string

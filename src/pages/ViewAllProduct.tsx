@@ -12,14 +12,14 @@ import {
   IonToast,
   IonToolbar,
 } from '@ionic/react'
-import { collection, getDocs, query, where } from 'firebase/firestore'
+import { collection, getDocs, limit, query } from 'firebase/firestore'
 import { useEffect, useState } from 'react'
 import { Redirect, useLocation } from 'react-router'
 import CardCategory from '../components/CardCategory'
 import { db } from '../firebase'
 import { Product } from './Home'
 
-const Category = () => {
+const ViewAllProduct = () => {
   const location = useLocation()
   const params: any = location.state
   const [product, setProduct] = useState<Product[]>([])
@@ -28,10 +28,7 @@ const Category = () => {
 
   useEffect(() => {
     const getProduct = async () => {
-      const q = query(
-        collection(db, 'product'),
-        where('category', '==', params.category),
-      )
+      const q = query(collection(db, 'product'), limit(10))
       const querySnapshot = await getDocs(q)
       const data: Product[] = []
       querySnapshot.forEach((doc) => {
@@ -132,4 +129,4 @@ const Category = () => {
   )
 }
 
-export default Category
+export default ViewAllProduct

@@ -4,14 +4,14 @@ import {
   IonHeader,
   IonPage,
   IonText,
-} from "@ionic/react";
-import React, { useRef, useState } from "react";
-import { Link } from "react-router-dom";
-import Slider from "react-slick";
-import Gambar1 from "../Assets/Page1.png";
-import Gambar2 from "../Assets/Page2.png";
-import Gambar3 from "../Assets/Page3.png";
-import "./LandingPage.css";
+} from '@ionic/react'
+import { useRef, useState } from 'react'
+import { Link } from 'react-router-dom'
+import Slider from 'react-slick'
+import Gambar1 from '../Assets/Page1.png'
+import Gambar2 from '../Assets/Page2.png'
+import Gambar3 from '../Assets/Page3.png'
+import './LandingPage.css'
 
 const LandingPage = () => {
   const settings = {
@@ -24,21 +24,21 @@ const LandingPage = () => {
     arrows: false,
     slidesToShow: 1,
     slidesToScroll: 1,
-  };
-  const sliderRef = useRef<any>();
-  const [number, setNumber] = useState<number>(1);
+  }
+  const sliderRef = useRef<any>()
+  const [number, setNumber] = useState<number>(1)
 
   const gotoNext = () => {
-    sliderRef.current.slickNext();
-    setNumber((prev) => prev + 1);
-  };
+    sliderRef.current.slickNext()
+    setNumber((prev) => prev + 1)
+  }
 
   return (
     <IonPage className="page">
       <IonHeader className="head"></IonHeader>
       <IonContent
         style={{
-          backgroundColor: "red",
+          backgroundColor: 'red',
         }}
         className="content"
       >
@@ -51,18 +51,18 @@ const LandingPage = () => {
               <div className="slide-text">
                 <IonText
                   style={{
-                    fontSize: "35px",
-                    fontWeight: "800",
-                    textAlign: "center",
+                    fontSize: '35px',
+                    fontWeight: '800',
+                    textAlign: 'center',
                   }}
                 >
                   Welcome to MODA!
                 </IonText>
                 <IonText
                   style={{
-                    fontSize: "15px",
-                    fontWeight: "500",
-                    textAlign: "center",
+                    fontSize: '15px',
+                    fontWeight: '500',
+                    textAlign: 'center',
                   }}
                 >
                   Thrifting Application
@@ -78,9 +78,9 @@ const LandingPage = () => {
               <div className="slide-text">
                 <IonText
                   style={{
-                    fontSize: "30px",
-                    fontWeight: "800",
-                    textAlign: "center",
+                    fontSize: '30px',
+                    fontWeight: '800',
+                    textAlign: 'center',
                   }}
                 >
                   Improve your fashion with the Moda
@@ -96,9 +96,9 @@ const LandingPage = () => {
               <div className="slide-text">
                 <IonText
                   style={{
-                    fontSize: "30px",
-                    fontWeight: "800",
-                    textAlign: "center",
+                    fontSize: '30px',
+                    fontWeight: '800',
+                    textAlign: 'center',
                   }}
                 >
                   Let's find your clothing style with fashion
@@ -109,18 +109,18 @@ const LandingPage = () => {
         </Slider>
         <div
           style={{
-            height: "15vh",
-            position: "fixed",
+            height: '15vh',
+            position: 'fixed',
             bottom: 0,
             left: 0,
-            width: "100%",
-            display: "flex",
-            justifyContent: "center",
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'center',
           }}
         >
           <div
             style={{
-              maxWidth: "1024px",
+              maxWidth: '1024px',
             }}
           >
             {number <= 2 && (
@@ -139,7 +139,7 @@ const LandingPage = () => {
         </div>
       </IonContent>
     </IonPage>
-  );
-};
+  )
+}
 
-export default LandingPage;
+export default LandingPage

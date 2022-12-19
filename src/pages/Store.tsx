@@ -19,7 +19,7 @@ import {
 import { OverlayEventDetail } from '@ionic/react/dist/types/components/react-component-lib/interfaces'
 import { collection, getDocs, limit, query } from 'firebase/firestore'
 import { cartOutline } from 'ionicons/icons'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import ModalFull from '../components/ModalFull'
 import { db } from '../firebase'

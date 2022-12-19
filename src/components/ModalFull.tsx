@@ -7,11 +7,10 @@ import {
   IonContent,
   IonSearchbar,
   IonIcon,
-  IonRow,
   IonSpinner,
 } from '@ionic/react'
 import { useState } from 'react'
-import { arrowBackOutline, cartOutline } from 'ionicons/icons'
+import { arrowBackOutline } from 'ionicons/icons'
 import { Product } from '../pages/Home'
 import { Toko } from '../pages/Store'
 import { useDebouncedCallback } from 'use-debounce'

@@ -1,7 +1,7 @@
 import { IonButton, IonContent, IonPage, IonRow } from '@ionic/react'
 import './SelectLogin.css'
 import { FcGoogle } from 'react-icons/fc'
-import { FaApple, FaFacebook } from 'react-icons/fa'
+import { FaFacebook } from 'react-icons/fa'
 import { MdOutgoingMail } from 'react-icons/md'
 
 import SelectLogin from '../Assets/authentication.png'
@@ -13,7 +13,7 @@ import {
   signInWithPopup,
   TwitterAuthProvider,
 } from 'firebase/auth'
-import { useContext, useEffect } from 'react'
+import { useContext } from 'react'
 import { UserContext } from '../context/UserData'
 import { Link } from 'react-router-dom'
 import { BsTwitter } from 'react-icons/bs'

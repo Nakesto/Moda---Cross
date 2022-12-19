@@ -9,23 +9,18 @@ import {
   IonLabel,
   IonPage,
   IonRow,
-  IonSelect,
-  IonSelectOption,
   IonTitle,
   IonToolbar,
 } from '@ionic/react'
 import './RegisterPage.css'
 import { useContext, useEffect, useState } from 'react'
-import { mail, calendar, camera } from 'ionicons/icons'
-import { FaAddressBook, FaIdCard, FaTransgender } from 'react-icons/fa'
+import { camera } from 'ionicons/icons'
+import { FaAddressBook, FaIdCard } from 'react-icons/fa'
 import { BsCameraFill, BsFillTelephoneFill } from 'react-icons/bs'
-import { RiLockPasswordFill } from 'react-icons/ri'
 import { HiIdentification } from 'react-icons/hi'
-import { AiTwotoneSecurityScan } from 'react-icons/ai'
 import profile from '../Assets/profile.png'
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
 import {
-  addDoc,
   collection,
   doc,
   onSnapshot,
@@ -34,11 +29,10 @@ import {
   updateDoc,
   where,
 } from 'firebase/firestore'
-import { useHistory, useLocation } from 'react-router'
-import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth'
+import { useHistory } from 'react-router'
 import { useForm } from 'react-hook-form'
 import { ErrorMessage } from '@hookform/error-message'
-import { storage, auth, db } from '../firebase'
+import { storage, db } from '../firebase'
 import { UserContext } from '../context/UserData'
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera'
 import { base64FromPath } from '@capacitor-community/filesystem-react'
