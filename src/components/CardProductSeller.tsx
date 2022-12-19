@@ -90,7 +90,7 @@ const CardProductSeller = ({ product }: { product: Product }) => {
         goDetailProduk(product)
       }}
     >
-      <img src={product.image} className="produk-image" />
+      <img src={product.image} className="produk-image" alt={product.name} />
       <div className="list-container">
         <div
           style={{

@@ -24,10 +24,9 @@ import {
   GoogleAuthProvider,
   signInWithEmailAndPassword,
   signInWithPopup,
-  TwitterAuthProvider,
 } from 'firebase/auth'
 import { useForm } from 'react-hook-form'
-import { Redirect, useHistory, useLocation } from 'react-router'
+import { Redirect, useHistory } from 'react-router'
 import { ErrorMessage } from '@hookform/error-message'
 import { auth, providerFacebook, providerGoogle } from '../firebase'
 import { UserContext } from '../context/UserData'
@@ -43,7 +42,6 @@ export type DataUser = {
 
 const LoginPage: React.FC = () => {
   const history = useHistory()
-  const location = useLocation()
   const { isLoggedIn } = useContext(UserContext)
   const [errLogin, setErrLogin] = useState<string>()
 
@@ -60,7 +58,6 @@ const LoginPage: React.FC = () => {
     )
       .then((userCredential) => {
         // Signed in
-        const user = userCredential.user
         history.push('/home')
       })
       .catch((error) => {
@@ -84,9 +81,6 @@ const LoginPage: React.FC = () => {
         // This gives you a Facebook Access Token. You can use it to access the Facebook API.
         const credential = FacebookAuthProvider.credentialFromResult(result)
         if (credential !== null) {
-          const token = credential.accessToken
-
-          const user = result.user
           history.push('/home')
         }
       })
@@ -102,36 +96,11 @@ const LoginPage: React.FC = () => {
         // This gives you a Google Access Token. You can use it to access the Google API.
         const credential = GoogleAuthProvider.credentialFromResult(result)
         if (credential !== null) {
-          const token = credential.accessToken
-
-          const user = result.user
         }
         history.push('/home')
       })
       .catch((error) => {
         const credential = GoogleAuthProvider.credentialFromError(error)
-        console.log(credential)
-      })
-  }
-
-  const loginTwitter = () => {
-    const providerTwitter = new TwitterAuthProvider()
-    signInWithPopup(auth, providerTwitter)
-      .then((result) => {
-        // The signed-in user info.
-        const user = result.user
-
-        // This gives you a Twitter Access Token. You can use it to access the Facebook API.
-        const credential = TwitterAuthProvider.credentialFromResult(result)
-        if (credential !== null) {
-          const token = credential.accessToken
-
-          const user = result.user
-          history.push('/home')
-        }
-      })
-      .catch((error) => {
-        const credential = TwitterAuthProvider.credentialFromError(error)
         console.log(credential)
       })
   }

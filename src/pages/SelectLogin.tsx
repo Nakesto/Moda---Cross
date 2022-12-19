@@ -5,7 +5,7 @@ import { FaFacebook } from 'react-icons/fa'
 import { MdOutgoingMail } from 'react-icons/md'
 
 import SelectLogin from '../Assets/authentication.png'
-import { Redirect, useHistory, useLocation } from 'react-router'
+import { Redirect, useHistory } from 'react-router'
 import { auth, providerGoogle, providerFacebook } from '../firebase'
 import {
   FacebookAuthProvider,
@@ -20,7 +20,6 @@ import { BsTwitter } from 'react-icons/bs'
 
 const SelectLoginPage: React.FC = () => {
   const history = useHistory()
-  const location = useLocation()
   const { isLoggedIn } = useContext(UserContext)
 
   const loginGoogle = () => {
@@ -29,8 +28,6 @@ const SelectLoginPage: React.FC = () => {
         // This gives you a Google Access Token. You can use it to access the Google API.
         const credential = GoogleAuthProvider.credentialFromResult(result)
         if (credential !== null) {
-          const token = credential.accessToken
-
           const user = result.user
           console.log(user)
           history.push('/home')
@@ -47,14 +44,10 @@ const SelectLoginPage: React.FC = () => {
     signInWithPopup(auth, providerTwitter)
       .then((result) => {
         // The signed-in user info.
-        const user = result.user
 
         // This gives you a Twitter Access Token. You can use it to access the Facebook API.
         const credential = TwitterAuthProvider.credentialFromResult(result)
         if (credential !== null) {
-          const token = credential.accessToken
-
-          const user = result.user
           history.push('/home')
         }
       })
@@ -68,14 +61,10 @@ const SelectLoginPage: React.FC = () => {
     signInWithPopup(auth, providerFacebook)
       .then((result) => {
         // The signed-in user info.
-        const user = result.user
 
         // This gives you a Facebook Access Token. You can use it to access the Facebook API.
         const credential = FacebookAuthProvider.credentialFromResult(result)
         if (credential !== null) {
-          const token = credential.accessToken
-
-          const user = result.user
           history.push('/home')
         }
       })
@@ -97,7 +86,7 @@ const SelectLoginPage: React.FC = () => {
     <IonPage className="container">
       <IonContent>
         <div className="content-select">
-          <img className="img-select-login" src={SelectLogin} />
+          <img className="img-select-login" src={SelectLogin} alt="no photo" />
           <h1 className="ion-h1">
             <strong>Let's you in</strong>
           </h1>
