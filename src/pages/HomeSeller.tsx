@@ -150,7 +150,7 @@ const HomeSeller: React.FC = () => {
       <IonContent className="content">
         <div
           style={{
-            height: '90vh',
+            height: '90vh'
           }}
         >
           <div className="test"></div>
@@ -332,6 +332,7 @@ const HomeSeller: React.FC = () => {
                 paddingLeft: '20px',
                 justifyContent: 'center',
                 flexDirection: 'column',
+                paddingBottom: "20px"
               }}
             >
               {dataproduct.map((product) => (
