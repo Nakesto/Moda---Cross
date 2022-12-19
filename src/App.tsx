@@ -39,6 +39,7 @@ import LandingPage from './pages/LandingPage'
 import Payment from './pages/Payment'
 import Cart from './pages/Cart'
 import History from './pages/History'
+import HomeSeller from './pages/HomeSeller'
 
 setupIonicReact()
 
@@ -70,6 +71,7 @@ const App: React.FC = () => {
               <Route exact path="/payment" component={Payment} />
               <Route exact path="/history" component={History} />
               <Route exact path="/landing" component={LandingPage} />
+              <Route exact path="/homeseller" component={HomeSeller} />
               <ProtectedRoute>
                 <LoggedInTabs />
               </ProtectedRoute>

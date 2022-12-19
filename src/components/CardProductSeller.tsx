@@ -28,13 +28,15 @@ const CardProductSeller = ({ product }: { product: Product }) => {
   }
   const { userData } = useContext(UserContext)
   const history = useHistory()
-  const addCart = async (product: Product) => {
-    await updateDoc(doc(db, 'cart', userData!.uid), {
-      [userData!.uid + product.uid + '.product']: product,
-      [userData!.uid + product.uid + '.quantity']: 1,
-    })
-    presentToast('middle')
+
+  const edit = (e : any, product: Product) => {
+      e.stopPropagation();
   }
+
+  const deleteProduct = (e : any, product: Product) => {
+      e.stopPropagation();
+  }
+
   const goDetailProduk = (product: Product) => {
     history.push('/detailProduct', { product })
   }
@@ -42,7 +44,7 @@ const CardProductSeller = ({ product }: { product: Product }) => {
   return (
     <div
       className="produk-card"
-      onClick={() => {
+      onClick={(e) => {
         goDetailProduk(product)
       }}
     >
@@ -65,11 +67,11 @@ const CardProductSeller = ({ product }: { product: Product }) => {
           <IonBadge className="verif-badge">Unverified</IonBadge>
         </div>
         <div className="button-group-seller">
-          <IonButton style={{ marginRight: '10px' }}>
+          <IonButton style={{ marginRight: '10px' }} onClick={(e) => edit(e, product)}>
             <IonIcon icon={create} />
           </IonButton>
           <IonButton>
-            <IonIcon icon={trash} />
+            <IonIcon icon={trash} onClick={(e) => deleteProduct(e, product)} />
           </IonButton>
         </div>
       </div>

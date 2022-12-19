@@ -33,7 +33,6 @@ const LoggedInTabs = () => {
         <Route exact path="/detail" component={ChatDetail} />
         <Route exact path="/regseller" component={RegisterSeller} />
         <Route exact path="/category" component={Category} />
-        <Route exact path="/homeseller" component={HomeSeller} />
       </IonRouterOutlet>
       <IonTabBar slot="bottom">
         <IonTabButton tab="home" href="/home">
