@@ -28,6 +28,7 @@ import { useContext, useEffect, useState } from "react";
 import { arrayUnion, deleteField, doc, updateDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import { UserContext } from "../context/UserData";
+import { rupiah } from "./Cart";
 
 const Payment: React.FC = () => {
   const location = useLocation();
@@ -40,7 +41,7 @@ const Payment: React.FC = () => {
   useEffect(() => {
     let sum = 0;
     Object.entries(params.cart).map((data: any, index) => {
-      let temp = parseInt(data[1].product.price);
+      let temp = parseInt(data[1].quantity) * parseInt(data[1].product.price);
       sum += temp;
       setPrice(sum);
     });
@@ -48,23 +49,34 @@ const Payment: React.FC = () => {
 
   const removeCart = async () => {
     const cartRef = doc(db, "cart", userData!.uid);
+    const historyRef = doc(db, "history", userData!.uid);
     const length = Object.entries(params.cart).length;
 
+    //   Object.entries(params.cart).forEach(async (data: any, index) => {
+    //     updateDoc(historyRef, {
+    //       [userData!.uid + data[1].product.uid]: deleteField(),
+    //     }).then(() => {
+    //       if (length - 1 === index) {
+
+    //       }
+    //     });
+    //   });
+    // };
     Object.entries(params.cart).forEach(async (data: any, index) => {
       updateDoc(cartRef, {
         [userData!.uid + data[1].product.uid]: deleteField(),
       })
         .then(() => {
-          if (length - 1 === index) {
-            updateDoc(doc(db, "history", userData!.uid), {
-              products: arrayUnion({
-                product: data[1].product,
-                quantity: data[1].quantity,
-              }),
-            }).then(() => {
+          updateDoc(doc(db, "history", userData!.uid), {
+            products: arrayUnion({
+              product: data[1].product,
+              quantity: data[1].quantity,
+            }),
+          }).then(() => {
+            if (length - 1 === index) {
               setSuccess(true);
-            });
-          }
+            }
+          });
         })
         .catch((err) => {});
     });
@@ -106,7 +118,7 @@ const Payment: React.FC = () => {
 
                 <IonLabel style={{ paddingTop: "10px", paddingBottom: "10px" }}>
                   <h2 className="des">{product[1].product.name}</h2>
-                  <h3 className="des">Rp. {product[1].product.price}</h3>
+                  <h3 className="des">{rupiah(product[1].product.price)}</h3>
                   <IonRow>
                     <IonCard className="ctr">{product[1].quantity}</IonCard>
                   </IonRow>
@@ -195,10 +207,7 @@ const Payment: React.FC = () => {
                 size="4"
                 style={{ justifyContent: "end", display: "flex" }}
               >
-                <IonLabel className="totalhrg">
-                  Rp.
-                  {price}
-                </IonLabel>
+                <IonLabel className="totalhrg">{rupiah(price)}</IonLabel>
               </IonCol>
             </IonRow>
             <IonRow>

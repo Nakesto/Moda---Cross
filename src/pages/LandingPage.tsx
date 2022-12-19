@@ -78,7 +78,7 @@ const LandingPage = () => {
               <div className="slide-text">
                 <IonText
                   style={{
-                    fontSize: "35px",
+                    fontSize: "30px",
                     fontWeight: "800",
                     textAlign: "center",
                   }}
@@ -96,7 +96,7 @@ const LandingPage = () => {
               <div className="slide-text">
                 <IonText
                   style={{
-                    fontSize: "35px",
+                    fontSize: "30px",
                     fontWeight: "800",
                     textAlign: "center",
                   }}
