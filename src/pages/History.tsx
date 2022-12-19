@@ -11,59 +11,66 @@ import {
   IonSpinner,
   IonTitle,
   IonToolbar,
-} from '@ionic/react'
+} from "@ionic/react";
 
-import './History.css'
-import { useContext, useEffect, useState } from 'react'
-import { doc, onSnapshot } from 'firebase/firestore'
-import { db } from '../firebase'
-import { UserContext } from '../context/UserData'
-import { rupiah } from './Cart'
+import "./History.css";
+import { useContext, useEffect, useState } from "react";
+import { doc, onSnapshot } from "firebase/firestore";
+import { db } from "../firebase";
+import { UserContext } from "../context/UserData";
+import { rupiah } from "./Cart";
+import { useHistory } from "react-router";
 
 const History: React.FC = () => {
-  const [hist, setHistory] = useState<any>({})
-  const { userData } = useContext(UserContext)
-  const [isLoading, setIsLoading] = useState(true)
-  const [success, setSuccess] = useState(false)
+  const [hist, setHistory] = useState<any>({});
+  const { userData, isLoggedIn } = useContext(UserContext);
+  const [isLoading, setIsLoading] = useState(true);
+  const [success, setSuccess] = useState(false);
+  const history = useHistory();
 
   useEffect(() => {
-    const unsub = onSnapshot(doc(db, 'history', userData!.uid), (doc) => {
-      setHistory(doc.data() as any)
-      setIsLoading(false)
-    })
-    return () => {
-      unsub()
+    if (isLoggedIn) {
+      const unsub = onSnapshot(doc(db, "history", userData!.uid), (doc) => {
+        setHistory(doc.data() as any);
+        setIsLoading(false);
+      });
+
+      return () => {
+        unsub();
+      };
+    } else {
+      history.push("/");
     }
-  }, [userData])
+  }, [userData]);
 
   const trigger = () => {
-    setSuccess(true)
-  }
+    setSuccess(true);
+  };
 
   if (isLoading) {
     return (
       <IonPage
         style={{
-          height: '100vh',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
+          height: "100vh",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
         }}
       >
         <IonSpinner color="black" name="lines"></IonSpinner>
       </IonPage>
-    )
+    );
   }
 
   return (
     <IonPage className="page">
       <IonHeader className="head">
-        <IonToolbar color={'primary'}>
+        <IonToolbar color={"primary"}>
           <IonButtons slot="start">
             <IonBackButton className="backbtn" />
           </IonButtons>
           <IonTitle
-            style={{ textAlign: 'left', marginLeft: '16px', fontSize: '20px' }}
+            style={{ textAlign: "left", marginLeft: "16px", fontSize: "20px" }}
           >
             History
           </IonTitle>
@@ -73,21 +80,23 @@ const History: React.FC = () => {
         <IonList
           color="primary"
           style={{
-            overflow: 'scroll',
+            overflow: "scroll",
           }}
         >
-          {hist.products.map((data: any) => (
-            <IonItem key={data.product.name} lines="none" button>
+          {hist.products.map((data: any, index: number) => (
+            <IonItem lines="none" button key={index}>
               <img
                 className="img"
-                style={{ width: '60px', height: '60px', marginRight: '10px' }}
+                style={{ width: "60px", height: "60px", marginRight: "10px" }}
                 alt="produk"
                 src={data.product.image}
               />
 
-              <IonLabel style={{ paddingTop: '10px', paddingBottom: '10px' }}>
+              <IonLabel style={{ paddingTop: "10px", paddingBottom: "10px" }}>
                 <h2 className="des">{data.product.name}</h2>
-                <h3 className="des">{rupiah(data.product.price)}</h3>
+                <h3 className="des">
+                  {rupiah(data.product.price * data.quantity)}
+                </h3>
                 <IonButton className="des" slot="end">
                   Beli Lagi
                 </IonButton>
@@ -97,7 +106,7 @@ const History: React.FC = () => {
         </IonList>
       </IonContent>
     </IonPage>
-  )
-}
+  );
+};
 
-export default History
+export default History;

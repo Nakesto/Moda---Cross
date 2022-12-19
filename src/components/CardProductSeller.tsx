@@ -95,8 +95,7 @@ const CardProductSeller = ({ product }: { product: Product }) => {
     history.push('/detailProduct', { product })
   }
 
-  const verify = async (e: any) => {
-    e.stopPropagation()
+  const verify = async () => {
     const photo = await Camera.getPhoto({
       resultType: CameraResultType.Uri,
       source: CameraSource.Camera,
@@ -156,7 +155,13 @@ const CardProductSeller = ({ product }: { product: Product }) => {
           >
             <IonIcon icon={trash} />
           </IonButton>
-          <IonButton onClick={(e) => verify(e)} className="button-fitur">
+          <IonButton
+            onClick={(e) => {
+              e.stopPropagation()
+              verify()
+            }}
+            className="button-fitur"
+          >
             <MdVerified
               style={{
                 width: '20px',
