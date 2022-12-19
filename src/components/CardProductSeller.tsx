@@ -4,12 +4,14 @@ import {
   IonButton,
   IonIcon,
   IonText,
+  useIonAlert,
   useIonModal,
+  useIonToast,
 } from '@ionic/react'
 import { OverlayEventDetail } from '@ionic/react/dist/types/components/react-component-lib/interfaces'
 import { deleteDoc, doc, updateDoc } from 'firebase/firestore'
-import { create, trash } from 'ionicons/icons'
-import { useContext } from 'react'
+import { checkmarkDoneOutline, create, trash } from 'ionicons/icons'
+import { useContext, useState } from 'react'
 import { MdVerified } from 'react-icons/md'
 import { useHistory } from 'react-router'
 import { UserContext } from '../context/UserData'
@@ -28,6 +30,9 @@ const CardProductSeller = ({ product }: { product: Product }) => {
     role: JSON.stringify(product),
   })
 
+  const [presentAlert] = useIonAlert()
+  const [presentToast] = useIonToast()
+
   function openModal() {
     present({
       onWillDismiss: (ev: CustomEvent<OverlayEventDetail>) => {
@@ -43,10 +48,36 @@ const CardProductSeller = ({ product }: { product: Product }) => {
     openModal()
   }
 
+  const presentToastAlert = (message: string, position: 'bottom') => {
+    presentToast({
+      message: message + ' product success!',
+      duration: 1500,
+      position: position,
+      icon: checkmarkDoneOutline,
+      cssClass: 'custom-toast',
+    })
+  }
+
   const deleteProduct = async (e: any, product: Product) => {
     e.stopPropagation()
     try {
-      await deleteDoc(doc(db, 'product', product.uid))
+      presentAlert({
+        header: 'Are you sure want to delete ?',
+        buttons: [
+          {
+            text: 'Cancel',
+            role: 'cancel',
+          },
+          {
+            text: 'Delete',
+            role: 'confirm',
+            handler: async () => {
+              await deleteDoc(doc(db, 'product', product.uid))
+              presentToastAlert('Delete', 'bottom')
+            },
+          },
+        ],
+      })
     } catch (err) {}
   }
 
@@ -54,7 +85,7 @@ const CardProductSeller = ({ product }: { product: Product }) => {
     const docRef = doc(db, 'product', data.uid)
     try {
       await updateDoc(docRef, data)
-      console.log('berhasil')
+      presentToastAlert('Update', 'bottom')
     } catch (err) {
       console.log(err)
     }
@@ -64,7 +95,8 @@ const CardProductSeller = ({ product }: { product: Product }) => {
     history.push('/detailProduct', { product })
   }
 
-  const verify = async () => {
+  const verify = async (e: any) => {
+    e.stopPropagation()
     const photo = await Camera.getPhoto({
       resultType: CameraResultType.Uri,
       source: CameraSource.Camera,
@@ -124,7 +156,7 @@ const CardProductSeller = ({ product }: { product: Product }) => {
           >
             <IonIcon icon={trash} />
           </IonButton>
-          <IonButton onClick={verify} className="button-fitur">
+          <IonButton onClick={(e) => verify(e)} className="button-fitur">
             <MdVerified
               style={{
                 width: '20px',

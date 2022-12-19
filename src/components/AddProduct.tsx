@@ -17,7 +17,7 @@ import { useState } from 'react'
 import { camera } from 'ionicons/icons'
 import { BsCameraFill } from 'react-icons/bs'
 import { AiFillTags, AiOutlineStock } from 'react-icons/ai'
-import profile from '../Assets/profile.png'
+import profile from '../Assets/product_default.jpeg'
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
 import { useForm } from 'react-hook-form'
 import { ErrorMessage } from '@hookform/error-message'
@@ -182,7 +182,7 @@ const AddProduct = ({
                   <span className="profilepic_icon">
                     <BsCameraFill className="fas" />
                   </span>
-                  <span className="profilepic_text">Input Photo Product</span>
+                  <span className="profilepic_text">Take photo</span>
                 </label>
                 <input
                   id="actual-btn1"
