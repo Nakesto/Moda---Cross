@@ -5,125 +5,130 @@ import {
   IonText,
   IonToolbar,
   useIonModal,
-} from '@ionic/react'
-import Slider from 'react-slick'
-import { useHistory } from 'react-router-dom'
-import { useContext, useEffect, useState } from 'react'
+} from "@ionic/react";
+import Slider from "react-slick";
+import { useHistory } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
 import {
   collection,
   doc,
   getDocs,
+  onSnapshot,
   query,
   setDoc,
   where,
-} from 'firebase/firestore'
-import { db } from '../firebase'
-import { OverlayEventDetail } from '@ionic/react/dist/types/components/react-component-lib/interfaces'
-import { AiOutlineAppstoreAdd } from 'react-icons/ai'
-import { CiSquareRemove } from 'react-icons/ci'
-import { MdDriveFileRenameOutline, MdVerified } from 'react-icons/md'
-import { UserContext } from '../context/UserData'
-import { Toko } from './Store'
-import CardProductSeller from '../components/CardProductSeller'
-import AddProduct from '../components/AddProduct'
+} from "firebase/firestore";
+import { db } from "../firebase";
+import { OverlayEventDetail } from "@ionic/react/dist/types/components/react-component-lib/interfaces";
+import { AiOutlineAppstoreAdd } from "react-icons/ai";
+import { CiSquareRemove } from "react-icons/ci";
+import { MdDriveFileRenameOutline, MdVerified } from "react-icons/md";
+import { UserContext } from "../context/UserData";
+import { Toko } from "./Store";
+import CardProductSeller from "../components/CardProductSeller";
+import AddProduct from "../components/AddProduct";
+import { v4 } from "uuid";
 
 export type Product = {
-  name: string
+  name: string;
   toko: {
-    name: string
-    uid: string
-    province: string
-    photoURL: string
-  }
-  price: string
-  description: string
-  uid: string
-  stock: number
-  image: string
-  category: string
-}
+    name: string;
+    uid: string;
+    province: string;
+    photoURL: string;
+  };
+  price: string;
+  description: string;
+  uid: string;
+  stock: number;
+  image: string;
+  category: string;
+  verified: string;
+};
 
 const HomeSeller: React.FC = () => {
-  const history = useHistory()
-  const [datatoko, setDataToko] = useState<Toko[]>([])
-  const [dataproduct, setdataproduct] = useState<Product[]>([])
-  const [addproduct, setAddProduct] = useState<Product[]>([])
-  const { userData } = useContext(UserContext)
+  const history = useHistory();
+  const [datatoko, setDataToko] = useState<Toko[]>([]);
+  const [dataproduct, setdataproduct] = useState<Product[]>([]);
+  const [addproduct, setAddProduct] = useState<Product[]>([]);
+  const { userData } = useContext(UserContext);
   const [present, dismiss] = useIonModal(AddProduct, {
     onDismiss: (data: { product: null }, role: string) => dismiss(data, role),
-    role: 'product',
-  })
+    role: "product",
+  });
 
   useEffect(() => {
     const getToko = async () => {
-      const q = query(collection(db, 'toko'), where('uid', '==', userData?.uid))
-      const querySnapshot = await getDocs(q)
-      const data: Toko[] = []
+      const q = query(
+        collection(db, "toko"),
+        where("uid", "==", userData?.uid)
+      );
+      const querySnapshot = await getDocs(q);
+      const data: Toko[] = [];
       querySnapshot.forEach((doc) => {
         // doc.data() is never undefined for query doc snapshots
-        data.push(doc.data() as Toko)
-      })
+        data.push(doc.data() as Toko);
+      });
 
-      setDataToko(data)
-    }
+      setDataToko(data);
+    };
 
     const getProduct = async () => {
       const q = query(
-        collection(db, 'product'),
-        where('toko.uid', '==', userData?.uid),
-      )
-      const querySnapshot = await getDocs(q)
-      const data: Product[] = []
-      querySnapshot.forEach((doc) => {
-        // doc.data() is never undefined for query doc snapshots
-        data.push(doc.data() as Product)
-      })
-      setdataproduct(data)
-    }
-    getToko()
-    getProduct()
-  }, [])
+        collection(db, "product"),
+        where("toko.uid", "==", userData?.uid)
+      );
+      onSnapshot(q, (snapshot) => {
+        const data: Product[] = [];
+        snapshot.forEach((doc) => {
+          // doc.data() is never undefined for query doc snapshots
+          data.push(doc.data() as Product);
+        });
+        setdataproduct(data);
+      });
+    };
+    getToko();
+    getProduct();
+  }, []);
 
   function openModal() {
     present({
       onWillDismiss: (ev: CustomEvent<OverlayEventDetail>) => {
-        if (ev.detail.role === 'goToProduct') {
-          const product = ev.detail.data.product
-          history.push('/detailProduct', { product })
+        if (ev.detail.role === "goToProduct") {
+          const product = ev.detail.data.product;
+          history.push("/detailProduct", { product });
         }
 
-        if (ev.detail.role === 'confirm') {
-          const productData = ev.detail.data.product
-          setAddProduct(productData)
-          addData()
+        if (ev.detail.role === "confirm") {
+          addData(ev.detail.data.product);
         }
       },
-    })
+    });
   }
 
-  const addData = async () => {
+  const addData = async (data: any) => {
     try {
-      const newDocRef = doc(collection(db, 'product'))
+      const newDocRef = doc(collection(db, "product"));
       await setDoc(newDocRef, {
-        name: addproduct[0].name,
+        name: data[0].name,
         toko: {
           name: datatoko[0].name,
           uid: datatoko[0].uid,
           province: datatoko[0].province,
           photoURL: datatoko[0].image,
         },
-        price: addproduct[0].price,
-        description: addproduct[0].description as string,
+        price: data[0].price,
+        description: data[0].description as string,
         uid: newDocRef.id,
-        stock: addproduct[0].stock,
-        image: addproduct[0].image as string,
-        category: addproduct[0].category as string,
-      })
-      history.push('/homeseller')
+        stock: data[0].stock,
+        image: data[0].image as string,
+        category: data[0].category as string,
+      });
+      console.log("berhasil");
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   return (
     <IonPage className="container">
@@ -131,14 +136,14 @@ const HomeSeller: React.FC = () => {
         <IonToolbar
           color="primary"
           style={{
-            paddingLeft: '15px',
-            paddingRight: '15px',
+            paddingLeft: "15px",
+            paddingRight: "15px",
           }}
           className="center"
         >
           <IonText
             style={{
-              marginTop: '9px',
+              marginTop: "9px",
             }}
             slot="start"
             className="text-toolbar"
@@ -150,22 +155,22 @@ const HomeSeller: React.FC = () => {
       <IonContent className="content">
         <div
           style={{
-            height: '90vh'
+            height: "90vh",
           }}
         >
           <div className="test"></div>
           <div
             style={{
-              marginTop: '-4rem',
-              backgroundColor: 'white',
-              marginLeft: '17px',
-              marginRight: '17px',
-              paddingRight: '10px',
-              paddingLeft: '10px',
-              paddingTop: '15px',
-              paddingBottom: '25px',
-              borderRadius: '10px',
-              boxShadow: '0 4px 6px rgb(0 0 0 / 0.3)',
+              marginTop: "-4rem",
+              backgroundColor: "white",
+              marginLeft: "17px",
+              marginRight: "17px",
+              paddingRight: "10px",
+              paddingLeft: "10px",
+              paddingTop: "15px",
+              paddingBottom: "25px",
+              borderRadius: "10px",
+              boxShadow: "0 4px 6px rgb(0 0 0 / 0.3)",
             }}
             className="ion-padding-horizontal"
           >
@@ -175,13 +180,13 @@ const HomeSeller: React.FC = () => {
                   <div>
                     <div
                       style={{
-                        width: '100%',
-                        backgroundColor: 'white',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '20px',
-                        paddingLeft: '5px',
-                        paddingRight: '5px',
+                        width: "100%",
+                        backgroundColor: "white",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "20px",
+                        paddingLeft: "5px",
+                        paddingRight: "5px",
                       }}
                     >
                       <img
@@ -190,28 +195,28 @@ const HomeSeller: React.FC = () => {
                         width="150px"
                         height="125px"
                         style={{
-                          borderRadius: '15px',
+                          borderRadius: "15px",
                         }}
                       />
                       <div
                         style={{
-                          display: 'flex',
-                          flexDirection: 'column',
+                          display: "flex",
+                          flexDirection: "column",
                         }}
                       >
                         <IonText
                           style={{
-                            fontWeight: '400',
-                            fontSize: '20px',
-                            marginBottom: '5px',
+                            fontWeight: "400",
+                            fontSize: "20px",
+                            marginBottom: "5px",
                           }}
                         >
                           Hello,
                         </IonText>
                         <IonText
                           style={{
-                            fontWeight: '600',
-                            fontSize: '25px',
+                            fontWeight: "600",
+                            fontSize: "25px",
                           }}
                         >
                           {val.name}
@@ -224,38 +229,38 @@ const HomeSeller: React.FC = () => {
           </div>
           <div
             style={{
-              display: 'flex',
-              marginLeft: '17px',
-              marginRight: '17px',
-              marginTop: '1.5rem',
-              justifyContent: 'center',
-              gap: '10px',
+              display: "flex",
+              marginLeft: "17px",
+              marginRight: "17px",
+              marginTop: "1.5rem",
+              justifyContent: "center",
+              gap: "10px",
             }}
           >
             <div
               style={{
-                textAlign: 'center',
-                fontSize: '20px',
-                fontWeight: '600',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                marginRight: '10px',
+                textAlign: "center",
+                fontSize: "20px",
+                fontWeight: "600",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                marginRight: "10px",
               }}
             >
               <button
                 style={{
-                  maxWidth: '200px',
-                  padding: '13px',
-                  marginBottom: '5px',
+                  maxWidth: "200px",
+                  padding: "13px",
+                  marginBottom: "5px",
                 }}
                 className="button-category"
                 onClick={() => openModal()}
               >
                 <AiOutlineAppstoreAdd
                   style={{
-                    width: '50px',
-                    height: '50px',
+                    width: "50px",
+                    height: "50px",
                   }}
                 />
               </button>
@@ -263,28 +268,28 @@ const HomeSeller: React.FC = () => {
             </div>
             <div
               style={{
-                textAlign: 'center',
-                fontSize: '20px',
-                fontWeight: '600',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                marginLeft: '10px',
-                marginRight: '10px',
+                textAlign: "center",
+                fontSize: "20px",
+                fontWeight: "600",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                marginLeft: "10px",
+                marginRight: "10px",
               }}
             >
               <button
                 style={{
-                  maxWidth: '200px',
-                  padding: '13px',
-                  marginBottom: '5px',
+                  maxWidth: "200px",
+                  padding: "13px",
+                  marginBottom: "5px",
                 }}
                 className="button-category"
               >
                 <MdVerified
                   style={{
-                    width: '50px',
-                    height: '50px',
+                    width: "50px",
+                    height: "50px",
                   }}
                 />
               </button>
@@ -293,26 +298,26 @@ const HomeSeller: React.FC = () => {
           </div>
           <div
             style={{
-              width: '100%',
-              paddingRight: '17px',
-              paddingLeft: '20px',
-              marginTop: '15px',
-              paddingTop: '20px',
-              paddingBottom: '20px',
+              width: "100%",
+              paddingRight: "17px",
+              paddingLeft: "20px",
+              marginTop: "15px",
+              paddingTop: "20px",
+              paddingBottom: "20px",
             }}
           >
             <div
               style={{
-                justifyContent: 'space-between',
-                display: 'flex',
-                alignItems: 'center',
+                justifyContent: "space-between",
+                display: "flex",
+                alignItems: "center",
               }}
             >
               <IonText
                 style={{
-                  fontSize: '30px',
-                  fontWeight: '600',
-                  marginTop: '20px',
+                  fontSize: "30px",
+                  fontWeight: "600",
+                  marginTop: "20px",
                 }}
               >
                 Product List
@@ -321,25 +326,25 @@ const HomeSeller: React.FC = () => {
           </div>
           <div
             style={{
-              marginTop: '10px',
+              marginTop: "10px",
             }}
           >
             <div
               style={{
-                display: 'flex',
-                gap: '20px',
-                marginBottom: '60px',
-                paddingLeft: '20px',
-                justifyContent: 'center',
-                flexDirection: 'column',
-                paddingBottom: "20px"
+                display: "flex",
+                gap: "20px",
+                marginBottom: "60px",
+                paddingLeft: "20px",
+                justifyContent: "center",
+                flexDirection: "column",
+                paddingBottom: "20px",
               }}
             >
               {dataproduct.map((product) => (
                 <div
                   style={{
-                    display: 'flex',
-                    justifyContent: 'center',
+                    display: "flex",
+                    justifyContent: "center",
                   }}
                   key={product.uid}
                 >
@@ -351,7 +356,7 @@ const HomeSeller: React.FC = () => {
         </div>
       </IonContent>
     </IonPage>
-  )
-}
+  );
+};
 
-export default HomeSeller
+export default HomeSeller;
