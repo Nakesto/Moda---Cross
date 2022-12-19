@@ -7,7 +7,12 @@
   flex-direction: row;
   margin-left: 5px;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  margin-bottom: 30px;
+  margin-bottom: 10px;
+}
+
+.list-container {
+  display: flex;
+  flex-direction: row;
 }
 
 .produk-image {
@@ -39,10 +44,16 @@
   height: 20px;
 }
 
+.button-group-seller {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  margin-left: 450px;
+}
+
 @media screen and (max-width: 350px) {
   .produk-card {
     padding: 10px;
-    width: 290px;
     margin-right: 20px;
   }
 
@@ -62,13 +73,24 @@
   .produk-price {
     font-size: 15px;
   }
+
+  .button-group-seller {
+    margin-left: 50px;
+  }
 }
 
 @media screen and (min-width: 395px) {
   .produk-card {
     padding: 10px;
-    width: 350px;
     margin-right: 20px;
+  }
+
+  .list-container {
+    flex-direction: column;
+  }
+
+  .button-group-seller {
+    margin-left: 10px;
   }
 
   .produk-image {
@@ -92,8 +114,6 @@
 @media screen and (min-width: 750px) {
   .produk-card {
     padding: 10px;
-    width: 80vh;
-    margin-right: 20px;
   }
 
   .produk-image {

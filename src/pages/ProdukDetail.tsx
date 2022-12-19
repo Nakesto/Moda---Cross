@@ -10,79 +10,79 @@ import {
   IonIcon,
   IonContent,
   IonToast,
-} from "@ionic/react";
+} from '@ionic/react'
 import {
   getDoc,
   doc,
   setDoc,
   updateDoc,
   serverTimestamp,
-} from "firebase/firestore";
+} from 'firebase/firestore'
 import {
   cartOutline,
   chatbubbleEllipsesOutline,
   heartOutline,
-} from "ionicons/icons";
-import { useState } from "react";
-import { Link, Redirect, useLocation } from "react-router-dom";
-import { auth, db } from "../firebase";
-import { Product } from "./Home";
-import "./ProdukDetail.css";
+} from 'ionicons/icons'
+import { useState } from 'react'
+import { Link, Redirect, useLocation } from 'react-router-dom'
+import { auth, db } from '../firebase'
+import { Product } from './Home'
+import './ProdukDetail.css'
 
 const ProdukDetail = () => {
-  const location = useLocation();
-  const params: any = location.state;
-  const { currentUser } = auth;
-  const [isSuccess, setIsSuccess] = useState(false);
+  const location = useLocation()
+  const params: any = location.state
+  const { currentUser } = auth
+  const [isSuccess, setIsSuccess] = useState(false)
 
   const addCart = (product: Product) => {
-    updateDoc(doc(db, "cart", currentUser!.uid), {
-      [currentUser!.uid + product.uid + ".product"]: product,
-      [currentUser!.uid + product.uid + ".quantity"]: 1,
+    updateDoc(doc(db, 'cart', currentUser!.uid), {
+      [currentUser!.uid + product.uid + '.product']: product,
+      [currentUser!.uid + product.uid + '.quantity']: 1,
     }).then(() => {
-      setIsSuccess(true);
-    });
-  };
+      setIsSuccess(true)
+    })
+  }
 
   const addUserChats = async () => {
     if (currentUser) {
       const combinedId =
         currentUser.uid > params.product.toko.uid
           ? currentUser.uid + params.product.toko.uid
-          : params.product.toko.uid + currentUser.uid;
+          : params.product.toko.uid + currentUser.uid
 
       try {
-        const res = await getDoc(doc(db, "chats", combinedId));
+        const res = await getDoc(doc(db, 'chats', combinedId))
 
         if (!res.exists()) {
           //create a chat in chats collection
-          await setDoc(doc(db, "chats", combinedId), { messages: [] });
+          await setDoc(doc(db, 'chats', combinedId), { messages: [] })
 
           //create user chats
-          await updateDoc(doc(db, "userChats", currentUser.uid), {
-            [combinedId + ".userInfo"]: {
+          await updateDoc(doc(db, 'userChats', currentUser.uid), {
+            [combinedId + '.userInfo']: {
               uid: params.product.toko.uid,
               displayName: params.product.toko.name,
               photoURL: params.product.toko.photoURL,
             },
-            [combinedId + ".date"]: serverTimestamp(),
-          });
+            [combinedId + '.date']: serverTimestamp(),
+          })
 
-          await updateDoc(doc(db, "userChats", params.product.toko.uid), {
-            [combinedId + ".userInfo"]: {
+          await updateDoc(doc(db, 'userChats', params.product.toko.uid), {
+            [combinedId + '.userInfo']: {
               uid: currentUser.uid,
               displayName: currentUser.displayName,
               photoURL: currentUser.photoURL,
             },
-            [combinedId + ".date"]: serverTimestamp(),
-          });
+            [combinedId + '.date']: serverTimestamp(),
+          })
         }
       } catch (err) {}
     }
-  };
+  }
 
   if (params == null) {
-    return <Redirect to="/home" />;
+    return <Redirect to="/home" />
   }
 
   return (
@@ -91,8 +91,8 @@ const ProdukDetail = () => {
         <IonToolbar
           color="primary"
           style={{
-            paddingLeft: "15px",
-            paddingRight: "15px",
+            paddingLeft: '15px',
+            paddingRight: '15px',
           }}
           className="center"
         >
@@ -134,7 +134,7 @@ const ProdukDetail = () => {
             <h4 className="h4-produk">Kategori: {params.product.category}</h4>
             <h3 className="h3-produk">
               <b>Description</b>
-              <p>{params.product.description}</p>
+              <p className="description">{params.product.description}</p>
             </h3>
           </div>
         </div>
@@ -169,7 +169,7 @@ const ProdukDetail = () => {
         />
       </IonContent>
     </IonPage>
-  );
-};
+  )
+}
 
-export default ProdukDetail;
+export default ProdukDetail

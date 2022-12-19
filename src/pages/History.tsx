@@ -64,7 +64,7 @@ const History: React.FC = () => {
 
               <IonLabel style={{ paddingTop: "10px", paddingBottom: "10px" }}>
                 <h2 className="des">{data.product.name}</h2>
-                <h3 className="des">{"Rp" + data.product.price}</h3>
+                <h3 className="des">{"Rp" + data.product.price.formatted_with_code}</h3>
                 <IonButton className="des" slot="end">
                   Beli Lagi
                 </IonButton>

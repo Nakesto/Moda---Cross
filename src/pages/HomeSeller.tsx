@@ -1,23 +1,24 @@
 import {
-  IonButton,
   IonContent,
   IonHeader,
   IonPage,
-  IonSearchbar,
   IonText,
   IonToolbar,
   useIonModal,
 } from '@ionic/react'
-// import { doc, serverTimestamp, setDoc, updateDoc } from "firebase/firestore";
-// import { useEffect, useState } from "react";
-// import { db } from "../firebase";
 import Slider from 'react-slick'
 import { useHistory } from 'react-router-dom'
 import { useContext, useEffect, useState } from 'react'
-import { collection, getDocs, query, where } from 'firebase/firestore'
+import {
+  collection,
+  doc,
+  getDocs,
+  query,
+  setDoc,
+  where,
+} from 'firebase/firestore'
 import { db } from '../firebase'
 import { OverlayEventDetail } from '@ionic/react/dist/types/components/react-component-lib/interfaces'
-import ModalFull from '../components/ModalFull'
 import { AiOutlineAppstoreAdd } from 'react-icons/ai'
 import { CiSquareRemove } from 'react-icons/ci'
 import { MdDriveFileRenameOutline, MdVerified } from 'react-icons/md'
@@ -44,11 +45,12 @@ export type Product = {
 
 const HomeSeller: React.FC = () => {
   const history = useHistory()
-  const [dataToko, setDataToko] = useState<Toko[]>([])
-  const [dataProduct, setDataProduct] = useState<Product[]>([])
+  const [datatoko, setDataToko] = useState<Toko[]>([])
+  const [dataproduct, setdataproduct] = useState<Product[]>([])
+  const [addproduct, setAddProduct] = useState<Product[]>([])
   const { userData } = useContext(UserContext)
   const [present, dismiss] = useIonModal(AddProduct, {
-    onDismiss: (data: { product: any }, role: string) => dismiss(data, role),
+    onDismiss: (data: { product: null }, role: string) => dismiss(data, role),
     role: 'product',
   })
 
@@ -76,7 +78,7 @@ const HomeSeller: React.FC = () => {
         // doc.data() is never undefined for query doc snapshots
         data.push(doc.data() as Product)
       })
-      setDataProduct(data)
+      setdataproduct(data)
     }
     getToko()
     getProduct()
@@ -85,10 +87,6 @@ const HomeSeller: React.FC = () => {
   function openModal() {
     present({
       onWillDismiss: (ev: CustomEvent<OverlayEventDetail>) => {
-        if (ev.detail.role === 'goToCart') {
-          history.push('/cart')
-        }
-
         if (ev.detail.role === 'goToProduct') {
           const product = ev.detail.data.product
           history.push('/detailProduct', { product })
@@ -96,10 +94,35 @@ const HomeSeller: React.FC = () => {
 
         if (ev.detail.role === 'confirm') {
           const productData = ev.detail.data.product
-          console.log(productData)
+          setAddProduct(productData)
+          addData()
         }
       },
     })
+  }
+
+  const addData = async () => {
+    try {
+      const newDocRef = doc(collection(db, 'product'))
+      await setDoc(newDocRef, {
+        name: addproduct[0].name,
+        toko: {
+          name: datatoko[0].name,
+          uid: datatoko[0].uid,
+          province: datatoko[0].province,
+          photoURL: datatoko[0].image,
+        },
+        price: addproduct[0].price,
+        description: addproduct[0].description as string,
+        uid: newDocRef.id,
+        stock: addproduct[0].stock,
+        image: addproduct[0].image as string,
+        category: addproduct[0].category as string,
+      })
+      history.push('/homeseller')
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (
@@ -122,12 +145,6 @@ const HomeSeller: React.FC = () => {
           >
             MODA
           </IonText>
-          <IonSearchbar
-            style={{
-              marginTop: '9px',
-            }}
-            onClick={() => openModal()}
-          ></IonSearchbar>
         </IonToolbar>
       </IonHeader>
       <IonContent className="content">
@@ -152,9 +169,9 @@ const HomeSeller: React.FC = () => {
             }}
             className="ion-padding-horizontal"
           >
-            {dataToko != null &&
-              dataToko.map((val, idx) => (
-                <Slider key={idx}>
+            {datatoko != null &&
+              datatoko.map((val) => (
+                <Slider key={val.uid}>
                   <div>
                     <div
                       style={{
@@ -252,33 +269,6 @@ const HomeSeller: React.FC = () => {
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
-              }}
-            >
-              <button
-                style={{
-                  maxWidth: '200px',
-                  padding: '13px',
-                  marginBottom: '5px',
-                }}
-                className="button-category"
-              >
-                <MdDriveFileRenameOutline
-                  style={{
-                    width: '50px',
-                    height: '50px',
-                  }}
-                />
-              </button>
-              <IonText>Update</IonText>
-            </div>
-            <div
-              style={{
-                textAlign: 'center',
-                fontSize: '20px',
-                fontWeight: '600',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
                 marginLeft: '10px',
                 marginRight: '10px',
               }}
@@ -299,33 +289,6 @@ const HomeSeller: React.FC = () => {
                 />
               </button>
               <IonText>Verify</IonText>
-            </div>
-            <div
-              style={{
-                textAlign: 'center',
-                fontSize: '20px',
-                fontWeight: '600',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-              }}
-            >
-              <button
-                style={{
-                  maxWidth: '200px',
-                  padding: '13px',
-                  marginBottom: '5px',
-                }}
-                className="button-category"
-              >
-                <CiSquareRemove
-                  style={{
-                    width: '50px',
-                    height: '50px',
-                  }}
-                />
-              </button>
-              <IonText>Remove</IonText>
             </div>
           </div>
           <div
@@ -354,28 +317,7 @@ const HomeSeller: React.FC = () => {
               >
                 Product List
               </IonText>
-              <IonButton style={{ marginTop: '20px' }}>View All</IonButton>
             </div>
-            {/* <div
-              style={{
-                marginTop: '10px',
-              }}
-            >
-              <div
-                style={{
-                  display: 'flex',
-                  gap: '20px',
-                  overflow: 'scroll',
-                }}
-                className="example"
-              >
-                {newProduct.map((product) => (
-                  <div key={product?.name}>
-                    <CardProduct product={product} />
-                  </div>
-                ))}
-              </div>
-            </div> */}
           </div>
           <div
             style={{
@@ -389,10 +331,17 @@ const HomeSeller: React.FC = () => {
                 marginBottom: '60px',
                 paddingLeft: '20px',
                 justifyContent: 'center',
+                flexDirection: 'column',
               }}
             >
-              {dataProduct.map((product) => (
-                <div key={product.uid}>
+              {dataproduct.map((product) => (
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                  }}
+                  key={product.uid}
+                >
                   <CardProductSeller product={product} />
                 </div>
               ))}

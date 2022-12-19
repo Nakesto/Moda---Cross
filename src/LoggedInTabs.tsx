@@ -6,27 +6,17 @@ import {
   IonTabButton,
   IonTabs,
 } from '@ionic/react'
-import {
-  chatboxOutline,
-  home,
-  person,
-  personCircle,
-  storefront,
-} from 'ionicons/icons'
+import { chatboxOutline, home, person, storefront } from 'ionicons/icons'
 import { Redirect, Route } from 'react-router'
 import AddChat from './pages/AddChat'
-import Cart from './pages/Cart'
 import Category from './pages/Category'
 import Chat from './pages/Chat'
 import ChatDetail from './pages/ChatDetail'
 import Home from './pages/Home'
 import HomeSeller from './pages/HomeSeller'
-import Payment from './pages/Payment'
-import ProdukDetail from './pages/ProdukDetail'
 import Profile from './pages/Profile'
 import RegisterSeller from './pages/RegisterSeller'
 import Store from './pages/Store'
-import StoreDetail from './pages/StoreDetail'
 
 const LoggedInTabs = () => {
   return (
