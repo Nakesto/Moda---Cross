@@ -239,6 +239,14 @@
   .text-information-detail {
     font-size: medium;
   }
+
+  .register-seller {
+    font-size: small;
+  }
+
+  .check-order {
+    font-size: small;
+  }
 }
 
 @media only screen and (min-width: 750px) {

@@ -1,4 +1,5 @@
 import {
+  IonButton,
   IonContent,
   IonHeader,
   IonPage,
@@ -145,12 +146,25 @@ const HomeSeller: React.FC = () => {
           >
             MODA
           </IonText>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'flex-end',
+              marginTop: '10px',
+              marginBottom: '10px',
+              alignItems: 'flex-end',
+            }}
+          >
+            <IonButton routerLink="/home" color="tertiary">
+              Switch To User
+            </IonButton>
+          </div>
         </IonToolbar>
       </IonHeader>
       <IonContent className="content">
         <div
           style={{
-            height: '90vh'
+            height: '90vh',
           }}
         >
           <div className="test"></div>
@@ -332,7 +346,7 @@ const HomeSeller: React.FC = () => {
                 paddingLeft: '20px',
                 justifyContent: 'center',
                 flexDirection: 'column',
-                paddingBottom: "20px"
+                paddingBottom: '20px',
               }}
             >
               {dataproduct.map((product) => (
