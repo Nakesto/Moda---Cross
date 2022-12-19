@@ -11,59 +11,64 @@ import {
   IonSpinner,
   IonToast,
   IonToolbar,
-} from '@ionic/react'
-import { collection, getDocs, limit, query } from 'firebase/firestore'
-import { useEffect, useState } from 'react'
-import { Redirect, useLocation } from 'react-router'
-import CardCategory from '../components/CardCategory'
-import { db } from '../firebase'
-import { Product } from './Home'
+} from "@ionic/react";
+import { collection, getDocs, limit, query } from "firebase/firestore";
+import { useContext, useEffect, useState } from "react";
+import { Redirect, useHistory, useLocation } from "react-router";
+import CardCategory from "../components/CardCategory";
+import { UserContext } from "../context/UserData";
+import { db } from "../firebase";
+import { Product } from "./Home";
 
 const ViewAllProduct = () => {
-  const location = useLocation()
-  const params: any = location.state
-  const [product, setProduct] = useState<Product[]>([])
-  const [success, setSuccess] = useState(false)
-  const [isLoading, setIsLoading] = useState(true)
+  const location = useLocation();
+  const history = useHistory();
+  const params: any = location.state;
+  const [product, setProduct] = useState<Product[]>([]);
+  const [success, setSuccess] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const { isLoggedIn } = useContext(UserContext);
 
   useEffect(() => {
     const getProduct = async () => {
-      const q = query(collection(db, 'product'), limit(10))
-      const querySnapshot = await getDocs(q)
-      const data: Product[] = []
+      const q = query(collection(db, "product"), limit(10));
+      const querySnapshot = await getDocs(q);
+      const data: Product[] = [];
       querySnapshot.forEach((doc) => {
         // doc.data() is never undefined for query doc snapshots
-        data.push(doc.data() as Product)
-      })
-      setProduct(data)
-      setIsLoading(false)
+        data.push(doc.data() as Product);
+      });
+      setProduct(data);
+      setIsLoading(false);
+    };
+    if (params !== null && isLoggedIn) {
+      getProduct();
+    } else {
+      history.push("/");
     }
-    if (params !== null) {
-      getProduct()
-    }
-  }, [])
+  }, []);
 
   const notif = () => {
-    setSuccess(true)
-  }
+    setSuccess(true);
+  };
 
   if (params == null) {
-    ;<Redirect to="/home" />
+    <Redirect to="/home" />;
   }
 
   if (isLoading) {
     return (
       <IonPage
         style={{
-          height: '100vh',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
+          height: "100vh",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
         }}
       >
         <IonSpinner color="black" name="lines"></IonSpinner>
       </IonPage>
-    )
+    );
   }
 
   return (
@@ -73,22 +78,22 @@ const ViewAllProduct = () => {
           <IonToolbar
             color="primary"
             style={{
-              paddingLeft: '15px',
-              paddingRight: '15px',
+              paddingLeft: "15px",
+              paddingRight: "15px",
             }}
             className="center"
           >
             <IonButtons
               slot="start"
               style={{
-                marginTop: '9px',
+                marginTop: "9px",
               }}
             >
               <IonBackButton></IonBackButton>
             </IonButtons>
             <IonSearchbar
               style={{
-                marginTop: '9px',
+                marginTop: "9px",
               }}
             ></IonSearchbar>
           </IonToolbar>
@@ -98,7 +103,7 @@ const ViewAllProduct = () => {
         <IonGrid
           className="ion-padding"
           style={{
-            gridGrap: '50px',
+            gridGrap: "50px",
           }}
         >
           <IonRow>
@@ -113,7 +118,7 @@ const ViewAllProduct = () => {
                 >
                   <CardCategory product={prod} notif={notif} />
                 </IonCol>
-              )
+              );
             })}
           </IonRow>
         </IonGrid>
@@ -126,7 +131,7 @@ const ViewAllProduct = () => {
         />
       </IonContent>
     </IonPage>
-  )
-}
+  );
+};
 
-export default ViewAllProduct
+export default ViewAllProduct;
