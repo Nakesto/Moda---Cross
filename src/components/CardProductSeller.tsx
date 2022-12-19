@@ -5,9 +5,9 @@ import {
   IonText,
   useIonToast,
 } from '@ionic/react'
-import { arrayUnion, doc, setDoc, updateDoc } from 'firebase/firestore'
-import { add, checkmarkDoneOutline } from 'ionicons/icons'
-import React, { useContext } from 'react'
+import { doc, updateDoc } from 'firebase/firestore'
+import { checkmarkDoneOutline, create, trash } from 'ionicons/icons'
+import { useContext } from 'react'
 import { useHistory } from 'react-router'
 import { UserContext } from '../context/UserData'
 import { db } from '../firebase'
@@ -47,21 +47,31 @@ const CardProductSeller = ({ product }: { product: Product }) => {
       }}
     >
       <img src={product.image} className="produk-image" />
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-        }}
-      >
-        <IonText className="produk-name">
-          <b>{product.name}</b>
-        </IonText>
-        <IonText className="produk-stock">Stock: {product.stock}</IonText>
-        <IonText className="produk-price">
-          <b>Rp. {product.price}</b>
-        </IonText>
-        <IonBadge className="verif-badge">Unverified</IonBadge>
+      <div className="list-container">
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+          }}
+        >
+          <IonText className="produk-name">
+            <b>{product.name}</b>
+          </IonText>
+          <IonText className="produk-stock">Stock: {product.stock}</IonText>
+          <IonText className="produk-price">
+            <b>Rp. {product.price}</b>
+          </IonText>
+          <IonBadge className="verif-badge">Unverified</IonBadge>
+        </div>
+        <div className="button-group-seller">
+          <IonButton style={{ marginRight: '10px' }}>
+            <IonIcon icon={create} />
+          </IonButton>
+          <IonButton>
+            <IonIcon icon={trash} />
+          </IonButton>
+        </div>
       </div>
     </div>
   )

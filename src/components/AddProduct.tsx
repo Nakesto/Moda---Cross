@@ -1,5 +1,4 @@
 import {
-  IonBackButton,
   IonButton,
   IonButtons,
   IonContent,
@@ -11,48 +10,40 @@ import {
   IonRow,
   IonSelect,
   IonSelectOption,
-  IonTextarea,
   IonTitle,
   IonToolbar,
 } from '@ionic/react'
-import { useContext, useEffect, useRef, useState } from 'react'
-import { mail, calendar, camera } from 'ionicons/icons'
-import { FaAddressBook, FaIdCard, FaTransgender } from 'react-icons/fa'
-import { BsCameraFill, BsFillTelephoneFill } from 'react-icons/bs'
-import { RiLockPasswordFill } from 'react-icons/ri'
-import { HiIdentification } from 'react-icons/hi'
-import {
-  AiFillTags,
-  AiOutlineStock,
-  AiTwotoneBook,
-  AiTwotoneSecurityScan,
-} from 'react-icons/ai'
+import { useState } from 'react'
+import { camera } from 'ionicons/icons'
+import { BsCameraFill } from 'react-icons/bs'
+import { AiFillTags, AiOutlineStock } from 'react-icons/ai'
 import profile from '../Assets/profile.png'
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
-import {
-  addDoc,
-  collection,
-  doc,
-  onSnapshot,
-  query,
-  setDoc,
-  updateDoc,
-  where,
-} from 'firebase/firestore'
-import { useHistory, useLocation } from 'react-router'
-import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth'
 import { useForm } from 'react-hook-form'
 import { ErrorMessage } from '@hookform/error-message'
-import { storage, auth, db } from '../firebase'
-import { UserContext } from '../context/UserData'
+import { storage } from '../firebase'
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera'
 import { base64FromPath } from '@capacitor-community/filesystem-react'
-import { MdCategory, MdOutlineCancel } from 'react-icons/md'
 import { BiMoney } from 'react-icons/bi'
-import { CgNametag, CgProductHunt } from 'react-icons/cg'
+import { CgNametag } from 'react-icons/cg'
 import { GiCancel } from 'react-icons/gi'
 import './AddProduct.css'
-import { stringify } from 'querystring'
+
+export type Product = {
+  name: string
+  toko: {
+    name: string
+    uid: string
+    province: string
+    photoURL: string
+  }
+  price: string
+  description: string
+  uid: string
+  stock: number
+  image: string
+  category: string
+}
 
 const AddProduct = ({
   onDismiss,
@@ -62,24 +53,9 @@ const AddProduct = ({
   role: string
 }) => {
   const [takenPhoto, setTakenPhoto] = useState<string>()
-  const [dataProduct, setDataProduct] = useState({
-    name: '',
-    toko: {
-      name: '',
-      uid: '',
-      province: '',
-      photoURL: '',
-    },
-    price: '',
-    description: '',
-    uid: '',
-    stock: '',
-    image: '',
-    category: '',
-  })
+  const [datas, setdatas] = useState<Product[]>([])
   const [selectedfile, setSelectedFile] = useState<File>()
   const [typeFile, setTypeFile] = useState<'camera' | 'file'>('camera')
-  const { userData } = useContext(UserContext)
   const [category, setCategory] = useState<'top' | 'pants' | 'bag' | 'shoes'>(
     'top',
   )
@@ -124,7 +100,7 @@ const AddProduct = ({
     })
 
     const addData = async (url: string) => {
-      await setDataProduct({
+      datas.push({
         name: data.product_name as string,
         toko: {
           name: '',
@@ -135,12 +111,13 @@ const AddProduct = ({
         price: data.price as string,
         description: data.description as string,
         uid: '',
-        stock: data.stock as string,
+        stock: data.stock as number,
         image: url,
         category: valCategory,
       })
+
+      onDismiss({ product: datas }, 'confirm')
     }
-    onDismiss(dataProduct, 'confirm')
   }
 
   const takePhotoHandler = async () => {

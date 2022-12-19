@@ -73,6 +73,10 @@
   margin-right: 50px;
 }
 
+.description {
+  font-size: large;
+}
+
 @media screen and (max-width: 320px) {
   .img-produk {
     width: 200px;
